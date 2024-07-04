@@ -1,0 +1,113 @@
+<svg version="1.1" id="Layer_Ape" shape-rendering="crispEdges"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 25 25"
+	 style="enable-background:new 0 0 25 25;" xml:space="preserve">
+<style type="text/css">
+	.stApe0{fill:#053AA3;}
+	.stApe1{fill:#2C64D3;}
+	.stApe2{fill:#FFFFFF;}
+</style>
+<g>
+	<path class="stApe0" d="M11,2c1.6,0,3.4,0,5,0V1c-2.3,0-4.7,0-7,0v1C9.5,2,10.5,2,11,2z"/>
+	<path class="stApe0" d="M9,3V2C8.5,2,7.5,2,7,2v1C7.5,3,8.5,3,9,3z"/>
+	<path class="stApe1" d="M10,3c1.9,0,4.1,0,6,0V2c-2.3,0-4.7,0-7,0v1H10z"/>
+	<path class="stApe0" d="M17,3h1V2c-0.5,0-1.5,0-2,0v1H17z"/>
+	<rect x="6" y="3" class="stApe0" width="1" height="1"/>
+	<path class="stApe1" d="M8,4h1V3C8.5,3,7.5,3,7,3v1H8z"/>
+	<path class="stApe1" d="M16,3v1c0.5,0,1.5,0,2,0V3C17.5,3,16.5,3,16,3z"/>
+	<rect x="18" y="3" class="stApe0" width="1" height="1"/>
+	<rect x="5" y="4" class="stApe0" width="1" height="1"/>
+	<rect x="6" y="4" class="stApe1" width="1" height="1"/>
+	<path class="stApe1" d="M12,5c0.9,0,2.1,0,3,0V4c-1.6,0-3.4,0-5,0v1C10.5,5,11.5,5,12,5z"/>
+	<rect x="18" y="4" class="stApe1" width="1" height="1"/>
+	<rect x="19" y="4" class="stApe0" width="1" height="1"/>
+	<rect x="4" y="5" class="stApe0" width="1" height="1"/>
+	<rect x="5" y="5" class="stApe1" width="1" height="1"/>
+	<path class="stApe1" d="M10,6V5C9.5,5,8.5,5,8,5v1C8.5,6,9.5,6,10,6z"/>
+	<path class="stApe0" d="M11,6c0.5,0,1.5,0,2,0v1h1V6h1V5c-1.6,0-3.4,0-5,0v1H11z"/>
+	<path class="stApe2" d="M16,5h-1v1c0.5,0,1.5,0,2,0v1h1c0,1.6,0,3.4,0,5h1v1h1c0-1.9,0-4.1,0-6h-1V6h-1V5C17.5,5,16.5,5,16,5z"/>
+	<rect x="18" y="5" class="stApe0" width="1" height="1"/>
+	<rect x="19" y="5" class="stApe1" width="1" height="1"/>
+	<rect x="20" y="5" class="stApe0" width="1" height="1"/>
+	<rect x="3" y="6" class="stApe0" width="1" height="1"/>
+	<rect x="4" y="6" class="stApe1" width="1" height="1"/>
+	<rect x="7" y="6" class="stApe1" width="1" height="1"/>
+	<path class="stApe0" d="M16,7h1V6c-0.5,0-1.5,0-2,0v1H16z"/>
+	<rect x="19" y="6" class="stApe0" width="1" height="1"/>
+	<rect x="20" y="6" class="stApe1" width="1" height="1"/>
+	<rect x="21" y="6" class="stApe0" width="1" height="1"/>
+	<rect x="6" y="7" class="stApe1" width="1" height="1"/>
+	<path class="stApe1" d="M21,8v1h1c0-0.5,0-1.5,0-2h-1V8z"/>
+	<path class="stApe0" d="M3,8V7H2c0,0.5,0,1.5,0,2h1V8z"/>
+	<path class="stApe1" d="M3,9h1c0-0.5,0-1.5,0-2H3C3,7.5,3,8.5,3,9z"/>
+	<path class="stApe0" d="M17,9c0,0.9,0,2.1,0,3h1c0-1.6,0-3.4,0-5h-1C17,7.5,17,8.5,17,9z"/>
+	<path class="stApe0" d="M21,8V7h-1c0,0.9,0,2.1,0,3h1c0,1.6,0,3.4,0,5h-1c0,0.5,0,1.5,0,2h-1v1h-1v1h-1v1c-0.5,0-1.5,0-2,0v1
+		c-1.6,0-3.4,0-5,0v-1c-0.9,0-2.1,0-3,0v1c0.5,0,1.5,0,2,0v1c2.3,0,4.7,0,7,0v-1c0.5,0,1.5,0,2,0v-1h1v-1h1v-1h1c0-0.5,0-1.5,0-2h1
+		c0-2.3,0-4.7,0-7h-1V8z"/>
+	<path class="stApe0" d="M22,9h1c0-0.5,0-1.5,0-2h-1C22,7.5,22,8.5,22,9z"/>
+	<path class="stApe1" d="M6,9V8H5c0,0.5,0,1.5,0,2h1V9z"/>
+	<path class="stApe0" d="M23,9c0,2.3,0,4.7,0,7h1c0-2.3,0-4.7,0-7H23z"/>
+	<path class="stApe0" d="M9,11c0.5,0,1.5,0,2,0v-1h1c0-0.5,0-1.5,0-2c-0.5,0-1.5,0-2,0v1H9C9,9.5,9,10.5,9,11z"/>
+	<path class="stApe0" d="M14,11h1v-1h1c0-0.5,0-1.5,0-2c-0.5,0-1.5,0-2,0v1h-1c0,0.5,0,1.5,0,2H14z"/>
+	<path class="stApe1" d="M20,12c0,0.9,0,2.1,0,3h1c0-1.6,0-3.4,0-5h-1C20,10.5,20,11.5,20,12z"/>
+	<rect x="18" y="12" class="stApe0" width="1" height="1"/>
+	<path class="stApe1" d="M5,13c0-0.9,0-2.1,0-3H4c0,1.6,0,3.4,0,5h1C5,14.5,5,13.5,5,13z"/>
+	<path class="stApe0" d="M11,14c0-0.5,0-1.5,0-2c-0.5,0-1.5,0-2,0v1H8c0,0.5,0,1.5,0,2c0.5,0,1.5,0,2,0v-1H11z"/>
+	<rect x="16" y="13" class="stApe0" width="1" height="1"/>
+	<path class="stApe2" d="M19,14v-1h-1v-1h-1c0-1.6,0-3.4,0-5c-0.5,0-1.5,0-2,0V6h-1v1h-1V6c-0.9,0-2.1,0-3,0v1H9c0,0.5,0,1.5,0,2h1V8
+		c0.5,0,1.5,0,2,0c0,0.5,0,1.5,0,2h-1v1c-0.5,0-1.5,0-2,0c0-0.5,0-1.5,0-2H8c0,0.5,0,1.5,0,2H7c0,0.5,0,1.5,0,2H6c0,0.5,0,1.5,0,2H5
+		c0,0.5,0,1.5,0,2h1v-1h1v1h1v-1h1v1h1v-1c0.5,0,1.5,0,2,0v1h1v-1c0.5,0,1.5,0,2,0c0-0.5,0-1.5,0-2h1v-1h1v1C17.5,14,18.5,14,19,14z
+		 M13,9h1V8c0.5,0,1.5,0,2,0c0,0.5,0,1.5,0,2h-1v1c-0.5,0-1.5,0-2,0C13,10.5,13,9.5,13,9z M9,15H8c0-0.5,0-1.5,0-2h1v-1
+		c0.5,0,1.5,0,2,0c0,0.5,0,1.5,0,2h-1v1H9z"/>
+	<path class="stApe0" d="M20,13h-1v1c-0.5,0-1.5,0-2,0v1c0.9,0,2.1,0,3,0C20,14.5,20,13.5,20,13z"/>
+	<path class="stApe0" d="M2,14c0-1.6,0-3.4,0-5H1c0,2.3,0,4.7,0,7h1C2,15.5,2,14.5,2,14z"/>
+	<path class="stApe0" d="M6,14v-1h1c0-0.5,0-1.5,0-2h1c0-0.5,0-1.5,0-2h1c0-0.5,0-1.5,0-2h1V6C9.5,6,8.5,6,8,6v1H7v1H6c0,0.5,0,1.5,0,2
+		H5c0,1.6,0,3.4,0,5h1V14z"/>
+	<path class="stApe0" d="M15,15v1h1c0-0.5,0-1.5,0-2h-1V15z"/>
+	<path class="stApe1" d="M23,14c0-1.6,0-3.4,0-5h-1c0,2.3,0,4.7,0,7h1C23,15.5,23,14.5,23,14z"/>
+	<path class="stApe1" d="M3,15c0-1.9,0-4.1,0-6H2c0,2.3,0,4.7,0,7h1V15z"/>
+	<path class="stApe1" d="M19,16v1h1c0-0.5,0-1.5,0-2h-1V16z"/>
+	<path class="stApe0" d="M3,16H2c0,0.5,0,1.5,0,2h1C3,17.5,3,16.5,3,16z"/>
+	<rect x="6" y="16" class="stApe0" width="1" height="1"/>
+	<rect x="8" y="16" class="stApe0" width="1" height="1"/>
+	<path class="stApe0" d="M12,16c-0.5,0-1.5,0-2,0v1h1v1c0.5,0,1.5,0,2,0v-1h-1V16z"/>
+	<path class="stApe0" d="M13,16v1h1v1h1c0-0.5,0-1.5,0-2C14.5,16,13.5,16,13,16z"/>
+	<rect x="18" y="16" class="stApe0" width="1" height="1"/>
+	<path class="stApe1" d="M22,16h-1c0,0.5,0,1.5,0,2h1C22,17.5,22,16.5,22,16z"/>
+	<path class="stApe0" d="M22,17v1h1c0-0.5,0-1.5,0-2h-1V17z"/>
+	<path class="stApe1" d="M4,17v-1H3c0,0.5,0,1.5,0,2h1V17z"/>
+	<path class="stApe0" d="M6,17H5c0-0.5,0-1.5,0-2H4c0-1.6,0-3.4,0-5h1c0-0.5,0-1.5,0-2h1V7h1V6h1V5c0.5,0,1.5,0,2,0V4c1.6,0,3.4,0,5,0
+		v1c0.9,0,2.1,0,3,0V4c-0.5,0-1.5,0-2,0V3c-2.3,0-4.7,0-7,0v1C8.5,4,7.5,4,7,4v1H6v1H5v1H4c0,0.5,0,1.5,0,2H3c0,2.3,0,4.7,0,7h1
+		c0,0.5,0,1.5,0,2h1v1h1C6,18.5,6,17.5,6,17z"/>
+	<rect x="7" y="17" class="stApe0" width="1" height="1"/>
+	<rect x="9" y="17" class="stApe0" width="1" height="1"/>
+	<rect x="17" y="17" class="stApe0" width="1" height="1"/>
+	<rect x="18" y="17" class="stApe1" width="1" height="1"/>
+	<rect x="3" y="18" class="stApe0" width="1" height="1"/>
+	<rect x="4" y="18" class="stApe1" width="1" height="1"/>
+	<rect x="16" y="18" class="stApe0" width="1" height="1"/>
+	<rect x="17" y="18" class="stApe1" width="1" height="1"/>
+	<rect x="20" y="18" class="stApe1" width="1" height="1"/>
+	<rect x="21" y="18" class="stApe0" width="1" height="1"/>
+	<rect x="4" y="19" class="stApe0" width="1" height="1"/>
+	<rect x="5" y="19" class="stApe1" width="1" height="1"/>
+	<rect x="6" y="19" class="stApe0" width="1" height="1"/>
+	<path class="stApe2" d="M9,20c1.9,0,4.1,0,6,0v-1h1v-1h1v-1h1v-1h1v-1c-0.5,0-1.5,0-2,0v-1h-1c0,0.5,0,1.5,0,2h-1c0,0.5,0,1.5,0,2h-1
+		v-1h-1v1c-0.5,0-1.5,0-2,0v-1h-1v1H9v-1H8v1H7v-1H6c0,0.5,0,1.5,0,2h1v1C7.5,20,8.5,20,9,20z"/>
+	<path class="stApe1" d="M15,19v1c0.5,0,1.5,0,2,0v-1C16.5,19,15.5,19,15,19z"/>
+	<rect x="19" y="19" class="stApe1" width="1" height="1"/>
+	<rect x="20" y="19" class="stApe0" width="1" height="1"/>
+	<rect x="5" y="20" class="stApe0" width="1" height="1"/>
+	<rect x="6" y="20" class="stApe1" width="1" height="1"/>
+	<path class="stApe1" d="M13,20c-0.9,0-2.1,0-3,0v1c1.6,0,3.4,0,5,0v-1C14.5,20,13.5,20,13,20z"/>
+	<rect x="18" y="20" class="stApe1" width="1" height="1"/>
+	<rect x="19" y="20" class="stApe0" width="1" height="1"/>
+	<rect x="6" y="21" class="stApe0" width="1" height="1"/>
+	<path class="stApe1" d="M9,22v-1c-0.5,0-1.5,0-2,0v1C7.5,22,8.5,22,9,22z"/>
+	<path class="stApe1" d="M17,21h-1v1c0.5,0,1.5,0,2,0v-1H17z"/>
+	<rect x="18" y="21" class="stApe0" width="1" height="1"/>
+	<path class="stApe0" d="M8,22H7v1c0.5,0,1.5,0,2,0v-1H8z"/>
+	<path class="stApe1" d="M15,22c-1.9,0-4.1,0-6,0v1c2.3,0,4.7,0,7,0v-1H15z"/>
+	<path class="stApe0" d="M16,22v1c0.5,0,1.5,0,2,0v-1C17.5,22,16.5,22,16,22z"/>
+	<path class="stApe0" d="M14,23c-1.6,0-3.4,0-5,0v1c2.3,0,4.7,0,7,0v-1C15.5,23,14.5,23,14,23z"/>
+</g>
+</svg>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 27.5.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_eth" shape-rendering="crispEdges"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 25 25"
+	 style="enable-background:new 0 0 25 25;" xml:space="preserve">
+<style type="text/css">
+	.stEth0{fill:#424242;}
+	.stEth1{fill:#9E9E9E;}
+	.stEth2{fill:#656D94;}
+	.stEth3{fill:#8C95B6;}
+	.stEth4{fill:#484C79;}
+	.stEth5{fill:#D2D2D2;}
+	.stEth6{fill:#EAEAEA;}
+</style>
+<g>
+	<path class="stEth0" d="M10,4c2.3,0,4.7,0,7,0V3c-3,0-6,0-9,0v1C8.5,4,9.5,4,10,4z"/>
+	<rect x="7" y="4" class="stEth0" width="1" height="1"/>
+	<rect x="8" y="4" class="stEth1" width="1" height="1"/>
+	<rect x="17" y="4" class="stEth0" width="1" height="1"/>
+	<rect x="6" y="5" class="stEth0" width="1" height="1"/>
+	<rect x="7" y="5" class="stEth1" width="1" height="1"/>
+	<rect x="15" y="5" class="stEth1" width="1" height="1"/>
+	<rect x="18" y="5" class="stEth0" width="1" height="1"/>
+	<rect x="5" y="6" class="stEth0" width="1" height="1"/>
+	<rect x="6" y="6" class="stEth1" width="1" height="1"/>
+	<rect x="16" y="6" class="stEth1" width="1" height="1"/>
+	<rect x="19" y="6" class="stEth0" width="1" height="1"/>
+	<rect x="4" y="7" class="stEth0" width="1" height="1"/>
+	<rect x="5" y="7" class="stEth1" width="1" height="1"/>
+	<rect x="17" y="7" class="stEth1" width="1" height="1"/>
+	<rect x="20" y="7" class="stEth0" width="1" height="1"/>
+	<path class="stEth2" d="M12,9c0,0.5,0,1.5,0,2h1v1c0.5,0,1.5,0,2,0v1c0.5,0,1.5,0,2,0v-1h-1c0-0.5,0-1.5,0-2h-1V9h-1c0-0.5,0-1.5,0-2
+		h-1V6h-1C12,6.9,12,8.1,12,9z"/>
+	<rect x="18" y="8" class="stEth1" width="1" height="1"/>
+	<path class="stEth0" d="M21,8c0,3,0,6,0,9h1c0-3,0-6,0-9H21z"/>
+	<path class="stEth3" d="M10,12c0.5,0,1.5,0,2,0c0-1.6,0-3.4,0-5h-1c0,0.5,0,1.5,0,2h-1v1H9c0,0.5,0,1.5,0,2H8v1c0.5,0,1.5,0,2,0V12z"
+		/>
+	<path class="stEth4" d="M15,12c-0.5,0-1.5,0-2,0v-1h-1c0,1.6,0,3.4,0,5h1v-1c0.5,0,1.5,0,2,0v-1h1v-1h-1V12z"/>
+	<rect x="8" y="14" class="stEth3" width="1" height="1"/>
+	<rect x="9" y="14" class="stEth5" width="1" height="1"/>
+	<path class="stEth2" d="M10,15c0.5,0,1.5,0,2,0c0-0.9,0-2.1,0-3c-0.5,0-1.5,0-2,0v1H9v1h1V15z"/>
+	<rect x="15" y="14" class="stEth5" width="1" height="1"/>
+	<rect x="16" y="14" class="stEth2" width="1" height="1"/>
+	<path class="stEth5" d="M19,14c0-1.6,0-3.4,0-5h-1V8h-1V7h-1V6h-1V5c-1.6,0-3.4,0-5,0v1H9v1H8v1H7v1H6c0,2.3,0,4.7,0,7h1v1h1v1h1v1h1
+		v1c1.6,0,3.4,0,5,0v-1h1v-1h1v-1h1v-1h1C19,15.5,19,14.5,19,14z M15,17v1c-0.5,0-1.5,0-2,0v1h-1v-1c-0.5,0-1.5,0-2,0v-1H9
+		c0-0.5,0-1.5,0-2H8v-1h1v-1H8v-1h1c0-0.5,0-1.5,0-2h1V9h1c0-0.5,0-1.5,0-2h1V6h1v1h1c0,0.5,0,1.5,0,2h1v1h1c0,0.5,0,1.5,0,2h1v1h-1
+		v1h1v1h-1c0,0.5,0,1.5,0,2H15z"/>
+	<path class="stEth1" d="M20,14c0-1.6,0-3.4,0-5h-1c0,2.3,0,4.7,0,7h1C20,15.5,20,14.5,20,14z"/>
+	<path class="stEth0" d="M4,15c0-2.3,0-4.7,0-7H3c0,3,0,6,0,9h1C4,16.5,4,15.5,4,15z"/>
+	<path class="stEth5" d="M11,15h-1v1c0.5,0,1.5,0,2,0v-1H11z"/>
+	<path class="stEth5" d="M13,15v1c0.5,0,1.5,0,2,0v-1C14.5,15,13.5,15,13,15z"/>
+	<path class="stEth2" d="M16,15h-1v1c-0.5,0-1.5,0-2,0v1h-1c0,0.5,0,1.5,0,2h1v-1c0.5,0,1.5,0,2,0v-1h1C16,16.5,16,15.5,16,15z"/>
+	<path class="stEth6" d="M21,15c0-2.3,0-4.7,0-7h-1V7h-1V6h-1V5h-1V4c-2.6,0-5.4,0-8,0v1H8v1H7v1H6v1H5c0,3,0,6,0,9h1v1h1v1h1v1h1v1
+		c2.6,0,5.4,0,8,0v-1h1v-1h1v-1h1v-1h1C21,16.5,21,15.5,21,15z M19,16v1h-1v1h-1v1h-1v1c-1.9,0-4.1,0-6,0v-1H9v-1H8v-1H7v-1H6
+		c0-2.3,0-4.7,0-7h1V8h1V7h1V6h1V5c1.9,0,4.1,0,6,0v1h1v1h1v1h1v1h1c0,2.3,0,4.7,0,7H19z"/>
+	<path class="stEth1" d="M5,16c0-2.6,0-5.4,0-8H4c0,3,0,6,0,9h1V16z"/>
+	<path class="stEth3" d="M12,16c-0.5,0-1.5,0-2,0v-1H9c0,0.5,0,1.5,0,2h1v1c0.5,0,1.5,0,2,0C12,17.5,12,16.5,12,16z"/>
+	<rect x="12" y="16" class="stEth5" width="1" height="1"/>
+	<rect x="18" y="16" class="stEth1" width="1" height="1"/>
+	<rect x="4" y="17" class="stEth0" width="1" height="1"/>
+	<rect x="5" y="17" class="stEth1" width="1" height="1"/>
+	<rect x="17" y="17" class="stEth1" width="1" height="1"/>
+	<rect x="20" y="17" class="stEth0" width="1" height="1"/>
+	<rect x="5" y="18" class="stEth0" width="1" height="1"/>
+	<rect x="6" y="18" class="stEth1" width="1" height="1"/>
+	<rect x="16" y="18" class="stEth1" width="1" height="1"/>
+	<rect x="19" y="18" class="stEth0" width="1" height="1"/>
+	<rect x="6" y="19" class="stEth0" width="1" height="1"/>
+	<rect x="7" y="19" class="stEth1" width="1" height="1"/>
+	<rect x="15" y="19" class="stEth1" width="1" height="1"/>
+	<rect x="18" y="19" class="stEth0" width="1" height="1"/>
+	<rect x="7" y="20" class="stEth0" width="1" height="1"/>
+	<rect x="8" y="20" class="stEth1" width="1" height="1"/>
+	<rect x="17" y="20" class="stEth0" width="1" height="1"/>
+	<path class="stEth0" d="M15,21c-2.3,0-4.7,0-7,0v1c3,0,6,0,9,0v-1C16.5,21,15.5,21,15,21z"/>
+</g>
+</svg>
