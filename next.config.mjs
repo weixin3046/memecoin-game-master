@@ -7,11 +7,13 @@ const nextConfig = {
   webpack(config, options) {
     // @ts-ignore
     config.module.rules.forEach((rule) => {
-      if (rule.test?.test?.('.svg')) rule.exclude = /\.svg$/;
+      if (rule.test?.test?.(".svg")) rule.exclude = /\.svg$/;
     });
 
     // @ts-ignore
-    const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.('.svg'));
+    const fileLoaderRule = config.module.rules.find((rule) =>
+      rule.test?.test?.(".svg")
+    );
 
     config.module.rules.push(
       // Reapply the existing rule, but only for svg imports ending in ?url
@@ -27,7 +29,7 @@ const nextConfig = {
         resourceQuery: { not: /url/ }, // exclude if *.svg?url
         use: [
           {
-            loader: '@svgr/webpack',
+            loader: "@svgr/webpack",
             options: {
               svgo: false,
               titleProp: true,
@@ -37,21 +39,21 @@ const nextConfig = {
         ],
       }
     );
-    
+
     config.module.rules.push({
       test: /\.mp3$/,
-      type: 'asset/resource',
+      type: "asset/resource",
       generator: {
-        filename: 'static/chunks/[name].[hash][ext]',
+        filename: "static/chunks/[name].[hash][ext]",
       },
     });
 
     return config;
   },
-  output: 'standalone',
+  output: "export",
   images: {
     unoptimized: true,
-    path: '/',
+    path: "/",
   },
 };
 
