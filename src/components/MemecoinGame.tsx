@@ -1,32 +1,33 @@
 "use client";
-import React, { useEffect, useRef } from 'react';
-import { Flex } from '@chakra-ui/react';
+import React, { useEffect, useRef } from "react";
+import { Flex } from "@chakra-ui/react";
 
-import { GAME_CONFIG_V1, useTeaserStore } from '@/stores/teaser';
-import { Show, useWindowStore } from '@/stores/window';
+import { GAME_CONFIG_V1, useTeaserStore } from "@/stores/teaser";
+import { Show, useWindowStore } from "@/stores/window";
 
-import BackgroundMusic from './assets/audios/background-music.mp3';
+import BackgroundMusic from "./assets/audios/background-music.mp3";
 
-import { SkyBackground } from './Background/SkyBackground';
-import { CoinBackgroundBack, CoinBackgroundFront } from './CoinBackground';
-import { CoinCounter } from './CoinCounter';
-import { CoinThrowing, PlusOneFloating } from './CoinThrowing';
-import MotionBox from './MotionBox';
-import { PreloadAssets } from './PreloadAssets';
-import { ScoreBoard } from './ScoreBoard';
-import { SocialButtons } from './SocialButtons';
-import { StartCount } from './StartCount';
-import { TeaserCharacter } from './TeaserCharacter';
-import { BrandHeader } from './BrandHeader';
+import { SkyBackground } from "./Background/SkyBackground";
+import { CoinBackgroundBack, CoinBackgroundFront } from "./CoinBackground";
+import { CoinCounter } from "./CoinCounter";
+import { CoinThrowing, PlusOneFloating } from "./CoinThrowing";
+import MotionBox from "./MotionBox";
+import { PreloadAssets } from "./PreloadAssets";
+import { ScoreBoard } from "./ScoreBoard";
+import { SocialButtons } from "./SocialButtons";
+import { StartCount } from "./StartCount";
+import { TeaserCharacter } from "./TeaserCharacter";
+import { BrandHeader } from "./BrandHeader";
 
 export const MemecoinGame = () => {
-  const vh = useWindowStore(state => state.vh);
-  const vw = useWindowStore(state => state.vw);
+  const vh = useWindowStore((state) => state.vh);
+  const vw = useWindowStore((state) => state.vw);
 
-  const character = useTeaserStore(state => state.character);
-  const state = useTeaserStore(state => state.state);
-  const playingAudio = useTeaserStore(state => state.playingAudio && state.browserActive);
-
+  const character = useTeaserStore((state) => state.character);
+  const state = useTeaserStore((state) => state.state);
+  const playingAudio = useTeaserStore(
+    (state) => state.playingAudio && state.browserActive
+  );
   const bgMusic = useRef() as React.MutableRefObject<HTMLAudioElement>;
 
   useEffect(() => {
@@ -45,7 +46,8 @@ export const MemecoinGame = () => {
       }
       if (!play && !bgMusic.current.paused) {
         bgMusic.current?.pause();
-        if (!useTeaserStore.getState().playedAudio) useTeaserStore.setState({ playingAudio: false });
+        if (!useTeaserStore.getState().playedAudio)
+          useTeaserStore.setState({ playingAudio: false });
       }
     } else {
       if (play) {
@@ -75,23 +77,28 @@ export const MemecoinGame = () => {
       background="#5FC7FF"
       transform="translate3d(0px, 0px, 0px)"
       overflow="hidden"
-      style={{ touchAction: 'pan-x pan-y' }} // To disable pinch zoom on iOS
+      style={{ touchAction: "pan-x pan-y" }} // To disable pinch zoom on iOS
       onClick={() => {
         if (!useTeaserStore.getState().playedAudio) startMusic(true);
       }}
     >
-      <Flex margin="auto" position="relative" width="100%" height="100%" maxWidth="1440px">
+      <Flex
+        margin="auto"
+        position="relative"
+        width="100%"
+        height="100%"
+        maxWidth="1440px"
+      >
         <PreloadAssets />
-
-        {state === 'score-board' && <ScoreBoard style={{ zIndex: 20 }} />}
-        {state === 'count-down' && <StartCount style={{ zIndex: 20 }} />}
+        {state === "score-board" && <ScoreBoard style={{ zIndex: 20 }} />}
+        {state === "count-down" && <StartCount style={{ zIndex: 20 }} />}
 
         {/** Upper Part **/}
-        {(state === 'in-game' || state === 'score-board') && (
+        {(state === "in-game" || state === "score-board") && (
           <Show isDesktop>
             <CoinCounter
               style={{
-                position: 'absolute',
+                position: "absolute",
                 top: `${vh * 3}px`,
                 left: `${vh * 3}px`,
                 zIndex: 10,
@@ -101,14 +108,14 @@ export const MemecoinGame = () => {
         )}
         <BrandHeader
           style={{
-            position: 'absolute',
+            position: "absolute",
             zIndex: 10,
           }}
         />
         <Show isDesktop>
           <SocialButtons
             style={{
-              position: 'absolute',
+              position: "absolute",
               top: `${vh * 2}px`,
               right: `${vh * 3}px`,
               zIndex: 10,
@@ -119,8 +126,15 @@ export const MemecoinGame = () => {
         {/** Backgrounds **/}
         <SkyBackground style={{ zIndex: 0 }} />
         <CoinBackgroundBack style={{ zIndex: 3 }} />
-        {(state === 'initial' || state === 'count-down' || state === 'in-game' || state === 'score-board') && (
-          <TeaserCharacter isInGame={state === 'in-game'} character={character} style={{ zIndex: 4 }} />
+        {(state === "initial" ||
+          state === "count-down" ||
+          state === "in-game" ||
+          state === "score-board") && (
+          <TeaserCharacter
+            isInGame={state === "in-game"}
+            character={character}
+            style={{ zIndex: 4 }}
+          />
         )}
         <CoinThrowing style={{ zIndex: 5 }} />
         <PlusOneFloating style={{ zIndex: 6 }} />
