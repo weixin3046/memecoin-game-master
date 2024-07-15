@@ -1,7 +1,7 @@
-import { useLayoutEffect, useState } from 'react';
-import { create } from 'zustand';
+import { useLayoutEffect, useState } from "react";
+import { create } from "zustand";
 
-const isClientSide = typeof window !== 'undefined';
+const isClientSide = typeof window !== "undefined";
 
 export const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
@@ -9,9 +9,9 @@ export const useWindowSize = () => {
     function updateSize() {
       setSize([window.innerWidth, window.innerHeight]);
     }
-    window.addEventListener('resize', updateSize);
+    window.addEventListener("resize", updateSize);
     updateSize();
-    return () => window.removeEventListener('resize', updateSize);
+    return () => window.removeEventListener("resize", updateSize);
   }, []);
   return size;
 };
@@ -22,7 +22,7 @@ const initialState = {
   vw: isClientSide ? window.innerWidth / 100 : 12.8,
   vh: isClientSide ? window.innerHeight / 100 : 7.68,
 
-  isMobile: typeof window === 'undefined' ? false : window.innerWidth < 992,
+  isMobile: typeof window === "undefined" ? false : window.innerWidth < 992,
 };
 
 export type State = typeof initialState;
@@ -32,7 +32,7 @@ export const useWindowStore = create<State & Actions>()(() => ({
 }));
 
 export const initAsMobile =
-  typeof window !== 'undefined' && window.innerWidth < 992;
+  typeof window !== "undefined" && window.innerWidth < 992;
 
 if (isClientSide) {
   const updateSize = () => {
@@ -47,10 +47,10 @@ if (isClientSide) {
       });
   };
 
-  window.addEventListener('resize', updateSize, { passive: true });
-  window.addEventListener('orientationchange', updateSize, { passive: true });
+  window.addEventListener("resize", updateSize, { passive: true });
+  window.addEventListener("orientationchange", updateSize, { passive: true });
   try {
-    window.visualViewport?.addEventListener('resize', updateSize, {
+    window.visualViewport?.addEventListener("resize", updateSize, {
       passive: true,
     });
   } catch {

@@ -1,16 +1,15 @@
-import React from 'react';
-import NextImage from 'next/image';
-import { Box } from '@chakra-ui/react';
+import React from "react";
+import NextImage from "next/image";
+import { Box } from "@chakra-ui/react";
 
-import { useWindowStore } from '@/stores/window';
+import { useWindowStore } from "@/stores/window";
 
-import Sky from '@/components/assets/images/background/sky-1.gif';
+import Sky from "@/components/assets/images/background/sky-1.gif";
 
-import MotionBox from '@/components/MotionBox';
+import MotionBox from "@/components/MotionBox";
 
 export const SkyBackground = ({ style, animation }: any) => {
-  const vh = useWindowStore(state => state.vh);
-
+  const vh = useWindowStore((state) => state.vh);
   return (
     <MotionBox
       position="absolute"
@@ -29,7 +28,7 @@ export const SkyBackground = ({ style, animation }: any) => {
           src={Sky}
           alt="sky"
           fill={true}
-          style={{ opacity: 0.3, pointerEvents: 'none', userSelect: 'none' }}
+          style={{ opacity: 0.3, pointerEvents: "none", userSelect: "none" }}
         />
       </Box>
     </MotionBox>

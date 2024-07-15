@@ -50,7 +50,7 @@ const nextConfig = {
 
     return config;
   },
-  output: "export",
+  output: "standalone",
   images: {
     unoptimized: true,
     path: "/",

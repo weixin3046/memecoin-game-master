@@ -15,13 +15,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { PhoneIcon, AddIcon, WarningIcon } from "@chakra-ui/icons";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [loading, setLoading] = useState(false);
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
+  const [countdown, setCountdown] = useState(0);
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const router = useRouter();
   const handleInputChange = (e) => setPhone(e.target.value);
@@ -30,17 +32,55 @@ export default function Page() {
     return re.test(phone);
   }, [phone]);
   const disabled = useMemo(() => {
-    console.log(!!code, "!!code;");
     return !isError || !code;
   }, [code, isError]);
 
-  console.log(!isError, "isError");
-  const submit = () => {
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    } else {
+      setIsRequesting(false);
+    }
+  }, [countdown]);
+
+  const getRequestCode = async () => {
+    setIsRequesting(true);
+    setCountdown(60);
+    const res = await fetch("/api/auth/requestcode", {
+      method: "POST",
+      body: JSON.stringify({
+        phoneNo: phone,
+      }),
+    });
+    console.log(await res.json());
+    // return await res.json();
+  };
+
+  const submit = async () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const data = await fetch("/api/auth/signIn", {
+        method: "POST",
+        body: JSON.stringify({
+          phoneNumber: phone,
+          verificationCode: code,
+        }),
+      });
+      console.log(await data.json());
       router.push("/");
-    }, 2000);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+
+    // setTimeout(() => {
+
+    //   router.push("/");
+    // }, 2000);
   };
   return (
     <ChakraProvider>
@@ -80,8 +120,13 @@ export default function Page() {
               onChange={(e) => setCode(e.target.value)}
             />
             <InputRightElement width="7.5rem">
-              <Button h="1.75rem" size="sm">
-                发送验证码
+              <Button
+                h="1.75rem"
+                size="sm"
+                isDisabled={!isError}
+                onClick={getRequestCode}
+              >
+                {isRequesting ? `重新发送${countdown}` : `发送验证码`}
               </Button>
             </InputRightElement>
           </InputGroup>
