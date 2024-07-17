@@ -19,25 +19,25 @@ export const CustomModal = ({
   children,
   isOpen,
   onClose,
+  closable,
 }: {
   isOpen: boolean;
   onClose: () => void;
   children?: ReactNode;
   header?: ReactNode;
   footer?: ReactNode;
+  closable?: boolean;
 }) => {
-  // const { isOpen, onOpen, onClose } = useDisclosure();
   // 使用 useBreakpointValue 钩子来设置模态框的位置
   const modalPlacement = useBreakpointValue({ base: "bottom", md: "center" });
 
   return (
     <>
-      {/* <Button onClick={onOpen}>Trigger modal</Button> */}
-
       <Modal
         onClose={onClose}
         isOpen={isOpen}
         isCentered={modalPlacement === "center"}
+        motionPreset="slideInBottom"
       >
         <ModalOverlay />
         <ModalContent
@@ -47,7 +47,7 @@ export const CustomModal = ({
           borderBottomRadius={modalPlacement === "bottom" ? "none" : "md"}
         >
           <ModalHeader>{header}</ModalHeader>
-          <ModalCloseButton />
+          {closable && <ModalCloseButton />}
           <ModalBody padding={5}>{children}</ModalBody>
           <ModalFooter>{footer}</ModalFooter>
         </ModalContent>
