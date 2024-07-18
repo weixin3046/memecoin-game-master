@@ -1,17 +1,9 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import NextAuth from "next-auth";
+import { authConfig } from "@/auth.config";
 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-  const { searchParams } = request.nextUrl;
-  const response = NextResponse.next();
-  const token = searchParams.get("token");
-  const oneDay = 24 * 60 * 60 * 1000;
-  response.cookies.set("token", token || "", { expires: Date.now() - oneDay });
-  return response;
-}
+export default NextAuth(authConfig).auth;
 
-// See "Matching Paths" below to learn more
 export const config = {
-  matcher: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+  // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
+  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
 };

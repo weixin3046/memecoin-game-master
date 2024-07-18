@@ -59,7 +59,6 @@ export const CoinCounter = ({ style, animation }: any) => {
             count !== 0 && state === "in-game" ? `${bounce} 1s ease-in-out` : ""
           }
         />
-        <Link href={"/draw"}>Draw</Link>
       </Flex>
     </MotionBox>
   );

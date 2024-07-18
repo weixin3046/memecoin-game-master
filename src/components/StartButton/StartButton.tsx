@@ -65,7 +65,7 @@ export const StartButton = () => {
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef(null);
-  const isGameCard = false;
+  const isGameCard = true;
   const playButtonSound = () => {
     if (!useTeaserStore.getState().playingAudio) return;
     const audio = new Audio(ClickStartButtonSound);

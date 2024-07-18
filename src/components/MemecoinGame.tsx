@@ -69,6 +69,10 @@ export const MemecoinGame = () => {
     startMusic();
   }, [playingAudio]);
 
+  useEffect(() => {
+    return bgMusic.current?.pause();
+  }, []);
+
   return (
     <MotionBox
       className="teaser"
@@ -112,16 +116,14 @@ export const MemecoinGame = () => {
             zIndex: 10,
           }}
         />
-        <Show isDesktop>
-          <SocialButtons
-            style={{
-              position: "absolute",
-              top: `${vh * 2}px`,
-              right: `${vh * 3}px`,
-              zIndex: 10,
-            }}
-          />
-        </Show>
+        <SocialButtons
+          style={{
+            position: "absolute",
+            top: `${vh * 2}px`,
+            right: `${vh * 3}px`,
+            zIndex: 10,
+          }}
+        />
 
         {/** Backgrounds **/}
         <SkyBackground style={{ zIndex: 0 }} />
