@@ -17,13 +17,18 @@ import {
   Button,
   Divider,
   Icon,
+  Modal,
   Stack,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { CustomModal } from "../CustomModal";
 import { useRouter } from "next/navigation";
+import PointButton from "./PointButton";
+import ApproveModal from "../ApproveModal/ApproveModal";
+import { number } from "zod";
+import useApprove from "@/hooks/useApprove";
 
 const googleInfo = {
   client_id:
@@ -53,9 +58,13 @@ async function getAppleLogin() {
   window.location.href = url;
 }
 
-export const StartButton = () => {
+export const StartButton = ({ balance }: { balance: string }) => {
   const isMobile = useWindowStore((state) => state.isMobile);
   const router = useRouter();
+  const { approve } = useApprove();
+
+  const [pending, setPending] = useState(false);
+  // const [balance, setBalance] = useState);
   const { state } = useTeaserStore((state) => ({
     state: state.state,
   }));
@@ -64,17 +73,34 @@ export const StartButton = () => {
     minW: "200px",
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef(null);
-  const isGameCard = true;
   const playButtonSound = () => {
     if (!useTeaserStore.getState().playingAudio) return;
     const audio = new Audio(ClickStartButtonSound);
     audio.volume = 0.2;
     audio.play();
   };
-  const onStartButtonClick = () => {
-    playButtonSound();
-    useTeaserStore.getState().onStartButtonClick();
+  const onStartButtonClick = async () => {
+    setPending(true);
+    try {
+      const hash = await fetch("/api/getMetaHash");
+
+      const hashRes = await hash.json();
+      const joinGame = await fetch("/api/joinGame", {
+        method: "POST",
+        body: JSON.stringify({
+          feelInfo: hashRes.content.feelInfo,
+          metaHash: hashRes.content.metaHash,
+          nonceInfo: hashRes.content.nonceInfo,
+          sourceActivity: "mmGame",
+        }),
+      });
+      const joinGameRes = await joinGame.json();
+      if (joinGameRes.code === "0") {
+        playButtonSound();
+        useTeaserStore.getState().onStartButtonClick();
+      }
+    } catch (error) {}
+    return;
   };
   const googleLogin = async () => {
     const data = await getGoogleLogin();
@@ -85,14 +111,19 @@ export const StartButton = () => {
   };
   return (
     <>
-      <Button8Bit2
-        padding={4}
-        width={isMobile ? "100%" : 272}
-        style={ctaBtnStyle}
-        onClick={isGameCard ? onStartButtonClick : onOpen}
-      >
-        PRESS START
-      </Button8Bit2>
+      {Number(balance) < 100 && <PointButton />}
+      {/* {Number(balance) >= 100 && approve === "Y" && <ApproveModal />} */}
+      {Number(balance) >= 100 && (
+        <Button8Bit2
+          padding={4}
+          width={isMobile ? "100%" : 272}
+          style={ctaBtnStyle}
+          onClick={onStartButtonClick}
+        >
+          PRESS START
+        </Button8Bit2>
+      )}
+
       <CustomModal isOpen={isOpen} onClose={onClose}>
         <VStack spacing={4} align="stretch">
           <Button
@@ -119,6 +150,7 @@ export const StartButton = () => {
           </Button>
         </VStack>
       </CustomModal>
+
       {/* <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}

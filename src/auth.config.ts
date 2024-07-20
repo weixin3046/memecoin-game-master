@@ -15,13 +15,16 @@ export const authConfig = {
         return true;
       }
       return false;
-      // if (isOnDashboard) {
-      //   if (isLoggedIn) return true;
-      //   return false; // Redirect unauthenticated users to login page
-      // } else if (isLoggedIn) {
-      //   return Response.redirect(new URL("/home", nextUrl));
-      // }
-      // return true;
+    },
+    async jwt({ token, trigger, session, account, user }) {
+      if (user) {
+        token.accessToken = user.accessToken; // Add accessToken to token
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.accessToken = token.accessToken;
+      return session;
     },
   },
   providers: [], // Add providers with an empty array for now

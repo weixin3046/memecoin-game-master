@@ -1,11 +1,8 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { authConfig } from "@/auth.config";
-import { z } from "zod";
+import { object, z, ZodError } from "zod";
 import validator from "validator";
-// import { sql } from '@vercel/postgres';
-// import type { User } from '@/app/lib/definitions';
-// import bcrypt from 'bcrypt';
+import { authConfig } from "./auth.config";
 
 async function handleLogin(
   phone: string,
@@ -34,34 +31,45 @@ async function handleLogin(
   }
 }
 
+const signInSchema = object({
+  phoneNumber: z
+    .string()
+    .refine((val) => validator.isMobilePhone(val, "zh-CN"), {
+      message: "无效的中国区手机号码",
+    }),
+  code: z.string().min(6),
+});
+
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
       async authorize(credentials) {
-        const parsedCredentials = z
-          .object({
-            phoneNumber: z
-              .string()
-              .refine((val) => validator.isMobilePhone(val, "zh-CN"), {
-                message: "无效的中国区手机号码",
-              }),
-            code: z.string().min(6),
-          })
-          .safeParse(credentials);
-        if (parsedCredentials.success) {
-          const { phoneNumber, code } = parsedCredentials.data;
-          const user = await handleLogin(phoneNumber, code);
-          if (!user) return null;
-          const res = await user.json();
-          if (res.code === "0") {
-            return res;
+        const { phoneNumber, code } = await signInSchema.parseAsync(
+          credentials
+        );
+        try {
+          let user = null;
+
+          user = await handleLogin(phoneNumber, code);
+          user = await user?.json();
+          if (!user) {
+            return null;
+          }
+          if (user.code === "0") {
+            return {
+              ...user.content,
+              accessToken: user.content.access_token,
+            };
           } else {
             return null;
           }
+        } catch (error) {
+          if (error instanceof ZodError) {
+            // Return `null` to indicate that the credentials are invalid
+            return null;
+          }
         }
-        console.log("Invalid credentials");
-        return null;
       },
     }),
   ],

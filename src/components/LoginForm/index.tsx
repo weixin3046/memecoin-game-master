@@ -23,7 +23,6 @@ export default function LoginForm() {
       setPending(false);
     }
   }, [countdown]);
-
   const sendVerificationCode = async () => {
     setPending(true);
     setCountdown(60);

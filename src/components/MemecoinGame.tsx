@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Flex } from "@chakra-ui/react";
 
 import { GAME_CONFIG_V1, useTeaserStore } from "@/stores/teaser";
@@ -18,10 +18,12 @@ import { SocialButtons } from "./SocialButtons";
 import { StartCount } from "./StartCount";
 import { TeaserCharacter } from "./TeaserCharacter";
 import { BrandHeader } from "./BrandHeader";
+import useToken from "@/hooks/useToken";
 
 export const MemecoinGame = () => {
   const vh = useWindowStore((state) => state.vh);
   const vw = useWindowStore((state) => state.vw);
+  const { balance } = useToken();
 
   const character = useTeaserStore((state) => state.character);
   const state = useTeaserStore((state) => state.state);
@@ -72,76 +74,77 @@ export const MemecoinGame = () => {
   useEffect(() => {
     return bgMusic.current?.pause();
   }, []);
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    setShow(true);
+  }, []);
 
   return (
-    <MotionBox
-      className="teaser"
-      height={100 * vh}
-      width={100 * vw}
-      background="#5FC7FF"
-      transform="translate3d(0px, 0px, 0px)"
-      overflow="hidden"
-      style={{ touchAction: "pan-x pan-y" }} // To disable pinch zoom on iOS
-      onClick={() => {
-        if (!useTeaserStore.getState().playedAudio) startMusic(true);
-      }}
-    >
-      <Flex
-        margin="auto"
-        position="relative"
-        width="100%"
-        height="100%"
-        maxWidth="1440px"
-      >
-        <PreloadAssets />
-        {state === "score-board" && <ScoreBoard style={{ zIndex: 20 }} />}
-        {state === "count-down" && <StartCount style={{ zIndex: 20 }} />}
+    <>
+      {show && (
+        <MotionBox
+          className="teaser"
+          height={100 * vh}
+          width={100 * vw}
+          background="#5FC7FF"
+          transform="translate3d(0px, 0px, 0px)"
+          overflow="hidden"
+          style={{ touchAction: "pan-x pan-y" }} // To disable pinch zoom on iOS
+          onClick={() => {
+            if (!useTeaserStore.getState().playedAudio) startMusic(true);
+          }}
+        >
+          <Flex
+            margin="auto"
+            position="relative"
+            width="100%"
+            height="100%"
+            maxWidth="1440px"
+          >
+            <PreloadAssets />
+            {state === "score-board" && <ScoreBoard style={{ zIndex: 20 }} />}
+            {state === "count-down" && <StartCount style={{ zIndex: 20 }} />}
 
-        {/** Upper Part **/}
-        {(state === "in-game" || state === "score-board") && (
-          <Show isDesktop>
-            <CoinCounter
+            {/** Upper Part **/}
+            {/* {(state === "in-game" || state === "score-board") && (
+        <Show isDesktop>
+          <CoinCounter
+            style={{
+              position: "absolute",
+              top: `${vh * 3}px`,
+              left: `${vh * 3}px`,
+              zIndex: 10,
+            }}
+          />
+        </Show>
+      )} */}
+            <BrandHeader
+              balance={balance}
               style={{
                 position: "absolute",
-                top: `${vh * 3}px`,
-                left: `${vh * 3}px`,
                 zIndex: 10,
               }}
             />
-          </Show>
-        )}
-        <BrandHeader
-          style={{
-            position: "absolute",
-            zIndex: 10,
-          }}
-        />
-        <SocialButtons
-          style={{
-            position: "absolute",
-            top: `${vh * 2}px`,
-            right: `${vh * 3}px`,
-            zIndex: 10,
-          }}
-        />
 
-        {/** Backgrounds **/}
-        <SkyBackground style={{ zIndex: 0 }} />
-        <CoinBackgroundBack style={{ zIndex: 3 }} />
-        {(state === "initial" ||
-          state === "count-down" ||
-          state === "in-game" ||
-          state === "score-board") && (
-          <TeaserCharacter
-            isInGame={state === "in-game"}
-            character={character}
-            style={{ zIndex: 4 }}
-          />
-        )}
-        <CoinThrowing style={{ zIndex: 5 }} />
-        <PlusOneFloating style={{ zIndex: 6 }} />
-        <CoinBackgroundFront style={{ zIndex: 6 }} />
-      </Flex>
-    </MotionBox>
+            {/** Backgrounds **/}
+            <SkyBackground style={{ zIndex: 0 }} />
+            <CoinBackgroundBack style={{ zIndex: 3 }} />
+            {(state === "initial" ||
+              state === "count-down" ||
+              state === "in-game" ||
+              state === "score-board") && (
+              <TeaserCharacter
+                isInGame={state === "in-game"}
+                character={character}
+                style={{ zIndex: 4 }}
+              />
+            )}
+            <CoinThrowing style={{ zIndex: 5 }} />
+            <PlusOneFloating style={{ zIndex: 6 }} />
+            <CoinBackgroundFront style={{ zIndex: 6 }} />
+          </Flex>
+        </MotionBox>
+      )}
+    </>
   );
 };

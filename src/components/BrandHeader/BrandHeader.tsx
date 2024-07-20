@@ -32,7 +32,7 @@ const getInfoContainerWidth = (vw: number) => {
   }
 };
 
-export const BrandHeader = ({ style, animation }: any) => {
+export const BrandHeader = ({ style, animation, balance }: any) => {
   const { state } = useTeaserStore((state) => ({
     state: state.state,
   }));
@@ -138,7 +138,7 @@ export const BrandHeader = ({ style, animation }: any) => {
         display={state === "in-game" ? "none" : "initial"}
       >
         <Flex justifyContent={"center"} mb={"16px"}>
-          <StartButton />
+          <StartButton balance={balance} />
         </Flex>
       </Flex>
       <Show isDesktop>
