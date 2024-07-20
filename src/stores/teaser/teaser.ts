@@ -64,7 +64,7 @@ export type GameStatus =
   | "score-board";
 
 const initialState = {
-  state: "initial" as GameStatus,
+  state: "score-board" as GameStatus,
   gameConfig: GAME_CONFIG_V1 as GameConfig,
   character: getCharacter(),
   countDown: 0,

@@ -52,6 +52,7 @@ export const ScoreBoard = ({ style, animation }: any) => {
       if (data.content.length < 1) {
         onOpen();
       } else {
+        onOpen();
         setState(2);
         // useTeaserStore.getState().onHomeButtonClick();
       }
