@@ -9,6 +9,7 @@ export default function RusltPage({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
   useEffect(() => {
+    let isMounted = true;
     const fetchData = async () => {
       try {
         const result = await fetch(
@@ -16,22 +17,28 @@ export default function RusltPage({ params }: { params: { id: string } }) {
         );
         const data = await result.json();
         if (data.content === "SUCCESS") {
-          setStatus(true);
+          if (isMounted) {
+            setStatus(true);
+          }
           return true;
         }
         return false;
       } catch (error) {
-        setError("error");
+        if (isMounted) {
+          setError("error");
+        }
         return false;
       }
     };
 
     // 循环请求 API 的函数
     const startFetching = async () => {
-      while (true) {
+      while (isMounted) {
         const isReady = await fetchData();
         if (isReady) {
-          setLoading(false);
+          if (isMounted) {
+            setLoading(false);
+          }
           break;
         }
         // 等待一段时间后再重新请求，假设是 5 秒
@@ -40,7 +47,12 @@ export default function RusltPage({ params }: { params: { id: string } }) {
     };
 
     startFetching();
+    // Cleanup function to set the isMounted flag to false
+    return () => {
+      isMounted = false;
+    };
   }, [params.id]);
+
   if (error) {
     return <div>请求出错了，刷新试一试</div>;
   }

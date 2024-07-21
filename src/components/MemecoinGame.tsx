@@ -72,7 +72,9 @@ export const MemecoinGame = () => {
   }, [playingAudio]);
 
   useEffect(() => {
-    return bgMusic.current?.pause();
+    return () => {
+      bgMusic.current?.pause();
+    };
   }, []);
   const [show, setShow] = useState(false);
   useEffect(() => {
