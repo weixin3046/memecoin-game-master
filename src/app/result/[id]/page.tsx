@@ -1,15 +1,29 @@
 "use client";
-import { ChakraProvider, Progress, Spinner } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Button,
+  ChakraProvider,
+  Progress,
+  Spinner,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RusltPage({ params }: { params: { id: string } }) {
-  const [status, setStatus] = useState<null | boolean>(null);
+  const router = useRouter();
+  const [status, setStatus] = useState<"loading" | "success" | "error">(
+    "loading"
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
   useEffect(() => {
     let isMounted = true;
+    setStatus("loading");
     const fetchData = async () => {
       try {
         const result = await fetch(
@@ -18,14 +32,16 @@ export default function RusltPage({ params }: { params: { id: string } }) {
         const data = await result.json();
         if (data.content === "SUCCESS") {
           if (isMounted) {
-            setStatus(true);
+            setStatus("success");
+            isMounted = false;
           }
           return true;
         }
         return false;
       } catch (error) {
         if (isMounted) {
-          setError("error");
+          setStatus("error");
+          isMounted = false;
         }
         return false;
       }
@@ -57,7 +73,37 @@ export default function RusltPage({ params }: { params: { id: string } }) {
   }
   return (
     <ChakraProvider>
-      <div className="space-y-4 p-4">
+      <Alert
+        status={status}
+        variant="subtle"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
+        height="100vh"
+      >
+        <AlertIcon boxSize="40px" mr={0} />
+        <AlertTitle mt={4} mb={1} fontSize="lg">
+          Authorization transaction on chain!
+        </AlertTitle>
+        <AlertDescription maxWidth="sm">
+          <div className="space-y-5">
+            <div>
+              The authorization transaction is expected to be confirmed within
+              3-5 minutes
+            </div>
+            <div>授权成功之后还需要你饭回首页再次点击兑换</div>
+            <Button
+              onClick={() => {
+                router.push("/");
+              }}
+            >
+              Back Home
+            </Button>
+          </div>
+        </AlertDescription>
+      </Alert>
+      {/* <div className="space-y-4 p-4">
         <div className="flex items-center justify-center relative h-16">
           <div className=" text-2xl">RusltPage</div>
           <Link href={"/"} className="absolute left-0 top-4">
@@ -110,7 +156,7 @@ export default function RusltPage({ params }: { params: { id: string } }) {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
       {/* <Drawer isOpen={true} onClose={onClose} size={"full"}>
           <DrawerOverlay />
           <DrawerContent>

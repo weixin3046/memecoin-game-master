@@ -22,16 +22,16 @@ export async function GET(req: NextRequest) {
       throw new Error("Failed to fetch account balance");
     }
     const data = await response.json();
-    // if (data.code == "0") {
-    //   return NextResponse.json({ msg: data.msg, content: data.content });
-    // }
-    return NextResponse.json(data);
+    if (data.code == "0") {
+      return NextResponse.json(data);
+    }
+    throw new Error(data.msg);
   } catch (error) {
-    console.log(error);
-    return NextResponse.json({
-      data: "0",
-      msg: "error",
-      content: null,
-    });
+    let errorMessage = "An unknown error occurred";
+
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+    throw new Error(errorMessage);
   }
 }

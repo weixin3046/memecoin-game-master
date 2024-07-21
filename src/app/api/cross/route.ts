@@ -25,12 +25,9 @@ export async function POST() {
     if (data.code == "0") {
       return Response.json(data);
     }
-    throw new Error("Cross chain execution failed");
+    throw new Error({ ...data });
   } catch (error) {
-    return {
-      data: "0",
-      msg: "error",
-      content: null,
-    };
+    console.log(error);
+    return error;
   }
 }
