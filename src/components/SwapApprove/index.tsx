@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 export default function SwapApprove() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [apprveFee, setApproveFee] = useState("");
-  const { approve } = useApprove();
+  const { approve, pending: approvePending } = useApprove();
   const [pending, setPending] = useState(false);
   const toast = useToast();
   const router = useRouter();
@@ -77,10 +77,11 @@ export default function SwapApprove() {
       loading: { title: "Promise pending", description: "Please wait" },
     });
   };
+
   //   const [appr] = true;
   return (
     <div>
-      <Button onClick={onSwap} variant={"ghost"}>
+      <Button onClick={onSwap} variant={"ghost"} isLoading={approvePending}>
         兑换
       </Button>
       <CustomModal
