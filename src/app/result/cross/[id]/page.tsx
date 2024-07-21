@@ -12,7 +12,7 @@ export default function RusltPage({ params }: { params: { id: string } }) {
     const fetchData = async () => {
       try {
         const result = await fetch(
-          `/api/approverresult?approveCrossId=${params.id}`
+          `/api/crossresult?crossChainId=${params.id}`
         );
         const data = await result.json();
         if (data.content === "SUCCESS") {
@@ -100,22 +100,6 @@ export default function RusltPage({ params }: { params: { id: string } }) {
           )}
         </div>
       </div>
-      {/* <Drawer isOpen={true} onClose={onClose} size={"full"}>
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader>积分兑换</DrawerHeader>
-
-            <DrawerBody>
-              <div>
-                <Text fontSize={"xl"}>PEG兑换成TPEG</Text>
-                <div>
-                  <Progress hasStripe value={100} />
-                </div>
-              </div>
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer> */}
     </ChakraProvider>
   );
 }

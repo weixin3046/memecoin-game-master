@@ -59,7 +59,10 @@ export default function SwapApprove() {
       }
     });
     toast.promise(cross, {
-      success: { title: "Promise resolved", description: "Looks great" },
+      success: (res: any) => {
+        router.push(`/result/cross/${res.content}`);
+        return { title: "Promise resolved", description: "Looks great" };
+      },
       error: { title: "Promise rejected", description: "Something wrong" },
       loading: { title: "Promise pending", description: "Please wait" },
     });
