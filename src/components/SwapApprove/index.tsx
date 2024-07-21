@@ -42,6 +42,11 @@ export default function SwapApprove() {
         router.push(`/result/${data.content}`);
       }
     } catch (error) {
+      toast({
+        title: `Transaction execution failed`,
+        status: "error",
+        isClosable: true,
+      });
     } finally {
       setPending(false);
     }
@@ -61,9 +66,14 @@ export default function SwapApprove() {
     toast.promise(cross, {
       success: (res: any) => {
         router.push(`/result/cross/${res.content}`);
-        return { title: "Promise resolved", description: "Looks great" };
+        return {
+          title: "🎉🎉🎉 success",
+          description: "Cross chain transaction execution successful",
+        };
       },
-      error: { title: "Promise rejected", description: "Something wrong" },
+      error: (res: any) => {
+        return { title: "failed", description: "Cross chain execution failed" };
+      },
       loading: { title: "Promise pending", description: "Please wait" },
     });
   };

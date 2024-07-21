@@ -20,11 +20,11 @@ export async function POST(req: NextRequest) {
       throw new Error("Failed to fetch account balance");
     }
     const data = await response.json();
-    // console.log(data);
-    // if (data.code == "0") {
-    //   return NextResponse.json({ msg: data.msg });
-    // }
-    return NextResponse.json(data);
+    console.log(data);
+    if (data.code == "0") {
+      return NextResponse.json(data);
+    }
+    throw new Error("Transaction execution failed");
   } catch (error) {
     console.log(error);
     return NextResponse.json(error);

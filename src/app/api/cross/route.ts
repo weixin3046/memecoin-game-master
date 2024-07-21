@@ -23,9 +23,9 @@ export async function POST() {
     }
     const data = await response.json();
     if (data.code == "0") {
-      return Response.json({ msg: data.mgs, content: data.content });
+      return Response.json(data);
     }
-    return Response.json({ msg: data.msg, content: null });
+    throw new Error("Cross chain execution failed");
   } catch (error) {
     return {
       data: "0",
