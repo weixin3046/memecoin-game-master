@@ -22,12 +22,14 @@ export async function POST(req: NextRequest) {
       throw new Error("Failed to fetch account balance");
     }
     const data = await response.json();
-    return NextResponse.json({ ...data });
+    return NextResponse.json(data);
   } catch (error) {
-    return NextResponse.json({
-      code: "500",
-      msg: "error",
-      content: null,
-    });
+    if (error instanceof Error) {
+      return NextResponse.json({
+        code: "500",
+        msg: "error",
+        content: error.message,
+      });
+    }
   }
 }

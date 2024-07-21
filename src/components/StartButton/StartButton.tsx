@@ -20,6 +20,7 @@ import {
   Modal,
   Stack,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
@@ -61,7 +62,7 @@ async function getAppleLogin() {
 export const StartButton = ({ balance }: { balance: string }) => {
   const isMobile = useWindowStore((state) => state.isMobile);
   const router = useRouter();
-  const { approve } = useApprove();
+  const toast = useToast();
 
   const [pending, setPending] = useState(false);
   // const [balance, setBalance] = useState);
@@ -80,8 +81,14 @@ export const StartButton = ({ balance }: { balance: string }) => {
     audio.play();
   };
   const onStartButtonClick = async () => {
-    setPending(true);
     try {
+      toast({
+        title: "Join the game",
+        description: "Please wait",
+        status: "loading",
+        duration: null,
+        isClosable: false,
+      });
       const hash = await fetch("/api/getMetaHash");
 
       const hashRes = await hash.json();
@@ -99,7 +106,11 @@ export const StartButton = ({ balance }: { balance: string }) => {
         playButtonSound();
         useTeaserStore.getState().onStartButtonClick();
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    } finally {
+      toast.closeAll();
+    }
     return;
   };
   const googleLogin = async () => {
