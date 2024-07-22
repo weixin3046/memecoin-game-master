@@ -92,7 +92,10 @@ export default function RusltPage({ params }: { params: { id: string } }) {
               The authorization transaction is expected to be confirmed within
               3-5 minutes
             </div>
-            <div>授权成功之后还需要你饭回首页再次点击兑换</div>
+            <div>
+              After authorization, return to the homepage and click exchange
+              again.
+            </div>
             <Button
               onClick={() => {
                 router.push("/");
