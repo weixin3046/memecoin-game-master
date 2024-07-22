@@ -51,9 +51,9 @@ export async function GET() {
     const data = await response.json();
     if (data.code == "0") {
       const pointsAmount = findPointsAmount(data, "THKD Token 1");
-      return NextResponse.json({ msg: "test", balance: pointsAmount });
+      return NextResponse.json({ ...data, balance: pointsAmount });
     }
-    return NextResponse.json({ msg: data.msg, balance: "0" });
+    return NextResponse.json({ ...data, balance: "0" });
   } catch (error) {
     return NextResponse.json({
       data: "0",
