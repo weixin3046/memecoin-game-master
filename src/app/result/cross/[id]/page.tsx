@@ -32,6 +32,13 @@ export default function RusltPage({ params }: { params: { id: string } }) {
           }
           return true;
         }
+        if (data.content === "FAIL") {
+          if (isMounted) {
+            setStatus("error");
+            isMounted = false;
+          }
+        }
+
         return false;
       } catch (error) {
         if (isMounted) {
