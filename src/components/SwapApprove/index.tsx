@@ -1,5 +1,11 @@
 "use client";
-import { Button, ButtonGroup, useDisclosure, useToast } from "@chakra-ui/react";
+import {
+  Button,
+  ButtonGroup,
+  Spinner,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
 import { CustomModal } from "../CustomModal";
 import NextImage from "next/image";
 import useApprove from "@/hooks/useApprove";
@@ -78,12 +84,11 @@ export default function SwapApprove() {
     });
   };
 
-  //   const [appr] = true;
   return (
     <div>
-      <Button onClick={onSwap} variant={"ghost"} isLoading={approvePending}>
-        兑换
-      </Button>
+      <button onClick={onSwap} disabled={approvePending}>
+        {approvePending ? <Spinner size="xs" className="ml-2" /> : "兑换"}
+      </button>
       <CustomModal
         isOpen={isOpen}
         onClose={onClose}

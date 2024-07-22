@@ -20,11 +20,13 @@ import MotionBox from "@/components/MotionBox";
 
 import { Dialog8Bit } from "../Dialog8Bit";
 import { HomeButton } from "../HomeButton";
+import useToken from "@/hooks/useToken";
 
 export const ScoreBoard = ({ style, animation }: any) => {
   const coinCount = useTeaserStore((state) => state.coinCount);
   const vh = useWindowStore((state) => state.vh);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { refetch } = useToken();
   const [state, setState] = useState(1);
   const cancelRef = React.useRef(null);
   const onCancel = () => {
@@ -129,6 +131,7 @@ export const ScoreBoard = ({ style, animation }: any) => {
               <Button
                 onClick={() => {
                   onClose();
+                  refetch();
                   useTeaserStore.getState().onHomeButtonClick();
                 }}
               >

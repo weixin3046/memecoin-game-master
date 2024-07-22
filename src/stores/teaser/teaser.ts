@@ -81,6 +81,18 @@ const initialState = {
 
 export type State = typeof initialState;
 
+export const useBalanceStore = create<{
+  balance: string;
+  pending: boolean;
+  error: null | string;
+}>((set) => ({
+  balance: "0",
+  pending: true,
+  error: null,
+  // initStatus: (sa) => set({ balance: sa }),
+  // removeAllBears: () => set({ balance: 0 }),
+}));
+
 export const useTeaserStore = create<State & Actions>()(
   subscribeWithSelector((set, get) => ({
     ...initialState,
