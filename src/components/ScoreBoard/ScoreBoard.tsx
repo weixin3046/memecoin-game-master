@@ -101,45 +101,45 @@ export const ScoreBoard = ({ style, animation }: any) => {
         isOpen={isOpen}
         isCentered
       >
-        <AlertDialogOverlay />
-
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            {state === 1 && "领取红包"}
-            {state === 2 && "遊戲獎勵"}
-            {state === 3 && "領取成功"}
-          </AlertDialogHeader>
-          <AlertDialogCloseButton />
-          <AlertDialogBody>
-            {state === 1 && "您有支付寶紅包未領取，是否領取支付寶紅包"}
-            {state === 2 &&
-              "已成功為您發放***MEMEToken，預計1小時內到帳，可請前往“我的-資產-ETH鏈”下查看餘額"}
-            {state === 3 &&
-              "支付寶紅包領取成功，請前往該手機號對應的支付寶帳號查看並使用。"}
-          </AlertDialogBody>
-          <AlertDialogFooter>
-            {state === 1 ? (
-              <>
-                <Button ref={cancelRef} onClick={onSumbit}>
-                  立即领取
+        <AlertDialogOverlay>
+          <AlertDialogContent className="!m-9">
+            <AlertDialogHeader>
+              {state === 1 && "领取红包"}
+              {state === 2 && "遊戲獎勵"}
+              {state === 3 && "領取成功"}
+            </AlertDialogHeader>
+            <AlertDialogCloseButton />
+            <AlertDialogBody>
+              {state === 1 && "您有支付寶紅包未領取，是否領取支付寶紅包"}
+              {state === 2 &&
+                "已成功為您發放***MEMEToken，預計1小時內到帳，可請前往“我的-資產-ETH鏈”下查看餘額"}
+              {state === 3 &&
+                "支付寶紅包領取成功，請前往該手機號對應的支付寶帳號查看並使用。"}
+            </AlertDialogBody>
+            <AlertDialogFooter>
+              {state === 1 ? (
+                <>
+                  <Button ref={cancelRef} onClick={onSumbit}>
+                    立即领取
+                  </Button>
+                  <Button colorScheme="red" ml={3} onClick={onCancel}>
+                    取消
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  onClick={() => {
+                    onClose();
+                    refetch();
+                    useTeaserStore.getState().onHomeButtonClick();
+                  }}
+                >
+                  确定
                 </Button>
-                <Button colorScheme="red" ml={3} onClick={onCancel}>
-                  取消
-                </Button>
-              </>
-            ) : (
-              <Button
-                onClick={() => {
-                  onClose();
-                  refetch();
-                  useTeaserStore.getState().onHomeButtonClick();
-                }}
-              >
-                确定
-              </Button>
-            )}
-          </AlertDialogFooter>
-        </AlertDialogContent>
+              )}
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
       </AlertDialog>
     </>
   );

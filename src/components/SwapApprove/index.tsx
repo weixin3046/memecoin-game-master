@@ -11,6 +11,7 @@ import NextImage from "next/image";
 import useApprove from "@/hooks/useApprove";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { RiTokenSwapFill } from "react-icons/ri";
 
 export default function SwapApprove() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -87,7 +88,14 @@ export default function SwapApprove() {
   return (
     <div>
       <button onClick={onSwap} disabled={approvePending}>
-        {approvePending ? <Spinner size="xs" className="ml-2" /> : "兑换"}
+        {approvePending ? (
+          <Spinner size="xs" className="ml-2" />
+        ) : (
+          <div className="flex gap-1 items-center">
+            <div>兑换：</div>
+            <RiTokenSwapFill className="text-white text-2xl" />
+          </div>
+        )}
       </button>
       <CustomModal
         isOpen={isOpen}

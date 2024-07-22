@@ -37,9 +37,10 @@ export default function PointButton() {
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
         onClose={onClose}
+        isCentered
       >
         <AlertDialogOverlay>
-          <AlertDialogContent>
+          <AlertDialogContent className="!mx-9">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               积分不足
             </AlertDialogHeader>
