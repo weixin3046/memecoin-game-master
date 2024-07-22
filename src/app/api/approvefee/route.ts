@@ -21,10 +21,10 @@ export async function POST() {
       throw new Error("Failed to fetch account balance");
     }
     const data = await response.json();
-    if (data.code == "0") {
-      return Response.json({ amounts: data.content.amounts });
-    }
-    return Response.json({ msg: data.msg, amounts: "0" });
+    // if (data.code == "0") {
+    return Response.json(data);
+    // }
+    // return Response.json({ msg: data.msg, amounts: "0" });
   } catch (error) {
     return {
       data: "0",

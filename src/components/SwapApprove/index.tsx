@@ -26,8 +26,8 @@ export default function SwapApprove() {
       const fee = await fetch("/api/approvefee", {
         method: "post",
       });
-      const { amounts } = await fee.json();
-      setApproveFee(amounts);
+      const data = await fee.json();
+      setApproveFee(data.content.approveFee);
     })();
   }, []);
 
@@ -92,7 +92,7 @@ export default function SwapApprove() {
           <Spinner size="xs" className="ml-2" />
         ) : (
           <div className="flex gap-1 items-center">
-            <div>兑换：</div>
+            <div>Swap：</div>
             <RiTokenSwapFill className="text-white text-2xl" />
           </div>
         )}

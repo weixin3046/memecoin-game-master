@@ -3,6 +3,7 @@
 import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "@/app/lib/actions";
 import { Button } from "../Button";
+import { Button as ChakraButton } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 export default function LoginForm() {
@@ -80,14 +81,15 @@ export default function LoginForm() {
                 required
                 minLength={6}
               />
-              <Button
-                className="absolute z-20 right-0 top-1/2  -translate-y-1/2 text-gray-500 peer-focus:text-gray-900"
-                aria-disabled={pending || !re.test(phone)}
-                type="button"
+              <ChakraButton
+                className="!absolute z-10 top-0 right-0 !bg-blue-500 !text-white "
+                isDisabled={pending || !re.test(phone)}
+                // type="button"
+                // colorScheme="bg-blue-500"
                 onClick={sendVerificationCode}
               >
-                {pending ? `重新发送${countdown}` : `发送验证码`}
-              </Button>
+                {pending ? `Verify ${countdown}` : `Verify`}
+              </ChakraButton>
             </div>
           </div>
         </div>
