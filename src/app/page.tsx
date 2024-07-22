@@ -28,12 +28,16 @@ export function TeaserGame() {
               <Link href="/rule" className="hover:!no-underline no-underline">
                 <FaFileAlt className="text-2xl text-white" />
               </Link>
-              <FaSignOutAlt
-                className="text-xl text-white"
-                // onClick={async () => {
-                //   await signOut();
-                // }}
-              />
+              <form
+                action={async () => {
+                  "use server";
+                  await signOut();
+                }}
+              >
+                <button type="submit">
+                  <FaSignOutAlt className="text-xl text-white" />
+                </button>
+              </form>
             </div>
           </div>
         </div>

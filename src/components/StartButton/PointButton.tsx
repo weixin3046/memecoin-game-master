@@ -48,7 +48,18 @@ export default function PointButton() {
             <AlertDialogBody>當前PEG積分不足，請先充值再兌換</AlertDialogBody>
 
             <AlertDialogFooter className="!justify-center">
-              <Button colorScheme="blue" onClick={onClose} ml={3}>
+              <Button
+                colorScheme="blue"
+                onClick={() => {
+                  onClose();
+                  window.open(
+                    "https://h5.qwerty2.com/integralConvert",
+                    "_blank"
+                  );
+                  // window.open('https://h5.qwerty2.com/integralConvert')
+                }}
+                ml={3}
+              >
                 确定
               </Button>
             </AlertDialogFooter>
