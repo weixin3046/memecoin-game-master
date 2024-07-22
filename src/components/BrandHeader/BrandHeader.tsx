@@ -54,8 +54,8 @@ export const BrandHeader = ({ style, animation, balance }: any) => {
       {...style}
       {...animation}
       marginTop={{
-        base: `${vh * 6}px`,
-        lg: `${vh * 2}px`,
+        base: `${vh * 10}px`,
+        lg: `${vh * 8}px`,
       }}
       gap={`${vh * 2}px`}
       pointerEvents={state === "in-game" ? "none" : undefined}

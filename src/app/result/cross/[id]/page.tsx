@@ -24,6 +24,7 @@ export default function RusltPage({ params }: { params: { id: string } }) {
         const result = await fetch(
           `/api/crossresult?crossChainId=${params.id}`
         );
+
         const data = await result.json();
         if (data.content === "SUCCESS") {
           if (isMounted) {
@@ -38,11 +39,10 @@ export default function RusltPage({ params }: { params: { id: string } }) {
             isMounted = false;
           }
         }
-
         return false;
       } catch (error) {
         if (isMounted) {
-          setStatus("error");
+          setError("error");
           isMounted = false;
         }
         return false;
@@ -115,6 +115,7 @@ export default function RusltPage({ params }: { params: { id: string } }) {
           <Alert status={status}>
             <AlertIcon />
             Transaction result query in progress
+            <div>{error}</div>
           </Alert>
         </div>
       </Container>

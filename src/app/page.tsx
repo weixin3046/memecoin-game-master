@@ -1,15 +1,7 @@
 // "use client";
-import {
-  Box,
-  Button,
-  ChakraProvider,
-  Flex,
-  Icon,
-  IconButton,
-} from "@chakra-ui/react";
+import { ChakraProvider, Flex, IconButton } from "@chakra-ui/react";
 import { MemecoinGame } from "../components/MemecoinGame";
-import { useEffect, useState } from "react";
-import { LiaSignOutAltSolid } from "react-icons/lia";
+import { FaSignOutAlt } from "react-icons/fa";
 import { FaFileAlt } from "react-icons/fa";
 import { signOut } from "@/auth";
 import Link from "next/link";
@@ -26,12 +18,12 @@ export function TeaserGame() {
         width="100%"
       >
         <div className="bg  absolute top-0 left-0 w-full h-20 z-30 p-5">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-start">
             <div className="flex gap-2 items-center">
               <Balance />
               <SwapApprove />
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2">
               <Link href="/rule" className="hover:!no-underline no-underline">
                 <FaFileAlt className="w-9 h-9 text-white" />
               </Link>
@@ -43,10 +35,9 @@ export function TeaserGame() {
               >
                 <IconButton
                   aria-label="Sign out"
-                  variant="outline"
-                  size={"md"}
+                  variant="unstyled"
                   type="submit"
-                  icon={<LiaSignOutAltSolid />}
+                  icon={<FaSignOutAlt className="text-4xl text-white" />}
                 />
               </form>
             </div>
