@@ -45,7 +45,7 @@ export default function ApproveModal() {
           <div>合约地址:0xaasdf...ss7f </div>
           <div className="flex">
             <div className="flex gap-2 items-center justify-start border rounded-full px-4">
-              <NextImage src="/bnb.svg" alt="" width={20} height={20} />
+              <NextImage src="/logo.svg" alt="" width={20} height={20} />
               <span>ERC</span>
             </div>
           </div>
@@ -56,7 +56,7 @@ export default function ApproveModal() {
             <div className="flex items-center justify-between border-b p-2">
               <div className="flex items-center justify-center gap-1">
                 <NextImage
-                  src={"/raq-bsc.png"}
+                  src={"/logo.png"}
                   alt="icon"
                   width={20}
                   height={20}

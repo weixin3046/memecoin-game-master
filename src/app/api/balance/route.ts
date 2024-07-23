@@ -50,7 +50,9 @@ export async function GET() {
     }
     const data = await response.json();
     if (data.code == "0") {
-      const pointsAmount = findPointsAmount(data, "THKD Token 1");
+      const tokenName = process.env.TOKEN_NAME || "PEG";
+      console.log(tokenName, "tokenName====");
+      const pointsAmount = findPointsAmount(data, tokenName);
       return NextResponse.json({ ...data, balance: pointsAmount });
     }
     return NextResponse.json({ ...data, balance: "0" });

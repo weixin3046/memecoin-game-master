@@ -76,7 +76,7 @@ export default function RusltPage({ params }: { params: { id: string } }) {
       <Container>
         <div className="space-y-4 p-4">
           <div className="flex items-center justify-center relative h-16">
-            <div className=" text-2xl">RusltPage</div>
+            <div className=" text-2xl">跨链</div>
             <Link href={"/"} className="absolute left-0 top-4">
               <ChevronLeftIcon className="text-4xl" />
             </Link>

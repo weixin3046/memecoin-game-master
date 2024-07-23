@@ -119,10 +119,10 @@ export default function SwapApprove() {
         }
       >
         <div className="flex items-center justify-center flex-col gap-3">
-          <div>合约地址:0xaasdf...ss7f </div>
+          <div>合约地址:0xaasdf...ss7f</div>
           <div className="flex">
             <div className="flex gap-2 items-center justify-start border rounded-full px-4">
-              <NextImage src={"/bnb.svg"} alt="BNB" width={20} height={20} />
+              <NextImage src={"/logo.png"} alt="BNB" width={20} height={20} />
               <span>BNB</span>
             </div>
           </div>
@@ -132,12 +132,7 @@ export default function SwapApprove() {
           <div className="border p-4 rounded-xl ">
             <div className="flex items-center justify-between border-b p-2">
               <div className="flex gap-1 items-center">
-                <NextImage
-                  src={"/raq-bsc.png"}
-                  alt="BNB"
-                  width={20}
-                  height={20}
-                />
+                <NextImage src={"/logo.png"} alt="BNB" width={20} height={20} />
                 <div>TPEG</div>
               </div>
               {/* <div>无限额度</div> */}
