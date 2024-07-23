@@ -5,6 +5,7 @@ import { shallow } from "zustand/shallow";
 import ClickCoinSound from "@/components/assets/audios/click-coin.mp3";
 import { getCharacter } from "./utils/character";
 import { extractClickOrTouchEvent } from "@/utils/extractClickOrTouchEvent";
+import { boolean } from "zod";
 
 let globalCount = 0;
 
@@ -80,6 +81,50 @@ const initialState = {
 };
 
 export type State = typeof initialState;
+export interface Transaction {
+  hash: string;
+  status: string; //1=>成功 2=>panding 0=>失败
+}
+interface TransactionState {
+  transactions: Transaction[];
+  targetModal: boolean;
+  openTargetModalStatus: () => void;
+  closeTargetModalStatus: () => void;
+  addTransaction: (hash: string, status: string) => void;
+  removeTransaction: (hash: string) => void;
+  updateTransactionStatus: (hash: string, status: string) => void;
+}
+
+export const useTransactionStore = create<TransactionState>((set) => ({
+  transactions: [],
+  targetModal: false,
+  openTargetModalStatus: () =>
+    set((state) => ({
+      targetModal: true,
+    })),
+  closeTargetModalStatus: () =>
+    set((state) => ({
+      targetModal: false,
+    })),
+  addTransaction: (hash, status) =>
+    set((state) => ({
+      transactions: [...state.transactions, { hash, status }],
+    })),
+
+  removeTransaction: (hash) =>
+    set((state) => ({
+      transactions: state.transactions.filter(
+        (transaction) => transaction.hash !== hash
+      ),
+    })),
+
+  updateTransactionStatus: (hash, status) =>
+    set((state) => ({
+      transactions: state.transactions.map((transaction) =>
+        transaction.hash === hash ? { ...transaction, status } : transaction
+      ),
+    })),
+}));
 
 export const useBalanceStore = create<{
   balance: string;

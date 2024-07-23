@@ -8,10 +8,12 @@ import { signOut } from "@/auth";
 import Link from "next/link";
 import SwapApprove from "@/components/SwapApprove";
 import Balance from "@/components/Balance";
+import Transactions from "@/components/Transaction";
 
 export function TeaserGame() {
   return (
     <ChakraProvider>
+      <Transactions />
       <Flex
         flexDirection="column"
         className="relative"

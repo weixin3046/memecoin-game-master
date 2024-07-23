@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { useTeaserStore } from "@/stores/teaser";
+import { useTeaserStore, useTransactionStore } from "@/stores/teaser";
 import { useWindowStore } from "@/stores/window";
 
 import MotionBox from "@/components/MotionBox";
@@ -24,6 +24,10 @@ import useToken from "@/hooks/useToken";
 
 export const ScoreBoard = ({ style, animation }: any) => {
   const coinCount = useTeaserStore((state) => state.coinCount);
+  const targetModal = useTransactionStore((state) => state.targetModal);
+  const closeTargetModalStatus = useTransactionStore(
+    (state) => state.closeTargetModalStatus
+  );
   const vh = useWindowStore((state) => state.vh);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { refetch } = useToken();
@@ -35,19 +39,19 @@ export const ScoreBoard = ({ style, animation }: any) => {
     // useTeaserStore.getState().onHomeButtonClick();
   };
   const onSumbit = async () => {
-    // const res = await fetch("/api/receiveAlipayCoupon", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     sourceActivity: "mmGame",
-    //   }),
-    // });
     const res = await fetch("/api/receiveAlipayCoupon?sourceActivity=mmGame");
     const data = await res.json();
     if (data.code === "0") {
       setState(3);
     }
   };
+
   const handleHomeClick = async () => {
+    if (!targetModal) {
+      useTeaserStore.getState().onHomeButtonClick();
+      return;
+    }
+    closeTargetModalStatus();
     const res = await fetch("/api/queryAlipayCouponList?sourceActivity=mmGame");
     const data = await res.json();
     if (data.code === "0") {
@@ -60,7 +64,6 @@ export const ScoreBoard = ({ style, animation }: any) => {
       }
     }
   };
-
   return (
     <>
       <MotionBox
@@ -112,7 +115,7 @@ export const ScoreBoard = ({ style, animation }: any) => {
             <AlertDialogBody>
               {state === 1 && "您有支付寶紅包未領取，是否領取支付寶紅包"}
               {state === 2 &&
-                "已成功為您發放***MEMEToken，預計1小時內到帳，可請前往“我的-資產-ETH鏈”下查看餘額"}
+                "已成功為您發放MEMEToken，預計1小時內到帳，可請前往“我的-資產-ETH鏈”下查看餘額"}
               {state === 3 &&
                 "支付寶紅包領取成功，請前往該手機號對應的支付寶帳號查看並使用。"}
             </AlertDialogBody>

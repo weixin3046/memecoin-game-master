@@ -1,15 +1,14 @@
 import { useWindowStore } from "@/stores/window";
 import { Button8Bit2 } from "../Button8Bit2";
-import { useTeaserStore } from "@/stores/teaser";
+import { useTeaserStore, useTransactionStore } from "@/stores/teaser";
 import ClickStartButtonSound from "@/components/assets/audios/click-start-button.mp3";
-import { FaGoogle, FaApple, FaUser } from "react-icons/fa";
+import { FaApple, FaUser } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import {
   AbsoluteCenter,
   AlertDialog,
   AlertDialogBody,
   AlertDialogCloseButton,
-  AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
@@ -17,19 +16,14 @@ import {
   Button,
   Divider,
   Icon,
-  Modal,
-  Stack,
   useDisclosure,
   useToast,
   VStack,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { CustomModal } from "../CustomModal";
 import { useRouter } from "next/navigation";
 import PointButton from "./PointButton";
-import ApproveModal from "../ApproveModal/ApproveModal";
-import { number } from "zod";
-import useApprove from "@/hooks/useApprove";
 
 const googleInfo = {
   client_id:
@@ -61,11 +55,10 @@ async function getAppleLogin() {
 
 export const StartButton = ({ balance }: { balance: string }) => {
   const isMobile = useWindowStore((state) => state.isMobile);
+  const addTransaction = useTransactionStore((state) => state.addTransaction);
   const router = useRouter();
   const toast = useToast();
-
-  const [pending, setPending] = useState(false);
-  // const [balance, setBalance] = useState);
+  const [ticketNumber, setTicketNumber] = useState(10);
   const { state } = useTeaserStore((state) => ({
     state: state.state,
   }));
@@ -81,14 +74,9 @@ export const StartButton = ({ balance }: { balance: string }) => {
     audio.play();
   };
   const onStartButtonClick = async () => {
+    playButtonSound();
+    useTeaserStore.getState().onStartButtonClick();
     try {
-      toast({
-        title: "Join the game",
-        description: "Please wait",
-        status: "loading",
-        duration: null,
-        isClosable: false,
-      });
       const hash = await fetch("/api/getMetaHash");
 
       const hashRes = await hash.json();
@@ -102,17 +90,22 @@ export const StartButton = ({ balance }: { balance: string }) => {
         }),
       });
       const joinGameRes = await joinGame.json();
+      // 初始状态
       if (joinGameRes.code === "0") {
-        playButtonSound();
-        useTeaserStore.getState().onStartButtonClick();
+        addTransaction(joinGameRes.content.data.metaHash, "2");
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      toast.closeAll();
-    }
+      console.log(joinGameRes);
+    } catch (error) {}
     return;
   };
+  const fetchTickerNum = async () => {
+    const res = await fetch("/api/tickerNumber");
+    const data = await res.json();
+    setTicketNumber(Number(data.content));
+  };
+  useEffect(() => {
+    fetchTickerNum();
+  }, []);
   const googleLogin = async () => {
     const data = await getGoogleLogin();
   };
@@ -122,9 +115,9 @@ export const StartButton = ({ balance }: { balance: string }) => {
   };
   return (
     <>
-      {Number(balance) < 100 && <PointButton />}
+      {Number(balance) < ticketNumber && <PointButton />}
       {/* {Number(balance) >= 100 && approve === "Y" && <ApproveModal />} */}
-      {Number(balance) >= 100 && (
+      {Number(balance) >= ticketNumber && (
         <Button8Bit2
           padding={4}
           width={isMobile ? "100%" : 272}
