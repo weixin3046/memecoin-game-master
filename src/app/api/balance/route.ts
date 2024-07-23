@@ -10,6 +10,7 @@ type ApiResponse = {
             pointsAmount: string;
           }
         ];
+        chainId: string;
       }
     ];
   };
@@ -19,12 +20,14 @@ const findPointsAmount = (
   pointsNameToFind: string
 ): string | null => {
   for (const blockchain of data.content.allBlockchainAssetList) {
-    if (blockchain.assetList) {
-      const asset = blockchain.assetList.find(
-        (asset) => asset.pointsName === pointsNameToFind
-      );
-      if (asset) {
-        return asset.pointsAmount;
+    if (blockchain.chainId === process.env.CHAINID) {
+      if (blockchain.assetList) {
+        const asset = blockchain.assetList.find(
+          (asset) => asset.pointsName === pointsNameToFind
+        );
+        if (asset) {
+          return asset.pointsAmount;
+        }
       }
     }
   }
@@ -51,7 +54,6 @@ export async function GET() {
     const data = await response.json();
     if (data.code == "0") {
       const tokenName = process.env.TOKEN_NAME || "PEG";
-      console.log(tokenName, "tokenName====");
       const pointsAmount = findPointsAmount(data, tokenName);
       return NextResponse.json({ ...data, balance: pointsAmount });
     }
