@@ -53,7 +53,7 @@ export default function PointButton() {
                 onClick={() => {
                   onClose();
                   window.open(
-                    "https://h5.qwerty2.com/integralConvert",
+                    "https://h5.blossomchain.net/integralConvert",
                     "_blank"
                   );
                   // window.open('https://h5.qwerty2.com/integralConvert')
