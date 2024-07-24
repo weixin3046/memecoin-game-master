@@ -1,16 +1,75 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
-import { authenticate } from "@/app/lib/actions";
-import { Button } from "../Button";
-import { Button as ChakraButton } from "@chakra-ui/react";
+import * as z from "zod";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Select,
+  Input,
+  FormErrorMessage,
+  Card,
+  CardBody,
+  InputGroup,
+  InputRightElement,
+  CardHeader,
+  Heading,
+  InputLeftElement,
+  useDisclosure,
+  List,
+  ListItem,
+  ListIcon,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { LoginSchemas } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { authenticate } from "@/app/api/auth/signIn/server";
+import { CustomModal } from "../CustomModal";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 export default function LoginForm() {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const {
+    handleSubmit,
+    register,
+    watch,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<z.infer<typeof LoginSchemas>>({
+    resolver: zodResolver(LoginSchemas),
+    mode: "all",
+    defaultValues: {
+      phone: "",
+      verifcode: "",
+      areaCode: "+86",
+    },
+  });
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [areas, setAreas] = useState([
+    {
+      country: "中国大陆",
+      area: "+86",
+      flag: "🇨🇳",
+    },
+    {
+      country: "香港地区(中国)",
+      area: "+852",
+      flag: "🇭🇰",
+    },
+    {
+      country: "澳门地区(中国)",
+      area: "+853",
+      flag: "🇲🇴",
+    },
+    {
+      country: "台湾地区(中国)",
+      area: "+886",
+      flag: "🇹🇼",
+    },
+  ]);
+  const [currentArea, setCurrentArea] = useState(areas[0]);
+
   const [pending, setPending] = useState(false);
-  const [phone, setPhone] = useState("");
-  const re = /^1[3,4,5,6,7,8,9][0-9]{9}$/;
   const [countdown, setCountdown] = useState(0);
 
   useEffect(() => {
@@ -31,97 +90,106 @@ export default function LoginForm() {
       await fetch("/api/auth/requestcode", {
         method: "POST",
         body: JSON.stringify({
-          phoneNo: phone,
+          phoneNo: watch("phone"),
+          areaCode: watch("areaCode"),
         }),
       });
     } catch (error) {}
   };
 
-  return (
-    <form action={dispatch} className="space-y-3">
-      <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-        <h1 className={`mb-3 text-2xl`}>Please log in to continue.</h1>
-        <div className="w-full">
-          <div>
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="phoneNumber"
-            >
-              Phone
-            </label>
-            <div className="relative">
-              <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-1 text-sm outline-2 placeholder:text-gray-500"
-                id="phoneNumber"
-                type="text"
-                name="phoneNumber"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="Enter your mobile phone"
-                required
-                minLength={11}
-              />
-              {/* <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" /> */}
-            </div>
-          </div>
-          <div className="mt-4">
-            <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="code"
-            >
-              Verification Code
-            </label>
-            <div className="relative">
-              <input
-                className="peer relative block w-full rounded-md border border-gray-200 py-[9px] pl-1 text-sm outline-2 placeholder:text-gray-500"
-                id="code"
-                type="text"
-                name="code"
-                placeholder="Enter Verification Code"
-                required
-                minLength={6}
-              />
-              <ChakraButton
-                className="!absolute z-10 top-0 right-0 !bg-blue-500 !text-white "
-                isDisabled={pending || !re.test(phone)}
-                // type="button"
-                // colorScheme="bg-blue-500"
-                onClick={sendVerificationCode}
-              >
-                {pending ? `Verify ${countdown}` : `Verify`}
-              </ChakraButton>
-            </div>
-          </div>
-        </div>
-        <LoginButton />
-        <div
-          className="flex h-8 items-end space-x-1"
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          {errorMessage && (
-            <>
-              {/* <ExclamationCircleIcon className="h-5 w-5 text-red-500" /> */}
-              <p className="text-sm text-red-500">{errorMessage}</p>
-            </>
-          )}
-        </div>
-      </div>
-    </form>
-  );
-}
-
-function LoginButton() {
-  const { pending } = useFormStatus();
+  const onSubmit = async (values: z.infer<typeof LoginSchemas>) => {
+    authenticate(values).then((res) => {
+      console.log(res);
+    });
+  };
 
   return (
-    <Button
-      className="mt-4 w-full justify-center"
-      aria-disabled={pending}
-      type="submit"
-    >
-      Log in
-      {/* <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" /> */}
-    </Button>
+    <>
+      <Card>
+        <CardBody>
+          <CardHeader>
+            <Heading size="md">请登录访问更多内容</Heading>
+          </CardHeader>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+            <FormControl isInvalid={!!errors.phone}>
+              <FormLabel htmlFor="phone">手机号</FormLabel>
+              <InputGroup>
+                <InputLeftElement width={"6rem"}>
+                  <Button width={"6rem"} type="button" onClick={onOpen}>
+                    <span className="flex gap-1 items-center">
+                      <span>{currentArea.flag}</span>
+                      <span>{currentArea.area}</span>
+                      <ChevronDownIcon />
+                    </span>
+                  </Button>
+                </InputLeftElement>
+                <Input
+                  paddingLeft={"6.2rem"}
+                  id="phone"
+                  placeholder="phone"
+                  {...register("phone")}
+                />
+              </InputGroup>
+              <FormErrorMessage>
+                {errors.phone && errors.phone.message}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={!!errors.verifcode}>
+              <FormLabel htmlFor="verifcode">验证码</FormLabel>
+              <InputGroup>
+                <Input
+                  id="verifcode"
+                  placeholder="Verification Code"
+                  {...register("verifcode")}
+                />
+                <InputRightElement width={"auto"}>
+                  <Button
+                    type="button"
+                    onClick={sendVerificationCode}
+                    isDisabled={pending || !watch("phone") || !!errors.phone}
+                  >
+                    {pending ? `重新发送 ${countdown}` : `发送验证码`}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+
+              <FormErrorMessage>
+                {errors.verifcode && errors.verifcode.message}
+              </FormErrorMessage>
+            </FormControl>
+            <Button
+              mt={4}
+              width={"100%"}
+              colorScheme="teal"
+              isLoading={isSubmitting}
+              type="submit"
+            >
+              登录
+            </Button>
+          </form>
+        </CardBody>
+      </Card>
+      <CustomModal isOpen={isOpen} onClose={onClose}>
+        <List spacing={3}>
+          {areas.map((area) => (
+            <ListItem
+              key={area.area}
+              onClick={() => (
+                setCurrentArea(area), onClose(), setValue("areaCode", area.area)
+              )}
+            >
+              {/* <ListIcon as={MdCheckCircle} color="green.500" /> */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <div>{area.flag}</div>
+                  <div>{area.country}</div>
+                </div>
+                <div> {area.area}</div>
+              </div>
+            </ListItem>
+          ))}
+        </List>
+      </CustomModal>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 "use server";
-export async function requestCode(phone: string) {
+export async function requestCode(phone: string, areaCode: string) {
   try {
     const res = await fetch(
       `${process.env.BASE_API_URL}/changyou-wap-service/wapUser/getCodeV2`,
@@ -10,6 +10,7 @@ export async function requestCode(phone: string) {
         },
         body: JSON.stringify({
           phoneNo: phone,
+          areaCode: areaCode,
         }),
       }
     );

@@ -1,6 +1,8 @@
 "use server";
 import { signIn } from "@/auth";
+import { LoginSchemas } from "@/schemas";
 import { AuthError } from "next-auth";
+import { z } from "zod";
 
 export async function handleLogin(formData: FormData) {
   try {
@@ -26,8 +28,8 @@ export async function handleLogin(formData: FormData) {
 }
 
 export async function authenticate(
-  prevState: string | undefined,
-  formData: FormData
+  // prevState: string | undefined,
+  formData: z.infer<typeof LoginSchemas>
 ) {
   try {
     await signIn("credentials", formData);

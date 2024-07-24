@@ -3,10 +3,12 @@ import Credentials from "next-auth/providers/credentials";
 import { object, z, ZodError } from "zod";
 import validator from "validator";
 import { authConfig } from "./auth.config";
+import { LoginSchemas } from "./schemas";
 
 async function handleLogin(
   phone: string,
-  code: string
+  code: string,
+  areaCode: string
 ): Promise<Response | undefined> {
   try {
     const user = await fetch(
@@ -17,7 +19,7 @@ async function handleLogin(
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          areaCode: "",
+          areaCode: areaCode,
           inputInviteCode: "",
           phoneNumber: phone,
           verificationCode: code,
@@ -31,28 +33,20 @@ async function handleLogin(
   }
 }
 
-const signInSchema = object({
-  phoneNumber: z
-    .string()
-    .refine((val) => validator.isMobilePhone(val, "zh-CN"), {
-      message: "无效的中国区手机号码",
-    }),
-  code: z.string().min(6),
-});
-
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
       async authorize(credentials) {
-        const { phoneNumber, code } = await signInSchema.parseAsync(
+        const { phone, verifcode, areaCode } = await LoginSchemas.parseAsync(
           credentials
         );
         try {
           let user = null;
 
-          user = await handleLogin(phoneNumber, code);
+          user = await handleLogin(phone, verifcode, areaCode);
           user = await user?.json();
+          console.log(user, "user=======");
           if (!user) {
             return null;
           }
