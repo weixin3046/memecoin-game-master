@@ -2,7 +2,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Flex } from "@chakra-ui/react";
 
-import { GAME_CONFIG_V1, useTeaserStore } from "@/stores/teaser";
+import {
+  GAME_CONFIG_V1,
+  useCoinCountStore,
+  useTeaserStore,
+} from "@/stores/teaser";
 import { Show, useWindowStore } from "@/stores/window";
 
 import BackgroundMusic from "./assets/audios/background-music.mp3";
@@ -24,7 +28,8 @@ export const MemecoinGame = () => {
   const vh = useWindowStore((state) => state.vh);
   const vw = useWindowStore((state) => state.vw);
   const { balance } = useToken();
-
+  const { count, badcount } = useCoinCountStore();
+  console.log(count, badcount);
   const character = useTeaserStore((state) => state.character);
   const state = useTeaserStore((state) => state.state);
   const playingAudio = useTeaserStore(

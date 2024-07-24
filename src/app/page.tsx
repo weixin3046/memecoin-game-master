@@ -9,6 +9,7 @@ import Link from "next/link";
 import SwapApprove from "@/components/SwapApprove";
 import Balance from "@/components/Balance";
 import Transactions from "@/components/Transaction";
+import RecordsButton from "@/components/RecordsButton";
 
 export function TeaserGame() {
   return (
@@ -26,20 +27,23 @@ export function TeaserGame() {
               <Balance />
               <SwapApprove />
             </div>
-            <div className="flex flex-col gap-4 items-end">
-              <Link href="/rule" className="hover:!no-underline no-underline">
-                <FaFileAlt className="text-2xl text-white" />
-              </Link>
-              <form
-                action={async () => {
-                  "use server";
-                  await signOut();
-                }}
-              >
-                <button type="submit">
-                  <FaSignOutAlt className="text-xl text-white" />
-                </button>
-              </form>
+            <div className="flex gap-4 items-start">
+              <RecordsButton />
+              <div className="flex flex-col gap-4 items-end">
+                <Link href="/rule" className="hover:!no-underline no-underline">
+                  <FaFileAlt className="text-2xl text-white" />
+                </Link>
+                <form
+                  action={async () => {
+                    "use server";
+                    await signOut();
+                  }}
+                >
+                  <button type="submit">
+                    <FaSignOutAlt className="text-xl text-white" />
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

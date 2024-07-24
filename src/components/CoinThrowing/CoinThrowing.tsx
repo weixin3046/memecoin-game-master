@@ -1,18 +1,18 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
-import { useAnimationFrame, useInView } from 'framer-motion';
+import { useAnimationFrame, useInView } from "framer-motion";
 
-import { useTeaserStore } from '@/stores/teaser';
+import { useCoinCountStore, useTeaserStore } from "@/stores/teaser";
 
-import MotionBox from '@/components/MotionBox';
+import MotionBox from "@/components/MotionBox";
 
-import { random, randomInt } from '@/utils/random';
-import { useScale } from '@/utils/useScale';
+import { random, randomInt } from "@/utils/random";
+import { useScale } from "@/utils/useScale";
 
-import { DOGE_COIN_VARIANT, nonMemeCoinVariants } from './non-memecoin';
-import ThrowingCoin from './throwing-coin.svg';
+import { DOGE_COIN_VARIANT, nonMemeCoinVariants } from "./non-memecoin";
+import ThrowingCoin from "./throwing-coin.svg";
 
-import type { TeaserCoin } from '@/stores/teaser';
+import type { TeaserCoin } from "@/stores/teaser";
 
 interface CoinProps {
   coin: TeaserCoin;
@@ -23,11 +23,26 @@ const numNonMemeVariants = nonMemeCoinVariants.length;
 let touched = false;
 
 const CoinItem = ({ coin }: CoinProps) => {
-  const { initialX, initialY, initialTheta, velocity, angularVelocity, angle } = coin;
+  const { initialX, initialY, initialTheta, velocity, angularVelocity, angle } =
+    coin;
   const dom = useRef<HTMLElement>() as React.MutableRefObject<HTMLElement>;
-  const vx = useMemo(() => velocity * Math.sin((angle * Math.PI) / 180), [velocity, angle]);
-  const vy = useMemo(() => velocity * Math.cos((angle * Math.PI) / 180), [velocity, angle]);
-
+  const vx = useMemo(
+    () => velocity * Math.sin((angle * Math.PI) / 180),
+    [velocity, angle]
+  );
+  const vy = useMemo(
+    () => velocity * Math.cos((angle * Math.PI) / 180),
+    [velocity, angle]
+  );
+  // const add = useCoinCountStore
+  const { addCoinCount, addBadCoinCount } = useCoinCountStore();
+  useEffect(() => {
+    if (coin.type === "normal") {
+      addCoinCount();
+    } else {
+      addBadCoinCount();
+    }
+  }, []);
   function f(t: number) {
     // Assuming upwards positive
     // ? vertex[f(t) = at^2 + bt + c]
@@ -76,7 +91,9 @@ const CoinItem = ({ coin }: CoinProps) => {
         if (oldMaxCoins === useTeaserStore.getState().maxCoins) {
           const maxCoins = Math.max(oldMaxCoins - 10, 15);
           useTeaserStore.setState({ maxCoins });
-          console.warn(`FPS low! Reduce max coin from ${oldMaxCoins} to ${maxCoins}.`);
+          console.warn(
+            `FPS low! Reduce max coin from ${oldMaxCoins} to ${maxCoins}.`
+          );
         }
       }
     }
@@ -90,12 +107,15 @@ const CoinItem = ({ coin }: CoinProps) => {
   const size = useMemo(() => random(minSize, maxSize), [minSize, maxSize]);
   const onClickEvent = (e: React.MouseEvent | React.TouchEvent) => {
     // remove coin lazily by setting opacity to 0 (more performant)
-    dom.current.style.opacity = '0';
-    dom.current.style.pointerEvents = 'none';
+    dom.current.style.opacity = "0";
+    dom.current.style.pointerEvents = "none";
     useTeaserStore.getState().onCoinClick(coin, e);
   };
 
-  const Coin = coin.type === 'normal' ? ThrowingCoin : nonMemeCoinVariants[coin.variant % nonMemeCoinVariants.length];
+  const Coin =
+    coin.type === "normal"
+      ? ThrowingCoin
+      : nonMemeCoinVariants[coin.variant % nonMemeCoinVariants.length];
 
   return (
     <MotionBox
@@ -117,8 +137,8 @@ const CoinItem = ({ coin }: CoinProps) => {
 };
 
 export const CoinThrowing = ({ style, animation }: any) => {
-  const doGnerateCoins = useTeaserStore(state => state.state === 'in-game');
-  const coins = useTeaserStore(state => state.coins);
+  const doGnerateCoins = useTeaserStore((state) => state.state === "in-game");
+  const coins = useTeaserStore((state) => state.coins);
 
   const timer = useRef<number>(0);
   const maxCoins = 30;
@@ -127,9 +147,13 @@ export const CoinThrowing = ({ style, animation }: any) => {
     useTeaserStore.setState(() => ({ maxCoins }));
     if (doGnerateCoins && !timer.current) {
       const throwCoins = () => {
-        for (let i = 0; i < useTeaserStore.getState().getCoinThrowAmount(); i++) {
+        for (
+          let i = 0;
+          i < useTeaserStore.getState().getCoinThrowAmount();
+          i++
+        ) {
           setTimeout(() => {
-            if (useTeaserStore.getState().state !== 'in-game') return;
+            if (useTeaserStore.getState().state !== "in-game") return;
 
             const width = Math.min(1440, window.innerWidth);
             const height = window.innerHeight;
@@ -144,32 +168,41 @@ export const CoinThrowing = ({ style, animation }: any) => {
               maxAngleMobile,
               Math.min(
                 maxAngleDesktop,
-                ((maxAngleDesktop - maxAngleMobile) / (maxAngleDesktopWidth - maxAngleMobileWidth)) *
+                ((maxAngleDesktop - maxAngleMobile) /
+                  (maxAngleDesktopWidth - maxAngleMobileWidth)) *
                   (width - maxAngleMobileWidth) +
-                  maxAngleMobile,
-              ),
+                  maxAngleMobile
+              )
             );
 
-            const initialX = random(width * (0.5 - xMaxWindow / 2), width * (0.5 + xMaxWindow / 2));
+            const initialX = random(
+              width * (0.5 - xMaxWindow / 2),
+              width * (0.5 + xMaxWindow / 2)
+            );
             const initialY = random(0, 0);
             const angle = random(-maxAngle, maxAngle);
 
             const maxHeight = height * 0.8;
             const minHeight = height * 0.4;
-            const velocityMax = Math.sqrt((maxHeight - initialY) * 2 * G) / Math.cos((angle * Math.PI) / 180);
-            const velocityMin = Math.sqrt((minHeight - initialY) * 2 * G) / Math.cos((angle * Math.PI) / 180);
+            const velocityMax =
+              Math.sqrt((maxHeight - initialY) * 2 * G) /
+              Math.cos((angle * Math.PI) / 180);
+            const velocityMin =
+              Math.sqrt((minHeight - initialY) * 2 * G) /
+              Math.cos((angle * Math.PI) / 180);
 
             const { timeLeft, gameConfig } = useTeaserStore.getState();
             const type =
               gameConfig.timeAllowed - timeLeft < 10 && // during the first 10 seconds
-              Math.random() > 1.0 - 0.2 * (timeLeft / gameConfig.timeAllowed) ** 2
-                ? 'non-memecoin'
-                : 'normal';
+              Math.random() >
+                1.0 - 0.2 * (timeLeft / gameConfig.timeAllowed) ** 2
+                ? "non-memecoin"
+                : "normal";
 
             const character = useTeaserStore.getState().character;
             const variant =
-              type === 'non-memecoin'
-                ? character.name === 'doge'
+              type === "non-memecoin"
+                ? character.name === "doge"
                   ? DOGE_COIN_VARIANT
                   : randomInt(0, numNonMemeVariants)
                 : 0;
@@ -196,7 +229,7 @@ export const CoinThrowing = ({ style, animation }: any) => {
         }
         timer.current = setTimeout(
           throwCoins,
-          useTeaserStore.getState().getCoinThrowInterval() * 1000,
+          useTeaserStore.getState().getCoinThrowInterval() * 1000
         ) as unknown as number;
       };
       startTimer();
@@ -211,8 +244,15 @@ export const CoinThrowing = ({ style, animation }: any) => {
   }, [doGnerateCoins, maxCoins]);
 
   return (
-    <MotionBox position="absolute" display="flex" bottom="48px" width="100%" {...style} {...animation}>
-      {coins.map(coin => (
+    <MotionBox
+      position="absolute"
+      display="flex"
+      bottom="48px"
+      width="100%"
+      {...style}
+      {...animation}
+    >
+      {coins.map((coin) => (
         <CoinItem key={coin.id} coin={coin} />
       ))}
     </MotionBox>

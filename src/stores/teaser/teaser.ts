@@ -126,6 +126,26 @@ export const useTransactionStore = create<TransactionState>((set) => ({
     })),
 }));
 
+interface CoinCountStorePropss {
+  count: number;
+  badcount: number;
+  addCoinCount: () => void;
+  addBadCoinCount: () => void;
+}
+
+export const useCoinCountStore = create<CoinCountStorePropss>((set) => ({
+  count: 0,
+  badcount: 0,
+  addCoinCount: () =>
+    set((state) => ({
+      count: state.count + 1,
+    })),
+  addBadCoinCount: () =>
+    set((state) => ({
+      badcount: state.badcount + 1,
+    })),
+}));
+
 export const useBalanceStore = create<{
   balance: string;
   pending: boolean;
