@@ -53,7 +53,7 @@ export interface GameConfig {
 }
 
 export const GAME_CONFIG_V1: GameConfig = {
-  timeAllowed: 15,
+  timeAllowed: 15, // 倒计时时间
   targetedScore: 0,
 };
 

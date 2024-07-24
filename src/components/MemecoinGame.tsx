@@ -109,17 +109,17 @@ export const MemecoinGame = () => {
 
             {/** Upper Part **/}
             {/* {(state === "in-game" || state === "score-board") && (
-        <Show isDesktop>
-          <CoinCounter
-            style={{
-              position: "absolute",
-              top: `${vh * 3}px`,
-              left: `${vh * 3}px`,
-              zIndex: 10,
-            }}
-          />
-        </Show>
-      )} */}
+              <Show isDesktop>
+                <CoinCounter
+                  style={{
+                    position: "absolute",
+                    top: `${vh * 3}px`,
+                    left: `${vh * 3}px`,
+                    zIndex: 10,
+                  }}
+                />
+              </Show>
+            )} */}
             <BrandHeader
               balance={balance}
               style={{
