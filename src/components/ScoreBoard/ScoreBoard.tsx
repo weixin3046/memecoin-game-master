@@ -24,10 +24,7 @@ import useToken from "@/hooks/useToken";
 
 export const ScoreBoard = ({ style, animation }: any) => {
   const coinCount = useTeaserStore((state) => state.coinCount);
-  const targetModal = useTransactionStore((state) => state.targetModal);
-  const closeTargetModalStatus = useTransactionStore(
-    (state) => state.closeTargetModalStatus
-  );
+  const metaHash = useTransactionStore((state) => state.metaHash);
   const vh = useWindowStore((state) => state.vh);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { refetch } = useToken();
@@ -47,22 +44,27 @@ export const ScoreBoard = ({ style, animation }: any) => {
   };
 
   const handleHomeClick = async () => {
-    if (!targetModal) {
-      useTeaserStore.getState().onHomeButtonClick();
-      return;
-    }
-    closeTargetModalStatus();
-    const res = await fetch("/api/queryAlipayCouponList?sourceActivity=mmGame");
-    const data = await res.json();
-    if (data.code === "0") {
-      if (data.content.length < 1) {
-        onOpen();
-      } else {
-        onOpen();
-        setState(2);
-        // useTeaserStore.getState().onHomeButtonClick();
-      }
-    }
+    const fetchData = await fetch("/api/addGameCredits", {
+      method: "POST",
+      body: JSON.stringify({
+        metaHash: metaHash,
+        points: String(coinCount),
+      }),
+    });
+    const data = await fetchData.json();
+    useTeaserStore.getState().onHomeButtonClick();
+    // closeTargetModalStatus();
+    // const res = await fetch("/api/queryAlipayCouponList?sourceActivity=mmGame");
+    // const data = await res.json();
+    // if (data.code === "0") {
+    //   if (data.content.length < 1) {
+    //     onOpen();
+    //   } else {
+    //     onOpen();
+    //     setState(2);
+    //     // useTeaserStore.getState().onHomeButtonClick();
+    //   }
+    // }
   };
   return (
     <>

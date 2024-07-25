@@ -14,11 +14,29 @@ import {
   Tr,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillBell } from "react-icons/ai";
+
+interface ListProps {
+  createTime: string;
+  issueState: number; //0待发放 1发放中 2发放成功 3发放失败
+  rewardQuantity: number;
+}
+
 export default function RecordsButton({}: {}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
+  const [list, setList] = useState<ListProps[]>([]);
+  const fetchData = async () => {
+    const res = await fetch("/api/getUserRecords");
+    const data = await res.json();
+    setList(data.content);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       {show && (
@@ -47,8 +65,8 @@ export default function RecordsButton({}: {}) {
                     <Th color={"#fff"} border={0} textAlign={"center"}>
                       参与时间
                     </Th>
-                    <Th color={"#fff"} border={0}>
-                      MetaHash
+                    <Th color={"#fff"} border={0} textAlign={"center"}>
+                      奖励数量
                     </Th>
                     <Th color={"#fff"} textAlign={"right"} border={0}>
                       状态
@@ -56,11 +74,22 @@ export default function RecordsButton({}: {}) {
                   </Tr>
                 </Thead>
                 <Tbody border={0}>
-                  <Tr>
-                    <Td border={0}>2024-07-23 11:12:12</Td>
-                    <Td border={0}>9X58772953552...</Td>
-                    <Td border={0}>success</Td>
-                  </Tr>
+                  {/* <Tr> */}
+                  {list.map((item, index) => (
+                    <Tr key={index}>
+                      <Td border={0} textAlign={"center"}>
+                        {item.createTime}
+                      </Td>
+                      <Td border={0} textAlign={"center"}>
+                        {item.rewardQuantity}
+                      </Td>
+                      <Td border={0} textAlign={"right"}>
+                        {item.issueState === 2 && "发放成功"}
+                        {item.issueState === 3 && "发放失败"}
+                        {(item.issueState === 0 || item.issueState) && "待发放"}
+                      </Td>
+                    </Tr>
+                  ))}
                 </Tbody>
               </Table>
             </TableContainer>

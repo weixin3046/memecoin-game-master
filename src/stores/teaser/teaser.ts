@@ -88,6 +88,8 @@ export interface Transaction {
 interface TransactionState {
   transactions: Transaction[];
   targetModal: boolean;
+  metaHash: string;
+  setMetaHash: (hash: string) => void;
   openTargetModalStatus: () => void;
   closeTargetModalStatus: () => void;
   addTransaction: (hash: string, status: string) => void;
@@ -98,6 +100,11 @@ interface TransactionState {
 export const useTransactionStore = create<TransactionState>((set) => ({
   transactions: [],
   targetModal: false,
+  metaHash: "",
+  setMetaHash: (hash) =>
+    set((state) => ({
+      metaHash: hash,
+    })),
   openTargetModalStatus: () =>
     set((state) => ({
       targetModal: true,

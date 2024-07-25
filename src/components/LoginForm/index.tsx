@@ -29,7 +29,10 @@ import { CustomModal } from "../CustomModal";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
-
+import NextImage from "next/image";
+{
+  /* <PixelClock /> */
+}
 export default function LoginForm() {
   const {
     handleSubmit,
@@ -51,22 +54,22 @@ export default function LoginForm() {
     {
       country: "中国大陆",
       area: "+86",
-      flag: "🇨🇳",
+      flag: "cn",
     },
     {
       country: "香港地区(中国)",
       area: "+852",
-      flag: "🇭🇰",
+      flag: "hk",
     },
     {
       country: "澳门地区(中国)",
       area: "+853",
-      flag: "🇲🇴",
+      flag: "mc",
     },
     {
       country: "台湾地区(中国)",
       area: "+886",
-      flag: "🇹🇼",
+      flag: "tw",
     },
   ]);
   const [currentArea, setCurrentArea] = useState(areas[0]);
@@ -127,7 +130,12 @@ export default function LoginForm() {
                 <InputLeftElement width={"6rem"}>
                   <Button width={"6rem"} type="button" onClick={onOpen}>
                     <span className="flex gap-1 items-center">
-                      <span>{currentArea.flag}</span>
+                      <NextImage
+                        src={`/flag/${currentArea.flag}.svg`}
+                        width={20}
+                        height={15}
+                        alt="flag"
+                      />
                       <span>{currentArea.area}</span>
                       <ChevronDownIcon />
                     </span>
@@ -194,7 +202,14 @@ export default function LoginForm() {
               {/* <ListIcon as={MdCheckCircle} color="green.500" /> */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1">
-                  <div>{area.flag}</div>
+                  <div>
+                    <NextImage
+                      src={`/flag/${area.flag}.svg`}
+                      width={20}
+                      height={15}
+                      alt="flag"
+                    />
+                  </div>
                   <div>{area.country}</div>
                 </div>
                 <div> {area.area}</div>

@@ -55,9 +55,8 @@ async function getAppleLogin() {
 
 export const StartButton = ({ balance }: { balance: string }) => {
   const isMobile = useWindowStore((state) => state.isMobile);
-  const addTransaction = useTransactionStore((state) => state.addTransaction);
+  const setMetaHash = useTransactionStore((state) => state.setMetaHash);
   const router = useRouter();
-  const toast = useToast();
   const [ticketNumber, setTicketNumber] = useState(10);
   const { state } = useTeaserStore((state) => ({
     state: state.state,
@@ -80,6 +79,7 @@ export const StartButton = ({ balance }: { balance: string }) => {
       const hash = await fetch("/api/getMetaHash");
 
       const hashRes = await hash.json();
+      setMetaHash(hashRes.content.metaHash);
       const joinGame = await fetch("/api/joinGame", {
         method: "POST",
         body: JSON.stringify({
@@ -89,12 +89,6 @@ export const StartButton = ({ balance }: { balance: string }) => {
           sourceActivity: "mmGame",
         }),
       });
-      const joinGameRes = await joinGame.json();
-      // 初始状态
-      if (joinGameRes.code === "0") {
-        addTransaction(joinGameRes.content.data.metaHash, "2");
-      }
-      console.log(joinGameRes);
     } catch (error) {}
     return;
   };
