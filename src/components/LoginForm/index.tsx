@@ -20,7 +20,7 @@ import {
   ListItem,
   ListIcon,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { LoginSchemas } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -74,6 +74,7 @@ export default function LoginForm() {
   const [success, setSuccess] = useState<undefined | string>("");
   const [pending, setPending] = useState(false);
   const [countdown, setCountdown] = useState(0);
+  const [isPending, startTransiton] = useTransition();
 
   useEffect(() => {
     if (countdown > 0) {
@@ -103,10 +104,12 @@ export default function LoginForm() {
   const onSubmit = async (values: z.infer<typeof LoginSchemas>) => {
     setError("");
     setSuccess("");
-    authenticate(values).then((data) => {
-      console.log(data, "data=========");
-      setError(data);
-      // setSuccess(data.success);
+    startTransiton(() => {
+      authenticate(values).then((data) => {
+        console.log(data, "data=========");
+        setError(data);
+        // setSuccess(data.success);
+      });
     });
   };
 
@@ -170,6 +173,7 @@ export default function LoginForm() {
               mt={4}
               width={"100%"}
               background="#5FC7FF"
+              disabled={isPending}
               isLoading={isSubmitting}
               type="submit"
             >
