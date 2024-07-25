@@ -27,7 +27,6 @@ import useToken from "@/hooks/useToken";
 export const MemecoinGame = () => {
   const vh = useWindowStore((state) => state.vh);
   const vw = useWindowStore((state) => state.vw);
-  const { balance } = useToken();
   const { count, badcount } = useCoinCountStore();
   console.log(count, badcount);
   const character = useTeaserStore((state) => state.character);
@@ -126,7 +125,6 @@ export const MemecoinGame = () => {
               </Show>
             )} */}
             <BrandHeader
-              balance={balance}
               style={{
                 position: "absolute",
                 zIndex: 10,

@@ -6,7 +6,6 @@ export async function POST(req: NextRequest) {
     const session = await auth();
     const token = session?.accessToken;
     const body = await req.json();
-    console.log(token);
     const response = await fetch(
       `${process.env.BASE_API_URL}/changyou-wap-service/game/addGameCredits`,
       {
@@ -15,7 +14,7 @@ export async function POST(req: NextRequest) {
           "Content-type": "application/json",
           Authorization: `${token}`,
         },
-        body: body,
+        body: JSON.stringify(body),
       }
     );
     if (!response.ok) {

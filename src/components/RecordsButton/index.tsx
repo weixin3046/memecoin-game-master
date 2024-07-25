@@ -35,7 +35,7 @@ export default function RecordsButton({}: {}) {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [isOpen]);
 
   return (
     <>
@@ -55,7 +55,7 @@ export default function RecordsButton({}: {}) {
 
       <Modal isOpen={isOpen} onClose={onClose} size={"sm"}>
         <ModalContent className="!bg-opacity-50 !bg-black" color={"#fff"}>
-          <ModalHeader className="text-center">参与记录</ModalHeader>
+          <ModalHeader className="text-center">參與記錄</ModalHeader>
           <ModalCloseButton />
           <ModalBody padding={0}>
             <TableContainer paddingBottom={20}>
@@ -63,13 +63,13 @@ export default function RecordsButton({}: {}) {
                 <Thead>
                   <Tr>
                     <Th color={"#fff"} border={0} textAlign={"center"}>
-                      参与时间
+                      參與時間
                     </Th>
                     <Th color={"#fff"} border={0} textAlign={"center"}>
-                      奖励数量
+                      獎勵數量
                     </Th>
                     <Th color={"#fff"} textAlign={"right"} border={0}>
-                      状态
+                      狀態
                     </Th>
                   </Tr>
                 </Thead>
@@ -84,8 +84,8 @@ export default function RecordsButton({}: {}) {
                         {item.rewardQuantity}
                       </Td>
                       <Td border={0} textAlign={"right"}>
-                        {item.issueState === 2 && "发放成功"}
-                        {item.issueState === 3 && "发放失败"}
+                        {item.issueState === 2 && "發放成功"}
+                        {item.issueState === 3 && "發放失敗"}
                         {(item.issueState === 0 || item.issueState) && "待发放"}
                       </Td>
                     </Tr>

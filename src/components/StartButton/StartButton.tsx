@@ -1,29 +1,27 @@
 import { useWindowStore } from "@/stores/window";
 import { Button8Bit2 } from "../Button8Bit2";
-import { useTeaserStore, useTransactionStore } from "@/stores/teaser";
+import {
+  useBalanceStore,
+  useTeaserStore,
+  useTransactionStore,
+} from "@/stores/teaser";
 import ClickStartButtonSound from "@/components/assets/audios/click-start-button.mp3";
 import { FaApple, FaUser } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import {
   AbsoluteCenter,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogCloseButton,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
   Box,
   Button,
   Divider,
   Icon,
   useDisclosure,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { CustomModal } from "../CustomModal";
 import { useRouter } from "next/navigation";
 import PointButton from "./PointButton";
+import useToken from "@/hooks/useToken";
 
 const googleInfo = {
   client_id:
@@ -53,10 +51,12 @@ async function getAppleLogin() {
   window.location.href = url;
 }
 
-export const StartButton = ({ balance }: { balance: string }) => {
+export const StartButton = () => {
   const isMobile = useWindowStore((state) => state.isMobile);
   const setMetaHash = useTransactionStore((state) => state.setMetaHash);
   const router = useRouter();
+  const balance = useBalanceStore((state) => state.balance);
+
   const [ticketNumber, setTicketNumber] = useState(10);
   const { state } = useTeaserStore((state) => ({
     state: state.state,
@@ -110,7 +110,6 @@ export const StartButton = ({ balance }: { balance: string }) => {
   return (
     <>
       {Number(balance) < ticketNumber && <PointButton />}
-      {/* {Number(balance) >= 100 && approve === "Y" && <ApproveModal />} */}
       {Number(balance) >= ticketNumber && (
         <Button8Bit2
           padding={4}
@@ -148,55 +147,6 @@ export const StartButton = ({ balance }: { balance: string }) => {
           </Button>
         </VStack>
       </CustomModal>
-
-      {/* <AlertDialog
-        isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-        // isCentered
-        motionPreset="slideInBottom"
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Customer
-            </AlertDialogHeader>
-            <AlertDialogCloseButton />
-            <AlertDialogBody>
-              {isGameCard
-                ? `玩一局消耗一张次卡`
-                : `你的次卡已用完，请前往BlossomChain购买`}
-            </AlertDialogBody>
-
-            <AlertDialogFooter>
-              {isGameCard ? (
-                <>
-                  <Button ref={cancelRef} onClick={onClose}>
-                    取消
-                  </Button>
-                  <Button
-                    colorScheme="red"
-                    onClick={() => {
-                      onClose();
-                      playButtonSound();
-                      useTeaserStore.getState().onStartButtonClick();
-                    }}
-                    ml={3}
-                  >
-                    确定
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button variant="ghost" onClick={onClose}>
-                    好的
-                  </Button>
-                </>
-              )}
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog> */}
     </>
   );
 };

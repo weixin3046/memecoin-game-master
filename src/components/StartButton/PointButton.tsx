@@ -42,7 +42,7 @@ export default function PointButton() {
         <AlertDialogOverlay>
           <AlertDialogContent className="!mx-9">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              积分不足
+              積分不足
             </AlertDialogHeader>
 
             <AlertDialogBody>當前PEG積分不足，請先充值再兌換</AlertDialogBody>
@@ -60,7 +60,7 @@ export default function PointButton() {
                 }}
                 ml={3}
               >
-                确定
+                確定
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

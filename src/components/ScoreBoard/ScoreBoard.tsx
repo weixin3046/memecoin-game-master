@@ -43,15 +43,19 @@ export const ScoreBoard = ({ style, animation }: any) => {
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      await fetch("/api/addGameCredits", {
+        method: "POST",
+        body: JSON.stringify({
+          metaHash: metaHash,
+          points: String(coinCount),
+        }),
+      });
+    })();
+  }, []);
+
   const handleHomeClick = async () => {
-    const fetchData = await fetch("/api/addGameCredits", {
-      method: "POST",
-      body: JSON.stringify({
-        metaHash: metaHash,
-        points: String(coinCount),
-      }),
-    });
-    const data = await fetchData.json();
     useTeaserStore.getState().onHomeButtonClick();
     // closeTargetModalStatus();
     // const res = await fetch("/api/queryAlipayCouponList?sourceActivity=mmGame");

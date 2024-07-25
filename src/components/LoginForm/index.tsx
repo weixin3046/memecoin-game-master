@@ -52,22 +52,22 @@ export default function LoginForm() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [areas, setAreas] = useState([
     {
-      country: "中国大陆",
+      country: "中國大陸",
       area: "+86",
       flag: "cn",
     },
     {
-      country: "香港地区(中国)",
+      country: "香港地區(中國)",
       area: "+852",
       flag: "hk",
     },
     {
-      country: "澳门地区(中国)",
+      country: "澳門地區(中國)",
       area: "+853",
       flag: "mc",
     },
     {
-      country: "台湾地区(中国)",
+      country: "臺灣地區(中國)",
       area: "+886",
       flag: "tw",
     },
@@ -105,12 +105,10 @@ export default function LoginForm() {
   };
 
   const onSubmit = async (values: z.infer<typeof LoginSchemas>) => {
-    console.log(999);
     setError("");
     setSuccess("");
     startTransiton(() => {
       authenticate(values).then((data) => {
-        console.log(data, "data=========");
         setError(data);
         // setSuccess(data.success);
       });
@@ -122,11 +120,13 @@ export default function LoginForm() {
       <Card>
         <CardBody>
           <CardHeader>
-            <Heading size="md">请登录访问更多内容</Heading>
+            <Heading size="md" className="text-center">
+              MEMELAND GAME
+            </Heading>
           </CardHeader>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
             <FormControl isInvalid={!!errors.phone}>
-              <FormLabel htmlFor="phone">手机号</FormLabel>
+              <FormLabel htmlFor="phone">手機號</FormLabel>
               <InputGroup>
                 <InputLeftElement width={"6rem"}>
                   <Button width={"6rem"} type="button" onClick={onOpen}>
@@ -145,7 +145,7 @@ export default function LoginForm() {
                 <Input
                   paddingLeft={"6.2rem"}
                   id="phone"
-                  placeholder="phone"
+                  placeholder="請輸入"
                   {...register("phone")}
                 />
               </InputGroup>
@@ -154,11 +154,11 @@ export default function LoginForm() {
               </FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={!!errors.verifcode}>
-              <FormLabel htmlFor="verifcode">验证码</FormLabel>
+              <FormLabel htmlFor="verifcode">驗證碼</FormLabel>
               <InputGroup>
                 <Input
                   id="verifcode"
-                  placeholder="Verification Code"
+                  placeholder="請輸入"
                   {...register("verifcode")}
                 />
                 <InputRightElement width={"auto"}>
@@ -167,7 +167,7 @@ export default function LoginForm() {
                     onClick={sendVerificationCode}
                     isDisabled={pending || !watch("phone") || !!errors.phone}
                   >
-                    {pending ? `重新发送 ${countdown}` : `发送验证码`}
+                    {pending ? `重新發送 ${countdown}` : `發送驗證碼`}
                   </Button>
                 </InputRightElement>
               </InputGroup>
@@ -186,7 +186,7 @@ export default function LoginForm() {
               isLoading={isSubmitting}
               type="submit"
             >
-              登录
+              登錄
             </Button>
           </form>
         </CardBody>
