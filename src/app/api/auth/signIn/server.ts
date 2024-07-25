@@ -32,7 +32,10 @@ export async function authenticate(
   formData: z.infer<typeof LoginSchemas>
 ) {
   try {
-    await signIn("credentials", formData);
+    await signIn("credentials", {
+      ...formData,
+      redirectTo: "/",
+    });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

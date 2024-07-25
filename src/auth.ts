@@ -25,6 +25,10 @@ async function handleLogin(
         }),
       }
     );
+    // const data = await user.json()
+    // if(data.code==="0"){
+
+    // }
     return user;
   } catch (error) {
     throw new Error("Failed to fetch user.");

@@ -7,14 +7,11 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith("/login");
       if (isLoggedIn) {
-        if (isOnDashboard) {
-          return Response.redirect(new URL("/", nextUrl));
-        }
         return true;
+      } else {
+        return false;
       }
-      return false;
     },
     async jwt({ token, trigger, session, account, user }) {
       if (user) {
