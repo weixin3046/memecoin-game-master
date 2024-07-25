@@ -1,5 +1,6 @@
 "use server";
 import { signIn } from "@/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { LoginSchemas } from "@/schemas";
 import { AuthError } from "next-auth";
 import { z } from "zod";
@@ -32,7 +33,10 @@ export async function authenticate(
   formData: z.infer<typeof LoginSchemas>
 ) {
   try {
-    await signIn("credentials", formData);
+    await signIn("credentials", {
+      ...formData,
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
+    });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

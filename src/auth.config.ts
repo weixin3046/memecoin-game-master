@@ -5,17 +5,17 @@ export const authConfig = {
     signIn: "/login",
   },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith("/login");
-      if (isLoggedIn) {
-        if (isOnDashboard) {
-          return Response.redirect(new URL("/", nextUrl));
-        }
-        return true;
-      }
-      return false;
-    },
+    // authorized({ auth, request: { nextUrl } }) {
+    //   const isLoggedIn = !!auth?.user;
+    //   const isOnDashboard = nextUrl.pathname.startsWith("/login");
+    //   if (isLoggedIn) {
+    //     if (isOnDashboard) {
+    //       return Response.redirect(new URL("/", nextUrl));
+    //     }
+    //     return true;
+    //   }
+    //   return false;
+    // },
     async jwt({ token, trigger, session, account, user }) {
       if (user) {
         token.accessToken = user.accessToken; // Add accessToken to token
