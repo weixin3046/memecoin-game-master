@@ -105,6 +105,7 @@ export default function LoginForm() {
   };
 
   const onSubmit = async (values: z.infer<typeof LoginSchemas>) => {
+    console.log(999);
     setError("");
     setSuccess("");
     startTransiton(() => {

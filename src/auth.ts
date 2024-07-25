@@ -1,10 +1,8 @@
 import NextAuth, { AuthError } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { object, z, ZodError } from "zod";
-import validator from "validator";
 import { authConfig } from "./auth.config";
 import { LoginSchemas } from "./schemas";
-import { DEFAULT_LOGIN_REDIRECT } from "./routes";
 
 async function handleLogin(
   phone: string,
@@ -27,7 +25,6 @@ async function handleLogin(
         }),
       }
     );
-
     return user;
   } catch (error) {
     throw new Error("Failed to fetch user.");
@@ -46,7 +43,6 @@ export const { auth, signIn, signOut } = NextAuth({
           let user = null;
           user = await handleLogin(phone, verifcode, areaCode);
           user = await user?.json();
-          console.log(user, "user login======");
           if (!user) {
             return null;
           }
