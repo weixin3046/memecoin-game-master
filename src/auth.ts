@@ -46,7 +46,6 @@ export const { auth, signIn, signOut } = NextAuth({
 
           user = await handleLogin(phone, verifcode, areaCode);
           user = await user?.json();
-          console.log(user, "user=======");
           if (!user) {
             return null;
           }

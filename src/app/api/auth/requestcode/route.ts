@@ -3,8 +3,8 @@ import { requestCode } from "./server";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const { phoneNo } = body;
-  const response = await requestCode(phoneNo);
+  const { phoneNo, areaCode } = body;
+  const response = await requestCode(phoneNo, areaCode);
   return Response.json(response);
 }
 export async function GET() {

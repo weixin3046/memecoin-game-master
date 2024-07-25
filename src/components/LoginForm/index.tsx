@@ -27,6 +27,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { authenticate } from "@/app/api/auth/signIn/server";
 import { CustomModal } from "../CustomModal";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { FormError } from "./form-error";
+import { FormSuccess } from "./form-success";
 
 export default function LoginForm() {
   const {
@@ -68,7 +70,8 @@ export default function LoginForm() {
     },
   ]);
   const [currentArea, setCurrentArea] = useState(areas[0]);
-
+  const [error, setError] = useState<undefined | string>("");
+  const [success, setSuccess] = useState<undefined | string>("");
   const [pending, setPending] = useState(false);
   const [countdown, setCountdown] = useState(0);
 
@@ -98,8 +101,12 @@ export default function LoginForm() {
   };
 
   const onSubmit = async (values: z.infer<typeof LoginSchemas>) => {
-    authenticate(values).then((res) => {
-      console.log(res);
+    setError("");
+    setSuccess("");
+    authenticate(values).then((data) => {
+      console.log(data, "data=========");
+      setError(data);
+      // setSuccess(data.success);
     });
   };
 
@@ -157,10 +164,12 @@ export default function LoginForm() {
                 {errors.verifcode && errors.verifcode.message}
               </FormErrorMessage>
             </FormControl>
+            <FormError message={error} />
+            <FormSuccess message={success} />
             <Button
               mt={4}
               width={"100%"}
-              colorScheme="teal"
+              background="#5FC7FF"
               isLoading={isSubmitting}
               type="submit"
             >
