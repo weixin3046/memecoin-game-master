@@ -30,9 +30,11 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
 import NextImage from "next/image";
-{
-  /* <PixelClock /> */
-}
+import CnFlag from "@/components/assets/flag/cn.svg";
+import HkFlag from "@/components/assets/flag/hk.svg";
+import McFlag from "@/components/assets/flag/mc.svg";
+import TwFlag from "@/components/assets/flag/tw.svg";
+
 export default function LoginForm() {
   const {
     handleSubmit,
@@ -54,22 +56,38 @@ export default function LoginForm() {
     {
       country: "中國大陸",
       area: "+86",
-      flag: "cn",
+      flag: (
+        <div>
+          <CnFlag />
+        </div>
+      ),
     },
     {
       country: "香港地區(中國)",
       area: "+852",
-      flag: "hk",
+      flag: (
+        <div>
+          <HkFlag />
+        </div>
+      ),
     },
     {
       country: "澳門地區(中國)",
       area: "+853",
-      flag: "mc",
+      flag: (
+        <div>
+          <McFlag />
+        </div>
+      ),
     },
     {
       country: "臺灣地區(中國)",
       area: "+886",
-      flag: "tw",
+      flag: (
+        <div>
+          <TwFlag />
+        </div>
+      ),
     },
   ]);
   const [currentArea, setCurrentArea] = useState(areas[0]);
@@ -131,12 +149,7 @@ export default function LoginForm() {
                 <InputLeftElement width={"6rem"}>
                   <Button width={"6rem"} type="button" onClick={onOpen}>
                     <span className="flex gap-1 items-center">
-                      <NextImage
-                        src={`/flag/${currentArea.flag}.svg`}
-                        width={20}
-                        height={15}
-                        alt="flag"
-                      />
+                      {currentArea.flag}
                       <span>{currentArea.area}</span>
                       <ChevronDownIcon />
                     </span>
@@ -204,12 +217,9 @@ export default function LoginForm() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1">
                   <div>
-                    <NextImage
-                      src={`/flag/${area.flag}.svg`}
-                      width={20}
-                      height={15}
-                      alt="flag"
-                    />
+                    {area.flag}
+                    {/* <NextImage src={CnFlag} width={20} height={15} alt="flag" /> */}
+                    {/* <CnFlag className={"w-[20px] h-[15px]"} /> */}
                   </div>
                   <div>{area.country}</div>
                 </div>
