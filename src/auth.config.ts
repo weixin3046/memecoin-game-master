@@ -7,9 +7,13 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
+      const isLogin = nextUrl.pathname.startsWith("/login");
       if (isLoggedIn) {
         return true;
       } else {
+        if (!isLogin) {
+          return Response.redirect(new URL("/login", nextUrl));
+        }
         return false;
       }
     },
