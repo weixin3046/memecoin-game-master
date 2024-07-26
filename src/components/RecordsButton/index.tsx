@@ -19,8 +19,8 @@ import { AiFillBell } from "react-icons/ai";
 
 interface ListProps {
   createTime: string;
-  issueState: number; //0待发放 1发放中 2发放成功 3发放失败
-  rewardQuantity: number;
+  issueState: string; //0待发放 1发放中 2发放成功 3发放失败
+  rewardQuantity: string;
 }
 
 export default function RecordsButton({}: {}) {
@@ -30,7 +30,9 @@ export default function RecordsButton({}: {}) {
   const fetchData = async () => {
     const res = await fetch("/api/getUserRecords");
     const data = await res.json();
-    setList(data.content);
+    if (data.code === "0") {
+      setList(data.content);
+    }
   };
 
   useEffect(() => {
@@ -84,9 +86,10 @@ export default function RecordsButton({}: {}) {
                         {item.rewardQuantity}
                       </Td>
                       <Td border={0} textAlign={"right"}>
-                        {item.issueState === 2 && "發放成功"}
-                        {item.issueState === 3 && "發放失敗"}
-                        {(item.issueState === 0 || item.issueState) && "待发放"}
+                        {item.issueState === "2" && "發放成功"}
+                        {item.issueState === "3" && "發放失敗"}
+                        {(item.issueState === "0" || item.issueState === "1") &&
+                          "待发放"}
                       </Td>
                     </Tr>
                   ))}
