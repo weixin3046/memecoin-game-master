@@ -27,7 +27,6 @@ export async function POST() {
     }
     throw new Error({ ...data });
   } catch (error) {
-    console.log(error);
     return error;
   }
 }

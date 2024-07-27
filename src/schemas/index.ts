@@ -1,7 +1,7 @@
 import validator from "validator";
 import * as z from "zod";
 
-export const LoginSchemas = z.object({
+export const LoginSchema = z.object({
   areaCode: z.string(),
   phone: z
     .string()

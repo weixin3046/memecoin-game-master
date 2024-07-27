@@ -9,23 +9,24 @@ export const {
 } = NextAuth({
   pages: {
     signIn: "/auth/login",
+    error: "/auth/error",
   },
   events: {},
   callbacks: {
     async signIn({ user, account }) {
-      console.log(user, account, " user, account ****");
       return true;
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
       return session;
     },
-    async jwt({ token, trigger, session, account, user }) {
+    async jwt({ token, user }) {
       if (user) {
         token.accessToken = user.accessToken; // Add accessToken to token
       }
       return token;
     },
   },
+  session: { strategy: "jwt" },
   ...authConfig,
 });

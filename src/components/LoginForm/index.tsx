@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { LoginSchemas } from "@/schemas";
+import { LoginSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomModal } from "../CustomModal";
 import { ChevronDownIcon } from "@chakra-ui/icons";
@@ -39,8 +39,8 @@ export default function LoginForm() {
     watch,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<z.infer<typeof LoginSchemas>>({
-    resolver: zodResolver(LoginSchemas),
+  } = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     mode: "all",
     defaultValues: {
       phone: "",
@@ -120,10 +120,10 @@ export default function LoginForm() {
     } catch (error) {}
   };
 
-  const onSubmit = async (values: z.infer<typeof LoginSchemas>) => {
+  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     setError("");
     setSuccess("");
-    login(values, callbackUrl)
+    login(values, "/")
       .then((data) => {
         if (data?.error) {
           setError(data?.error);
