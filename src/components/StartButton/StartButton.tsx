@@ -128,7 +128,7 @@ export const StartButton = () => {
             leftIcon={<Icon as={FaUser} />}
             onClick={() => {
               onClose();
-              router.push("/login");
+              router.push("/auth/login");
             }}
           >
             通过手机号码登录

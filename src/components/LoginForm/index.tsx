@@ -5,7 +5,6 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Select,
   Input,
   FormErrorMessage,
   Card,
@@ -32,7 +31,7 @@ import HkFlag from "@/components/assets/flag/hk.svg";
 import McFlag from "@/components/assets/flag/mc.svg";
 import TwFlag from "@/components/assets/flag/tw.svg";
 import { login } from "@/actions/login";
-
+import { useSearchParams } from "next/navigation";
 export default function LoginForm() {
   const {
     handleSubmit,
@@ -49,6 +48,8 @@ export default function LoginForm() {
       areaCode: "+86",
     },
   });
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [areas, setAreas] = useState([
     {
@@ -122,8 +123,7 @@ export default function LoginForm() {
   const onSubmit = async (values: z.infer<typeof LoginSchemas>) => {
     setError("");
     setSuccess("");
-    console.log(213123);
-    login(values)
+    login(values, callbackUrl)
       .then((data) => {
         if (data?.error) {
           setError(data?.error);

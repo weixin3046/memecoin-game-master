@@ -1,15 +1,15 @@
 // "use client";
-import { ChakraProvider, Flex, IconButton } from "@chakra-ui/react";
+import { ChakraProvider, Flex } from "@chakra-ui/react";
 import { MemecoinGame } from "../components/MemecoinGame";
-import { FaSignOutAlt } from "react-icons/fa";
+
 import { FaFileAlt } from "react-icons/fa";
-import { signOut } from "@/auth";
 
 import Link from "next/link";
 import SwapApprove from "@/components/SwapApprove";
 import Balance from "@/components/Balance";
 import Transactions from "@/components/Transaction";
 import RecordsButton from "@/components/RecordsButton";
+import SignOutButton from "@/components/SignOutButton";
 
 export function TeaserGame() {
   return (
@@ -33,16 +33,7 @@ export function TeaserGame() {
                 <Link href="/rule" className="hover:!no-underline no-underline">
                   <FaFileAlt className="text-2xl text-white" />
                 </Link>
-                <form
-                  action={async () => {
-                    "use server";
-                    await signOut();
-                  }}
-                >
-                  <button type="submit">
-                    <FaSignOutAlt className="text-xl text-white" />
-                  </button>
-                </form>
+                <SignOutButton />
               </div>
             </div>
           </div>
