@@ -18,22 +18,20 @@ import {
   useDisclosure,
   List,
   ListItem,
-  ListIcon,
 } from "@chakra-ui/react";
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { LoginSchemas } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { authenticate } from "@/app/api/auth/signIn/server";
 import { CustomModal } from "../CustomModal";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
-import NextImage from "next/image";
 import CnFlag from "@/components/assets/flag/cn.svg";
 import HkFlag from "@/components/assets/flag/hk.svg";
 import McFlag from "@/components/assets/flag/mc.svg";
 import TwFlag from "@/components/assets/flag/tw.svg";
+import { login } from "@/actions/login";
 
 export default function LoginForm() {
   const {
@@ -95,7 +93,6 @@ export default function LoginForm() {
   const [success, setSuccess] = useState<undefined | string>("");
   const [pending, setPending] = useState(false);
   const [countdown, setCountdown] = useState(0);
-  const [isPending, startTransiton] = useTransition();
 
   useEffect(() => {
     if (countdown > 0) {
@@ -125,12 +122,14 @@ export default function LoginForm() {
   const onSubmit = async (values: z.infer<typeof LoginSchemas>) => {
     setError("");
     setSuccess("");
-    startTransiton(() => {
-      authenticate(values).then((data) => {
-        setError(data);
-        // setSuccess(data.success);
-      });
-    });
+    console.log(213123);
+    login(values)
+      .then((data) => {
+        if (data?.error) {
+          setError(data?.error);
+        }
+      })
+      .catch(() => setError("Something went wrong"));
   };
 
   return (
@@ -195,7 +194,6 @@ export default function LoginForm() {
               mt={4}
               width={"100%"}
               background="#5FC7FF"
-              disabled={isPending}
               isLoading={isSubmitting}
               type="submit"
             >
