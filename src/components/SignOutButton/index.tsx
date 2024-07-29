@@ -19,8 +19,6 @@ export default function SignOutButton() {
       type="button"
       onClick={async () => {
         await logout();
-        window.location.href = "/auth/login";
-        // window.location.reload();
       }}
     >
       <FaSignOutAlt className="text-xl text-white" />

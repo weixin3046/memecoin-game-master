@@ -42,6 +42,11 @@ export const login = async (
       redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
   } else {
+    if (data.code === "500") {
+      return {
+        error: "服务器异常",
+      };
+    }
     return {
       error: data.msg,
     };
