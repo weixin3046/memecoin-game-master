@@ -31,7 +31,7 @@ import HkFlag from "@/components/assets/flag/hk.svg";
 import McFlag from "@/components/assets/flag/mc.svg";
 import TwFlag from "@/components/assets/flag/tw.svg";
 import { login } from "@/actions/login";
-import { useSearchParams } from "next/navigation";
+
 export default function LoginForm() {
   const {
     handleSubmit,
@@ -48,8 +48,6 @@ export default function LoginForm() {
       areaCode: "+86",
     },
   });
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [areas, setAreas] = useState([
     {
@@ -94,7 +92,7 @@ export default function LoginForm() {
   const [success, setSuccess] = useState<undefined | string>("");
   const [pending, setPending] = useState(false);
   const [countdown, setCountdown] = useState(0);
-
+  const [isPending, startTransiton] = useTransition();
   useEffect(() => {
     if (countdown > 0) {
       const timer = setTimeout(() => {
@@ -123,13 +121,14 @@ export default function LoginForm() {
   const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
     setError("");
     setSuccess("");
-    login(values, "/")
-      .then((data) => {
+    startTransiton(() => {
+      login(values).then((data) => {
         if (data?.error) {
-          setError(data?.error);
+          setError(data.error);
         }
-      })
-      .catch(() => setError("Something went wrong"));
+        // setSuccess(data.success);
+      });
+    });
   };
 
   return (
@@ -157,6 +156,7 @@ export default function LoginForm() {
                 <Input
                   paddingLeft={"6.2rem"}
                   id="phone"
+                  isDisabled={isPending}
                   placeholder="請輸入"
                   {...register("phone")}
                 />
@@ -169,6 +169,7 @@ export default function LoginForm() {
               <FormLabel htmlFor="verifcode">驗證碼</FormLabel>
               <InputGroup>
                 <Input
+                  isDisabled={isPending}
                   id="verifcode"
                   placeholder="請輸入"
                   {...register("verifcode")}
@@ -177,7 +178,9 @@ export default function LoginForm() {
                   <Button
                     type="button"
                     onClick={sendVerificationCode}
-                    isDisabled={pending || !watch("phone") || !!errors.phone}
+                    isDisabled={
+                      pending || !watch("phone") || !!errors.phone || isPending
+                    }
                   >
                     {pending ? `重新發送 ${countdown}` : `發送驗證碼`}
                   </Button>
@@ -194,6 +197,7 @@ export default function LoginForm() {
               mt={4}
               width={"100%"}
               background="#5FC7FF"
+              isDisabled={isPending}
               isLoading={isSubmitting}
               type="submit"
             >
