@@ -86,11 +86,12 @@ export const StartButton = () => {
     const data = hashRes.content as metaHashResponseProps;
 
     setMetaHashResponse(data);
-    return data.metaHashB64;
+    return data;
   }, [setMetaHashResponse]);
 
   const JoinGame = useCallback(
     async (idToken?: string) => {
+      if (!metaHashResponse.metaHash) return;
       await fetch("/api/joinGame", {
         method: "POST",
         body: JSON.stringify({
@@ -102,12 +103,14 @@ export const StartButton = () => {
           metaHashB64: metaHashResponse.metaHashB64, //
         }),
       });
+
       setMetaHashResponse({
         metaHash: "",
         metaHashB64: "",
         nonceInfo: "",
         feelInfo: {},
       });
+      updateToken("");
     },
     [
       metaHashResponse.feelInfo,
@@ -145,8 +148,8 @@ export const StartButton = () => {
       try {
         updateToken("");
         const metaHash = await GetMetaHash();
-        console.log(metaHash);
-        googleInfo.nonce = metaHash;
+        setMetaHashResponse(metaHash);
+        googleInfo.nonce = metaHash.metaHashB64;
         let url =
           "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?";
         let query = Object.keys(googleInfo)
@@ -154,7 +157,7 @@ export const StartButton = () => {
           .join("&");
         let link = url + query;
         console.log(link);
-        window.location.href = link;
+        // window.location.href = link;
       } catch (error) {}
     }
     return;

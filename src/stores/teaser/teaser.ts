@@ -1,5 +1,9 @@
 import { create } from "zustand";
-import { persist, subscribeWithSelector } from "zustand/middleware";
+import {
+  createJSONStorage,
+  persist,
+  subscribeWithSelector,
+} from "zustand/middleware";
 import { shallow } from "zustand/shallow";
 
 import ClickCoinSound from "@/components/assets/audios/click-coin.mp3";
@@ -106,53 +110,59 @@ interface TransactionState {
   updateTransactionStatus: (hash: string, status: string) => void;
 }
 
-export const useTransactionStore = create<TransactionState>((set) => ({
-  transactions: [],
-  targetModal: false,
-  metaHash: "",
-  metaHashResponse: {
-    metaHash: "",
-    metaHashB64: "",
-    nonceInfo: "",
-    feelInfo: {},
-  },
-  setMetaHashResponse: (meta) =>
-    set((state) => ({
-      metaHashResponse: meta,
-    })),
-  setMetaHash: (hash) =>
-    set((state) => ({
-      metaHash: hash,
-    })),
-  openTargetModalStatus: () =>
-    set((state) => ({
-      targetModal: true,
-    })),
-  closeTargetModalStatus: () =>
-    set((state) => ({
+export const useTransactionStore = create(
+  persist<TransactionState>(
+    (set, get) => ({
+      transactions: [],
       targetModal: false,
-    })),
-  addTransaction: (hash, status) =>
-    set((state) => ({
-      transactions: [...state.transactions, { hash, status }],
-    })),
+      metaHash: "",
+      metaHashResponse: {
+        metaHash: "",
+        metaHashB64: "",
+        nonceInfo: "",
+        feelInfo: {},
+      },
+      setMetaHashResponse: (meta) =>
+        set((state) => ({
+          metaHashResponse: meta,
+        })),
+      setMetaHash: (hash) =>
+        set((state) => ({
+          metaHash: hash,
+        })),
+      openTargetModalStatus: () =>
+        set((state) => ({
+          targetModal: true,
+        })),
+      closeTargetModalStatus: () =>
+        set((state) => ({
+          targetModal: false,
+        })),
+      addTransaction: (hash, status) =>
+        set((state) => ({
+          transactions: [...state.transactions, { hash, status }],
+        })),
 
-  removeTransaction: (hash) =>
-    set((state) => ({
-      transactions: state.transactions.filter(
-        (transaction) => transaction.hash !== hash
-      ),
-    })),
+      removeTransaction: (hash) =>
+        set((state) => ({
+          transactions: state.transactions.filter(
+            (transaction) => transaction.hash !== hash
+          ),
+        })),
 
-  updateTransactionStatus: (hash, status) =>
-    set((state) => ({
-      transactions: state.transactions.map((transaction) =>
-        transaction.hash === hash ? { ...transaction, status } : transaction
-      ),
-    })),
-}));
-
-persist(useTransactionStore, { name: "metaHash" });
+      updateTransactionStatus: (hash, status) =>
+        set((state) => ({
+          transactions: state.transactions.map((transaction) =>
+            transaction.hash === hash ? { ...transaction, status } : transaction
+          ),
+        })),
+    }),
+    {
+      name: "food-storage", // name of the item in the storage (must be unique)
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);
 
 interface CoinCountStorePropss {
   count: number;
