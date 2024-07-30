@@ -33,7 +33,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const response = await fetch(
           // /changyou-wap-service/google/verify/v2
           // /changyou-wap-service/apple/login/verify/v2
-          `${process.env.BASE_API_URL}/changyou-wap-service/apple/login/verify/v2`,
+          `${process.env.BASE_API_URL}/changyou-wap-service/google/verify/v2`,
           {
             method: "POST",
             body: JSON.stringify({
@@ -42,6 +42,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
         );
         const data = await response.json();
+        console.log({
+          data: data,
+        });
         token.accessToken = data.content.loginInfo.token;
         return token;
       }
