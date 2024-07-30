@@ -15,8 +15,7 @@ const Social = () => {
   const onClick = (provider: "google" | "appale") => {
     console.log(provider);
     signIn(provider, {
-      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
-      // callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+      callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
   };
 

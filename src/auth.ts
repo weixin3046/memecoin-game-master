@@ -9,12 +9,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   events: {},
   callbacks: {
     async signIn({ user, account }) {
-      console.log(account?.provider, "account.provider=====");
-      // if (account?.provider !== "Google") {
-      //   return true;
-      // }
       // Allow OAuth without email verification
-      if (account?.provider !== "credentials") return true;
+      if (account?.provider !== "credentials") {
+        return true;
+      }
       return true;
     },
     async session({ session, token }) {
@@ -22,18 +20,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
     async jwt({ token, user, account }) {
-      console.log({
-        token: token,
-        user: user,
-        account: account,
-      });
-
       if (user) {
         token.accessToken = user.accessToken; // Add accessToken to token
         return token;
       }
 
       if (account?.id_token) {
+        console.log("进来了啊=======");
         const response = await fetch(
           // /changyou-wap-service/google/verify/v2
           // /changyou-wap-service/apple/login/verify/v2
