@@ -84,7 +84,9 @@ export const StartButton = () => {
     const hash = await fetch("/api/getMetaHash");
     const hashRes = await hash.json();
     const data = hashRes.content as metaHashResponseProps;
+
     setMetaHashResponse(data);
+    return data.metaHashB64;
   }, [setMetaHashResponse]);
 
   const JoinGame = useCallback(
@@ -135,8 +137,9 @@ export const StartButton = () => {
     } else {
       try {
         updateToken("");
-        await GetMetaHash();
-        googleInfo.nonce = metaHashResponse.metaHashB64;
+        const metaHash = await GetMetaHash();
+        console.log(metaHash);
+        googleInfo.nonce = metaHash;
         let url =
           "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?";
         let query = Object.keys(googleInfo)
