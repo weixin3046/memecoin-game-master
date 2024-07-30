@@ -43,6 +43,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           `${process.env.BASE_API_URL}/changyou-wap-service/google/verify/v2`,
           {
             method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
             body: JSON.stringify({
               jwtToken: account.id_token,
             }),
