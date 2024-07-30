@@ -24,10 +24,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         user: user,
         account: account,
       });
-      if (user) {
-        token.accessToken = user.accessToken; // Add accessToken to token
-        return token;
-      }
       console.log(
         "这里开始",
         account?.access_token,
@@ -35,6 +31,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         account,
         "account结束"
       );
+      if (user) {
+        token.accessToken = user.accessToken; // Add accessToken to token
+        return token;
+      }
+
       if (account?.id_token) {
         const response = await fetch(
           // /changyou-wap-service/google/verify/v2
