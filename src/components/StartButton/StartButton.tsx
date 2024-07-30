@@ -69,6 +69,7 @@ export const StartButton = () => {
   const balance = useBalanceStore((state) => state.balance);
   const [ticketNumber, setTicketNumber] = useState(10);
   const provider = useProvider((state) => state.provider);
+  const updateToken = useOAutToken((state) => state.updateToken);
   const { state } = useTeaserStore((state) => ({
     state: state.state,
   }));
@@ -108,8 +109,9 @@ export const StartButton = () => {
     ]
   );
 
-  // 三方登录授权验证
+  // // 三方登录授权验证
   useEffect(() => {
+    console.log(token);
     if (token) {
       JoinGame(token);
     }
@@ -132,6 +134,7 @@ export const StartButton = () => {
       } catch (error) {}
     } else {
       try {
+        updateToken("");
         await GetMetaHash();
         googleInfo.nonce = metaHashResponse.metaHashB64;
         let url =
