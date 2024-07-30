@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { subscribeWithSelector } from "zustand/middleware";
+import { persist, subscribeWithSelector } from "zustand/middleware";
 import { shallow } from "zustand/shallow";
 
 import ClickCoinSound from "@/components/assets/audios/click-coin.mp3";
@@ -151,6 +151,8 @@ export const useTransactionStore = create<TransactionState>((set) => ({
       ),
     })),
 }));
+
+persist(useTransactionStore, { name: "metaHash" });
 
 interface CoinCountStorePropss {
   count: number;

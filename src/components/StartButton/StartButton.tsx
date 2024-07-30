@@ -102,12 +102,19 @@ export const StartButton = () => {
           metaHashB64: metaHashResponse.metaHashB64, //
         }),
       });
+      setMetaHashResponse({
+        metaHash: "",
+        metaHashB64: "",
+        nonceInfo: "",
+        feelInfo: {},
+      });
     },
     [
       metaHashResponse.feelInfo,
       metaHashResponse.metaHash,
       metaHashResponse.metaHashB64,
       metaHashResponse.nonceInfo,
+      setMetaHashResponse,
     ]
   );
 
