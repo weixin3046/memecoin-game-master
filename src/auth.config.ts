@@ -14,7 +14,6 @@ export default {
         params: {
           scope: "email",
           response_type: "id_token",
-          flowName: "GeneralOAuthFlow",
         },
       },
       clientId: process.env.GOOGLE_CLIENT_ID,
