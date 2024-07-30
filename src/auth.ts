@@ -18,28 +18,37 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       session.accessToken = token.accessToken;
       return session;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       console.log({
         token: token,
         user: user,
+        account: account,
       });
       if (user) {
         token.accessToken = user.accessToken; // Add accessToken to token
+        return token;
       }
 
-      if (!token.sub) return token;
-      if (!token.id_token) return token;
-      const existingUser = await fetch(
-        `${process.env.BASE_API_URL}/changyou-wap-service/apple/login/verify/v2`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            jwtToken: token.id_token,
-          }),
-        }
-      );
-
+      if (account?.id_token) {
+        const response = await fetch(
+          // /changyou-wap-service/google/verify/v2
+          // /changyou-wap-service/apple/login/verify/v2
+          `${process.env.BASE_API_URL}/changyou-wap-service/apple/login/verify/v2`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              jwtToken: account.id_token,
+            }),
+          }
+        );
+        const data = await response.json();
+        token.accessToken = data.content.loginInfo.token;
+        return token;
+      }
       return token;
+
+      // if (!token.sub) return token;
+      // if (!token.id_token) return token;
     },
   },
   session: { strategy: "jwt" },
