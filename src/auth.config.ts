@@ -10,12 +10,6 @@ export default {
       clientSecret: process.env.APPLE_CLIENT_SECRET as string,
     }),
     Google({
-      authorization: {
-        params: {
-          scope: "email",
-          response_type: "id_token",
-        },
-      },
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
