@@ -9,7 +9,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   events: {},
   callbacks: {
     async signIn({ user, account }) {
-      console.log(account);
+      console.log(account?.provider, "account.provider=====");
+      // if (account?.provider !== "Google") {
+      //   return true;
+      // }
       // Allow OAuth without email verification
       if (account?.provider !== "credentials") return true;
       return true;
@@ -24,13 +27,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         user: user,
         account: account,
       });
-      console.log(
-        "这里开始",
-        account?.access_token,
-        "account开始",
-        account,
-        "account结束"
-      );
+
       if (user) {
         token.accessToken = user.accessToken; // Add accessToken to token
         return token;
