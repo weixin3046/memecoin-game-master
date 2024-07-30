@@ -7,13 +7,15 @@ import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@chakra-ui/react";
+import { useProvider } from "@/stores/teaser";
 
 const Social = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
-
+  const setProvider = useProvider((state) => state.setProvider);
   const onClick = (provider: "google" | "appale") => {
     console.log(provider);
+    setProvider("OAuth");
     signIn(provider, {
       callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });

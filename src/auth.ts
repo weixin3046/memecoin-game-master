@@ -17,36 +17,31 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
+      session.provider = token.provider;
       return session;
     },
-    async jwt({ token, user, account }) {
-      // if (user) {
-      //   token.accessToken = user.accessToken; // Add accessToken to token
-      //   return token;
-      // }
-
-      console.log("token开始", token, "token结束");
-
+    async jwt({ token, user, account, session }) {
+      if (user) {
+        if (user.accessToken) {
+          token.accessToken = user.accessToken; // Add accessToken to token
+          return token;
+        }
+      }
       if (account?.id_token) {
-        console.log("进来了啊=======");
-        const response = await fetch(
-          // /changyou-wap-service/google/verify/v2
-          // /changyou-wap-service/apple/login/verify/v2
-          `${process.env.BASE_API_URL}/changyou-wap-service/google/verify/v2`,
-          {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify({
-              jwtToken: account.id_token,
-            }),
-          }
-        );
-        const data = await response.json();
-        console.log({
-          data: data,
+        const url =
+          account?.provider === "google"
+            ? "/changyou-wap-service/google/verify/v2"
+            : "/changyou-wap-service/apple/login/verify/v2";
+        const response = await fetch(`${process.env.BASE_API_URL}${url}`, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            jwtToken: account.id_token,
+          }),
         });
+        const data = await response.json();
         token.accessToken = data.content.loginInfo.token;
         return token;
       }

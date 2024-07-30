@@ -33,8 +33,11 @@ import McFlag from "@/components/assets/flag/mc.svg";
 import TwFlag from "@/components/assets/flag/tw.svg";
 import { login } from "@/actions/login";
 import CardWrapper from "@/components/LoginForm/card-wrapper";
+import { useOAutToken, useProvider } from "@/stores/teaser";
 
 export default function LoginForm() {
+  const setpProvider = useProvider((state) => state.setProvider);
+  const updateToken = useOAutToken((state) => state.updateToken);
   const {
     handleSubmit,
     register,
@@ -128,6 +131,8 @@ export default function LoginForm() {
         if (data?.error) {
           setError(data.error);
         }
+        updateToken("");
+        setpProvider("credentials");
         // setSuccess(data.success);
       });
     });

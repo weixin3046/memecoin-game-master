@@ -1,7 +1,10 @@
 import { useWindowStore } from "@/stores/window";
 import { Button8Bit2 } from "../Button8Bit2";
 import {
+  metaHashResponseProps,
   useBalanceStore,
+  useOAutToken,
+  useProvider,
   useTeaserStore,
   useTransactionStore,
 } from "@/stores/teaser";
@@ -17,16 +20,18 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CustomModal } from "../CustomModal";
 import { useRouter } from "next/navigation";
 import PointButton from "./PointButton";
 import useToken from "@/hooks/useToken";
+import { auth } from "@/auth";
+import { useSession } from "next-auth/react";
 
 const googleInfo = {
   client_id:
     "191629411062-fepnoc22qk6e8hq5bv9n0mbjjb58sj0h.apps.googleusercontent.com",
-  redirect_uri: "https://h5-auth.blossomchain.net/authorization/success",
+  redirect_uri: "http://localhost:3000/success",
   scope: "email",
   state: "eyJvcGVyYXRlIjoibG9na",
   response_type: "id_token",
@@ -53,43 +58,91 @@ async function getAppleLogin() {
 
 export const StartButton = () => {
   const isMobile = useWindowStore((state) => state.isMobile);
-  const setMetaHash = useTransactionStore((state) => state.setMetaHash);
+  const metaHashResponse = useTransactionStore(
+    (state) => state.metaHashResponse
+  );
+  const setMetaHashResponse = useTransactionStore(
+    (state) => state.setMetaHashResponse
+  );
+  const token = useOAutToken((state) => state.token);
   const router = useRouter();
   const balance = useBalanceStore((state) => state.balance);
-
   const [ticketNumber, setTicketNumber] = useState(10);
+  const provider = useProvider((state) => state.provider);
   const { state } = useTeaserStore((state) => ({
     state: state.state,
   }));
+
   const ctaBtnStyle = {
     visibility: state === "initial" ? "visible" : "hidden",
     minW: "200px",
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const GetMetaHash = useCallback(async () => {
+    const hash = await fetch("/api/getMetaHash");
+    const hashRes = await hash.json();
+    const data = hashRes.content as metaHashResponseProps;
+    setMetaHashResponse(data);
+  }, [setMetaHashResponse]);
+
+  const JoinGame = useCallback(
+    async (idToken?: string) => {
+      await fetch("/api/joinGame", {
+        method: "POST",
+        body: JSON.stringify({
+          feelInfo: metaHashResponse.feelInfo,
+          metaHash: metaHashResponse.metaHash,
+          nonceInfo: metaHashResponse.nonceInfo,
+          sourceActivity: "mmGame",
+          idToken: idToken,
+          metaHashB64: metaHashResponse.metaHashB64, //
+        }),
+      });
+    },
+    [
+      metaHashResponse.feelInfo,
+      metaHashResponse.metaHash,
+      metaHashResponse.metaHashB64,
+      metaHashResponse.nonceInfo,
+    ]
+  );
+
+  // 三方登录授权验证
+  useEffect(() => {
+    if (token) {
+      JoinGame(token);
+    }
+  }, [JoinGame, token]);
+
   const playButtonSound = () => {
     if (!useTeaserStore.getState().playingAudio) return;
     const audio = new Audio(ClickStartButtonSound);
     audio.volume = 0.2;
     audio.play();
   };
+  // const on
   const onStartButtonClick = async () => {
-    playButtonSound();
-    useTeaserStore.getState().onStartButtonClick();
-    try {
-      const hash = await fetch("/api/getMetaHash");
-
-      const hashRes = await hash.json();
-      setMetaHash(hashRes.content.metaHash);
-      const joinGame = await fetch("/api/joinGame", {
-        method: "POST",
-        body: JSON.stringify({
-          feelInfo: hashRes.content.feelInfo,
-          metaHash: hashRes.content.metaHash,
-          nonceInfo: hashRes.content.nonceInfo,
-          sourceActivity: "mmGame",
-        }),
-      });
-    } catch (error) {}
+    if (provider === "credentials") {
+      playButtonSound();
+      useTeaserStore.getState().onStartButtonClick();
+      try {
+        await GetMetaHash();
+        await JoinGame();
+      } catch (error) {}
+    } else {
+      try {
+        await GetMetaHash();
+        googleInfo.nonce = metaHashResponse.metaHashB64;
+        let url =
+          "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?";
+        let query = Object.keys(googleInfo)
+          .map((key) => `${key}=${googleInfo[key]}`)
+          .join("&");
+        let link = url + query;
+        window.location.href = link;
+      } catch (error) {}
+    }
     return;
   };
   const fetchTickerNum = async () => {

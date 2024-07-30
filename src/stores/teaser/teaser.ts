@@ -85,10 +85,19 @@ export interface Transaction {
   hash: string;
   status: string; //1=>成功 2=>panding 0=>失败
 }
+
+export interface metaHashResponseProps {
+  feelInfo: any;
+  metaHash: string;
+  metaHashB64: string;
+  nonceInfo: string;
+}
 interface TransactionState {
   transactions: Transaction[];
   targetModal: boolean;
   metaHash: string;
+  metaHashResponse: metaHashResponseProps;
+  setMetaHashResponse: (meta: metaHashResponseProps) => void;
   setMetaHash: (hash: string) => void;
   openTargetModalStatus: () => void;
   closeTargetModalStatus: () => void;
@@ -101,6 +110,16 @@ export const useTransactionStore = create<TransactionState>((set) => ({
   transactions: [],
   targetModal: false,
   metaHash: "",
+  metaHashResponse: {
+    metaHash: "",
+    metaHashB64: "",
+    nonceInfo: "",
+    feelInfo: {},
+  },
+  setMetaHashResponse: (meta) =>
+    set((state) => ({
+      metaHashResponse: meta,
+    })),
   setMetaHash: (hash) =>
     set((state) => ({
       metaHash: hash,
@@ -150,6 +169,28 @@ export const useCoinCountStore = create<CoinCountStorePropss>((set) => ({
   addBadCoinCount: () =>
     set((state) => ({
       badcount: state.badcount + 1,
+    })),
+}));
+
+export const useOAutToken = create<{
+  token: null | string;
+  updateToken: (token: string) => void;
+}>((set) => ({
+  token: null,
+  updateToken: (new_token) =>
+    set((state) => ({
+      token: new_token,
+    })),
+}));
+
+export const useProvider = create<{
+  provider: null | string;
+  setProvider: (token: string) => void;
+}>((set) => ({
+  provider: null,
+  setProvider: (new_provider) =>
+    set((state) => ({
+      provider: new_provider,
     })),
 }));
 
