@@ -19,9 +19,26 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
     async jwt({ token, user }) {
+      console.log({
+        token: token,
+        user: user,
+      });
       if (user) {
         token.accessToken = user.accessToken; // Add accessToken to token
       }
+
+      if (!token.sub) return token;
+      if (!token.id_token) return token;
+      const existingUser = await fetch(
+        `${process.env.BASE_API_URL}/changyou-wap-service/apple/login/verify/v2`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            jwtToken: token.id_token,
+          }),
+        }
+      );
+
       return token;
     },
   },
