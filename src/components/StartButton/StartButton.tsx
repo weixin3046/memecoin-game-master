@@ -140,6 +140,7 @@ export const StartButton = () => {
           .map((key) => `${key}=${googleInfo[key]}`)
           .join("&");
         let link = url + query;
+        console.log(link);
         window.location.href = link;
       } catch (error) {}
     }
