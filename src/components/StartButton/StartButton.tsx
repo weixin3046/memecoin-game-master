@@ -31,7 +31,7 @@ import { useSession } from "next-auth/react";
 const googleInfo = {
   client_id:
     "191629411062-fepnoc22qk6e8hq5bv9n0mbjjb58sj0h.apps.googleusercontent.com",
-  redirect_uri: "http://localhost:3000/success",
+  redirect_uri: "https://memecoin-game-master.vercel.app/success",
   scope: "email",
   state: "eyJvcGVyYXRlIjoibG9na",
   response_type: "id_token",
