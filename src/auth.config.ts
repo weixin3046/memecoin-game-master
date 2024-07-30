@@ -5,7 +5,10 @@ import Apple from "next-auth/providers/apple";
 
 export default {
   providers: [
-    Apple,
+    Apple({
+      clientId: process.env.APPLE_CLIENT_SECRET,
+      clientSecret: process.env.APPLE_CLIENT_SECRET as string,
+    }),
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,

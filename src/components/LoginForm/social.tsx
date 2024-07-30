@@ -2,6 +2,7 @@
 
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { FaApple } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { useSearchParams } from "next/navigation";
@@ -35,7 +36,7 @@ const Social = () => {
         variant="outline"
         onClick={() => onClick("appale")}
       >
-        <FaGithub className="h-5 w-5" />
+        <FaApple className="h-5 w-5" />
       </Button>
     </div>
   );
