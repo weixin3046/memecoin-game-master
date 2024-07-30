@@ -20,10 +20,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
     async jwt({ token, user, account }) {
-      if (user) {
-        token.accessToken = user.accessToken; // Add accessToken to token
-        return token;
-      }
+      // if (user) {
+      //   token.accessToken = user.accessToken; // Add accessToken to token
+      //   return token;
+      // }
+
+      console.log("token开始", token, "token结束");
 
       if (account?.id_token) {
         console.log("进来了啊=======");
