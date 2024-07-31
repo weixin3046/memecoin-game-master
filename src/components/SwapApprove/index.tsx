@@ -111,6 +111,7 @@ export default function SwapApprove() {
     }
   };
   const approvecross = useCallback(async () => {
+    console.log(approveMetaHash);
     const res = await fetch("/api/approvecross", {
       method: "POST",
       body: JSON.stringify({

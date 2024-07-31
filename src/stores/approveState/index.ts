@@ -62,3 +62,19 @@ export const useApproveState = create(
     }
   )
 );
+
+export const useGuideState = create(
+  persist<{
+    open: boolean;
+    setOpen: () => void;
+  }>(
+    (set, get) => ({
+      open: true,
+      setOpen: () => set({ open: false }),
+    }),
+    {
+      name: "guide-state", // name of the item in the storage (must be unique)
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);

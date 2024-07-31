@@ -13,14 +13,21 @@ import {
 import React, { useEffect, useState } from "react";
 import { RiTokenSwapFill } from "react-icons/ri";
 import Image from "next/image";
+import { useGuideState } from "@/stores/approveState";
 
 export default function Guide() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
   const [step, setStep] = useState(1);
+  const openState = useGuideState((state) => state.open);
+  const setOpen = useGuideState((state) => state.setOpen);
+  // console.log(openState, "openState=====");
   useEffect(() => {
-    onOpen();
-  }, [onOpen]);
+    if (useGuideState.getState().open) {
+      // console.log(openState, "openState");
+      onOpen();
+    }
+  }, [onOpen, openState]);
   return (
     <div>
       <AlertDialog
@@ -28,6 +35,7 @@ export default function Guide() {
         leastDestructiveRef={cancelRef}
         onClose={onClose}
         size={"sm"}
+        isCentered
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
@@ -44,19 +52,25 @@ export default function Guide() {
 
               <div className="flex items-center justify-center gap-4 flex-col py-8">
                 {step === 1 ? (
-                  <Button colorScheme="blue" onClick={() => setStep(2)}>
+                  <Button
+                    colorScheme="blue"
+                    onClick={() => {
+                      setStep(2);
+                      setOpen();
+                    }}
+                  >
                     Swap: <RiTokenSwapFill className="text-white text-2xl" />
                   </Button>
                 ) : (
                   <>
                     <Image
-                      src={"/setp1.png"}
+                      src={"/setp2.png"}
                       width={630}
                       height={40}
                       alt="setp"
                     />
                     <Image
-                      src={"/setp2.png"}
+                      src={"/setp1.png"}
                       width={630}
                       height={40}
                       alt="setp"
