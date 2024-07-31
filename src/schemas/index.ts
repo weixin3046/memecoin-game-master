@@ -9,11 +9,11 @@ export const LoginSchema = z.object({
       (val) =>
         validator.isMobilePhone(val, ["zh-CN", "zh-HK", "zh-MO", "zh-TW"]),
       {
-        message: "Phone number is required ",
+        message: "請輸入手機號",
       }
     ),
   verifcode: z.string().min(6, {
-    message: "Verification Code is required",
+    message: "請輸入驗證碼",
   }),
 });
 
