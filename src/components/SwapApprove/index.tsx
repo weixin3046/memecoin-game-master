@@ -23,6 +23,7 @@ export default function SwapApprove() {
   const [pending, setPending] = useState(false);
   const toast = useToast();
   const crossJwt = useApproveState((state) => state.crossJwt);
+  const setCrossJwt = useApproveState((state) => state.setCrossJwt);
   const crossMetaHash = useApproveState((state) => state.crossMetaHash);
   const setApproveMetaHash = useApproveState(
     (state) => state.setApproveMetaHash
@@ -52,6 +53,7 @@ export default function SwapApprove() {
           });
           const data = await res.json();
           if (data.code === "0") {
+            setCrossJwt(null);
             resolve(data);
           } else {
             reject("error");
