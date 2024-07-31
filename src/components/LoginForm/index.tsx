@@ -57,6 +57,7 @@ export default function LoginForm() {
     },
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log(isOpen);
   const [areas, setAreas] = useState([
     {
       country: "中國大陸",
@@ -140,89 +141,78 @@ export default function LoginForm() {
     });
   };
   return (
-    <CardWrapper
-      backButtonLabel={
-        "為了確保您能順利領取到平台提供的福利，我們建議您使用登錄Blossom Chain時的帳號登錄遊戲，保持帳號一致，謝謝！"
-      }
-      showSocial
-    >
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-        <FormControl isInvalid={!!errors.phone}>
-          <FormLabel htmlFor="phone">手機號</FormLabel>
-          <InputGroup>
-            <InputLeftElement width={"6rem"}>
-              <Button width={"6rem"} type="button" onClick={onOpen}>
-                <span className="flex gap-1 items-center">
-                  {currentArea.flag}
-                  <span>{currentArea.area}</span>
-                  <ChevronDownIcon />
-                </span>
-              </Button>
-            </InputLeftElement>
-            <Input
-              paddingLeft={"6.2rem"}
-              id="phone"
-              isDisabled={isPending || !!phoneNo}
-              placeholder="請輸入"
-              {...register("phone")}
-            />
-          </InputGroup>
-          <FormErrorMessage>
-            {errors.phone && errors.phone.message}
-          </FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={!!errors.verifcode}>
-          <FormLabel htmlFor="verifcode">驗證碼</FormLabel>
-          <InputGroup>
-            <Input
-              isDisabled={isPending}
-              id="verifcode"
-              placeholder="請輸入"
-              {...register("verifcode")}
-            />
-            <InputRightElement width={"auto"}>
-              <Button
-                type="button"
-                onClick={sendVerificationCode}
-                isDisabled={
-                  pending || !watch("phone") || !!errors.phone || isPending
-                }
-              >
-                {pending ? `重新發送 ${countdown}` : `發送驗證碼`}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-
-          <FormErrorMessage>
-            {errors.verifcode && errors.verifcode.message}
-          </FormErrorMessage>
-        </FormControl>
-        <FormError message={error} />
-        <FormSuccess message={success} />
-        <Button
-          mt={4}
-          width={"100%"}
-          background="#5FC7FF"
-          isDisabled={isPending}
-          isLoading={isSubmitting}
-          type="submit"
-        >
-          登錄
-        </Button>
-      </form>
-    </CardWrapper>
-  );
-  return (
     <>
-      <Card>
-        <CardBody>
-          <CardHeader>
-            <Heading size="md" className="text-center">
-              MEMELAND GAME
-            </Heading>
-          </CardHeader>
-        </CardBody>
-      </Card>
+      <CardWrapper
+        backButtonLabel={
+          "為了確保您能順利領取到平台提供的福利，我們建議您使用登錄Blossom Chain時的帳號登錄遊戲，保持帳號一致，謝謝！"
+        }
+        showSocial
+      >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+          <FormControl isInvalid={!!errors.phone}>
+            <FormLabel htmlFor="phone">手機號</FormLabel>
+            <InputGroup>
+              <InputLeftElement width={"6rem"}>
+                <Button width={"6rem"} type="button" onClick={onOpen}>
+                  <span className="flex gap-1 items-center">
+                    {currentArea.flag}
+                    <span>{currentArea.area}</span>
+                    <ChevronDownIcon />
+                  </span>
+                </Button>
+              </InputLeftElement>
+              <Input
+                paddingLeft={"6.2rem"}
+                id="phone"
+                isDisabled={isPending || !!phoneNo}
+                placeholder="請輸入"
+                {...register("phone")}
+              />
+            </InputGroup>
+            <FormErrorMessage>
+              {errors.phone && errors.phone.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={!!errors.verifcode}>
+            <FormLabel htmlFor="verifcode">驗證碼</FormLabel>
+            <InputGroup>
+              <Input
+                isDisabled={isPending}
+                id="verifcode"
+                placeholder="請輸入"
+                {...register("verifcode")}
+              />
+              <InputRightElement width={"auto"}>
+                <Button
+                  type="button"
+                  onClick={sendVerificationCode}
+                  isDisabled={
+                    pending || !watch("phone") || !!errors.phone || isPending
+                  }
+                >
+                  {pending ? `重新發送 ${countdown}` : `發送驗證碼`}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+
+            <FormErrorMessage>
+              {errors.verifcode && errors.verifcode.message}
+            </FormErrorMessage>
+          </FormControl>
+          <FormError message={error} />
+          <FormSuccess message={success} />
+          <Button
+            mt={4}
+            width={"100%"}
+            background="#5FC7FF"
+            isDisabled={isPending}
+            isLoading={isSubmitting}
+            type="submit"
+          >
+            登錄
+          </Button>
+        </form>
+      </CardWrapper>
       <CustomModal isOpen={isOpen} onClose={onClose}>
         <List spacing={3}>
           {areas.map((area) => (
