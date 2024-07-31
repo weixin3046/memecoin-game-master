@@ -1,5 +1,5 @@
 // "use client";
-import { ChakraProvider, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { MemecoinGame } from "../components/MemecoinGame";
 
 import { FaFileAlt } from "react-icons/fa";
@@ -7,14 +7,13 @@ import { FaFileAlt } from "react-icons/fa";
 import Link from "next/link";
 import SwapApprove from "@/components/SwapApprove";
 import Balance from "@/components/Balance";
-import Transactions from "@/components/Transaction";
 import RecordsButton from "@/components/RecordsButton";
 import SignOutButton from "@/components/SignOutButton";
+import Guide from "@/components/Guide";
 
 export function TeaserGame() {
   return (
-    <ChakraProvider>
-      <Transactions />
+    <div className=" relative">
       <Flex
         flexDirection="column"
         className="relative"
@@ -40,7 +39,10 @@ export function TeaserGame() {
         </div>
         <MemecoinGame />
       </Flex>
-    </ChakraProvider>
+      <div className="absolute top-auto bottom-auto right-auto left-auto">
+        <Guide />
+      </div>
+    </div>
   );
 }
 
