@@ -119,7 +119,7 @@ export default function SwapApprove() {
         metaHash: approveMetaHash?.metaHash,
         metaHashB64: approveMetaHash?.metaHashB64,
         feeInfo: approveMetaHash?.feelInfo,
-        nonceInfo: approveMetaHash?.nonceInfo,
+        nonceInfo: approveMetaHash?.nonceInfoDto,
       }),
     });
     const data = await res.json();
@@ -127,15 +127,7 @@ export default function SwapApprove() {
       router.push(`/result/${data.content}`);
       setApproveJwt(null);
     }
-  }, [
-    approveJwt,
-    approveMetaHash?.feelInfo,
-    approveMetaHash?.metaHash,
-    approveMetaHash?.metaHashB64,
-    approveMetaHash?.nonceInfo,
-    router,
-    setApproveJwt,
-  ]);
+  }, [approveJwt, approveMetaHash, router, setApproveJwt]);
   useEffect(() => {
     if (approveJwt) {
       onOpen();

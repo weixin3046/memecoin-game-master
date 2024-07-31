@@ -6,6 +6,7 @@ export interface MetaHashResponseProps {
   metaHash: string;
   metaHashB64: string;
   nonceInfo: string;
+  nonceInfoDto: string;
 }
 
 export const useApproveState = create(
