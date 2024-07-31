@@ -7,12 +7,8 @@ import {
   FormLabel,
   Input,
   FormErrorMessage,
-  Card,
-  CardBody,
   InputGroup,
   InputRightElement,
-  CardHeader,
-  Heading,
   InputLeftElement,
   useDisclosure,
   List,
@@ -40,7 +36,8 @@ export default function LoginForm() {
   const searchParams = useSearchParams();
   const phoneNo = searchParams.get("phoneNo");
   const areaCode = searchParams.get("areaCode");
-  console.log(areaCode);
+  const decodedAreaCode = areaCode && areaCode.replace(/\s*/g, "");
+
   const {
     handleSubmit,
     register,
@@ -53,11 +50,10 @@ export default function LoginForm() {
     defaultValues: {
       phone: phoneNo ? phoneNo : "",
       verifcode: "",
-      areaCode: areaCode ? `+${areaCode}` : "+86",
+      areaCode: areaCode ? `+${decodedAreaCode}` : "+86",
     },
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log(isOpen);
   const [areas, setAreas] = useState([
     {
       country: "中國大陸",
