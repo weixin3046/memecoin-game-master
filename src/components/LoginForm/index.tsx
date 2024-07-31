@@ -17,7 +17,6 @@ import {
   useDisclosure,
   List,
   ListItem,
-  CardFooter,
 } from "@chakra-ui/react";
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -33,11 +32,11 @@ import McFlag from "@/components/assets/flag/mc.svg";
 import TwFlag from "@/components/assets/flag/tw.svg";
 import { login } from "@/actions/login";
 import CardWrapper from "@/components/LoginForm/card-wrapper";
-import { useOAutToken, useProvider } from "@/stores/teaser";
+import { useApproveState } from "@/stores/approveState";
 
 export default function LoginForm() {
-  const setpProvider = useProvider((state) => state.setProvider);
-  const updateToken = useOAutToken((state) => state.updateToken);
+  const setProvider = useApproveState((state) => state.setProvider);
+
   const {
     handleSubmit,
     register,
@@ -131,8 +130,7 @@ export default function LoginForm() {
         if (data?.error) {
           setError(data.error);
         }
-        updateToken("");
-        setpProvider("credentials");
+        setProvider("credentials");
         // setSuccess(data.success);
       });
     });

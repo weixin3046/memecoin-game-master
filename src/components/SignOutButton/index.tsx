@@ -1,24 +1,18 @@
 "use client";
 import { logout } from "@/actions/logout";
+import { useApproveState } from "@/stores/approveState";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { FaSignOutAlt } from "react-icons/fa";
 
 export default function SignOutButton() {
-  // const router = useRouter();
-  // useEffect(() => {
-  //   // 假设在这里处理退出登录逻辑
-  //   // 清除cookie或其他身份验证状态
-
-  //   // 重定向到登录页面
-  //   const callbackUrl = encodeURIComponent(router.asPath);
-  //   router.push(`/auth/login?callbackUrl=${callbackUrl}`);
-  // }, [router]);
+  const reset = useApproveState((state) => state.reset);
   return (
     <button
       type="button"
       onClick={async () => {
         await logout();
+        reset();
       }}
     >
       <FaSignOutAlt className="text-xl text-white" />

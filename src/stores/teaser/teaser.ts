@@ -183,44 +183,6 @@ export const useCoinCountStore = create<CoinCountStorePropss>((set) => ({
     })),
 }));
 
-export const useOAutToken = create(
-  persist<{
-    token: null | string;
-    updateToken: (token: string) => void;
-  }>(
-    (set, get) => ({
-      token: null,
-      updateToken: (new_token) =>
-        set((state) => ({
-          token: new_token,
-        })),
-    }),
-    {
-      name: "oauth-token", // name of the item in the storage (must be unique)
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-);
-
-export const useProvider = create(
-  persist<{
-    provider: null | string;
-    setProvider: (token: string) => void;
-  }>(
-    (set, get) => ({
-      provider: null,
-      setProvider: (new_provider) =>
-        set((state) => ({
-          provider: new_provider,
-        })),
-    }),
-    {
-      name: "provider", // name of the item in the storage (must be unique)
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-);
-
 export const useBalanceStore = create<{
   balance: string;
   pending: boolean;

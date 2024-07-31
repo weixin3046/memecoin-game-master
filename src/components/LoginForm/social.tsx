@@ -7,15 +7,15 @@ import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@chakra-ui/react";
-import { useProvider } from "@/stores/teaser";
+import { useApproveState } from "@/stores/approveState";
 
 const Social = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
-  const setProvider = useProvider((state) => state.setProvider);
-  const onClick = (provider: "google" | "appale") => {
+  const setProvider = useApproveState((state) => state.setProvider);
+  const onClick = (provider: "google" | "apple") => {
     console.log(provider);
-    setProvider("OAuth");
+    setProvider(provider);
     signIn(provider, {
       callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
@@ -35,7 +35,7 @@ const Social = () => {
         size="lg"
         className="w-full"
         variant="outline"
-        onClick={() => onClick("appale")}
+        onClick={() => onClick("apple")}
       >
         <FaApple className="h-5 w-5" />
       </Button>

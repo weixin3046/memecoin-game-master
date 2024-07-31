@@ -1,10 +1,12 @@
 // callCrossActivity
 import { auth } from "@/auth";
+import { NextRequest } from "next/server";
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   try {
     const session = await auth();
     const token = session?.accessToken;
+    const body = await req.json();
     const response = await fetch(
       `${process.env.BASE_API_URL}/changyou-wap-service/crossChainActivity/callCrossActivity`,
       {
@@ -15,6 +17,7 @@ export async function POST() {
         },
         body: JSON.stringify({
           activityType: "mmGame",
+          ...body,
         }),
       }
     );
@@ -22,11 +25,18 @@ export async function POST() {
       throw new Error("Failed to fetch account balance");
     }
     const data = await response.json();
-    if (data.code == "0") {
-      return Response.json(data);
-    }
-    throw new Error({ ...data });
+    console.log(data);
+    // if (data.code == "0") {
+    return Response.json(data);
+    // }
   } catch (error) {
-    return error;
+    return Response.json(
+      {
+        error,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }

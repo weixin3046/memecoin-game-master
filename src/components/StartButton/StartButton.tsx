@@ -1,13 +1,6 @@
 import { useWindowStore } from "@/stores/window";
 import { Button8Bit2 } from "../Button8Bit2";
-import {
-  metaHashResponseProps,
-  useBalanceStore,
-  useOAutToken,
-  useProvider,
-  useTeaserStore,
-  useTransactionStore,
-} from "@/stores/teaser";
+import { useBalanceStore, useTeaserStore } from "@/stores/teaser";
 import ClickStartButtonSound from "@/components/assets/audios/click-start-button.mp3";
 import { FaApple, FaUser } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -24,9 +17,8 @@ import { useCallback, useEffect, useState } from "react";
 import { CustomModal } from "../CustomModal";
 import { useRouter } from "next/navigation";
 import PointButton from "./PointButton";
-import useToken from "@/hooks/useToken";
-import { auth } from "@/auth";
-import { useSession } from "next-auth/react";
+import { MetaHashResponseProps, useApproveState } from "@/stores/approveState";
+import { getOAuthApprove } from "@/utils/getOAuthApprove";
 
 const googleInfo = {
   client_id:
@@ -58,18 +50,17 @@ async function getAppleLogin() {
 
 export const StartButton = () => {
   const isMobile = useWindowStore((state) => state.isMobile);
-  const metaHashResponse = useTransactionStore(
-    (state) => state.metaHashResponse
+
+  const setJoinGameMetaHash = useApproveState(
+    (state) => state.setJoinGameMetaHash
   );
-  const setMetaHashResponse = useTransactionStore(
-    (state) => state.setMetaHashResponse
-  );
-  const token = useOAutToken((state) => state.token);
+  const joinGameMetaHash = useApproveState((state) => state.joinGameMetaHash);
+  const token = useApproveState((state) => state.joinJwt);
   const router = useRouter();
   const balance = useBalanceStore((state) => state.balance);
   const [ticketNumber, setTicketNumber] = useState(10);
-  const provider = useProvider((state) => state.provider);
-  const updateToken = useOAutToken((state) => state.updateToken);
+  const provider = useApproveState((state) => state.provider);
+  const updateToken = useApproveState((state) => state.setJoinJwt);
   const { state } = useTeaserStore((state) => ({
     state: state.state,
   }));
@@ -83,43 +74,31 @@ export const StartButton = () => {
   const GetMetaHash = useCallback(async () => {
     const hash = await fetch("/api/getMetaHash");
     const hashRes = await hash.json();
-    const data = hashRes.content as metaHashResponseProps;
+    const data = hashRes.content as MetaHashResponseProps;
 
-    setMetaHashResponse(data);
+    setJoinGameMetaHash(data);
     return data;
-  }, [setMetaHashResponse]);
+  }, [setJoinGameMetaHash]);
 
   const JoinGame = useCallback(
     async (idToken?: string) => {
-      if (!metaHashResponse.metaHash) return;
+      if (!joinGameMetaHash) return;
       await fetch("/api/joinGame", {
         method: "POST",
         body: JSON.stringify({
-          feelInfo: metaHashResponse.feelInfo,
-          metaHash: metaHashResponse.metaHash,
-          nonceInfo: metaHashResponse.nonceInfo,
+          feelInfo: joinGameMetaHash.feelInfo,
+          metaHash: joinGameMetaHash.metaHash,
+          nonceInfo: joinGameMetaHash.nonceInfo,
           sourceActivity: "mmGame",
           idToken: idToken,
-          metaHashB64: metaHashResponse.metaHashB64, //
+          metaHashB64: joinGameMetaHash.metaHashB64, //
         }),
       });
 
-      setMetaHashResponse({
-        metaHash: "",
-        metaHashB64: "",
-        nonceInfo: "",
-        feelInfo: {},
-      });
-      updateToken("");
+      setJoinGameMetaHash(null);
+      updateToken(null);
     },
-    [
-      metaHashResponse.feelInfo,
-      metaHashResponse.metaHash,
-      metaHashResponse.metaHashB64,
-      metaHashResponse.nonceInfo,
-      setMetaHashResponse,
-      updateToken,
-    ]
+    [joinGameMetaHash, setJoinGameMetaHash, updateToken]
   );
 
   // // 三方登录授权验证
@@ -136,7 +115,7 @@ export const StartButton = () => {
     audio.volume = 0.2;
     audio.play();
   };
-  // const on
+  // 开始游戏
   const onStartButtonClick = async () => {
     if (provider === "credentials") {
       playButtonSound();
@@ -149,16 +128,7 @@ export const StartButton = () => {
       try {
         updateToken("");
         const metaHash = await GetMetaHash();
-        setMetaHashResponse(metaHash);
-        googleInfo.nonce = metaHash.metaHashB64;
-        let url =
-          "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?";
-        let query = Object.keys(googleInfo)
-          .map((key) => `${key}=${googleInfo[key]}`)
-          .join("&");
-        let link = url + query;
-        console.log(link);
-        window.location.href = link;
+        getOAuthApprove(metaHash.metaHashB64, "join");
       } catch (error) {}
     }
     return;

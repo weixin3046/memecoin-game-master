@@ -21,10 +21,11 @@ import MotionBox from "@/components/MotionBox";
 import { Dialog8Bit } from "../Dialog8Bit";
 import { HomeButton } from "../HomeButton";
 import useToken from "@/hooks/useToken";
+import { useApproveState } from "@/stores/approveState";
 
 export const ScoreBoard = ({ style, animation }: any) => {
   const coinCount = useTeaserStore((state) => state.coinCount);
-  const metaHash = useTransactionStore((state) => state.metaHash);
+  const joinGameMetaHash = useApproveState((state) => state.joinGameMetaHash);
   const vh = useWindowStore((state) => state.vh);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { refetch } = useToken();
@@ -45,15 +46,17 @@ export const ScoreBoard = ({ style, animation }: any) => {
 
   useEffect(() => {
     (async () => {
+      //后台 默认提价游戏分数
+      if (!joinGameMetaHash) return;
       await fetch("/api/addGameCredits", {
         method: "POST",
         body: JSON.stringify({
-          metaHash: metaHash,
+          metaHash: joinGameMetaHash?.metaHash,
           points: String(coinCount),
         }),
       });
     })();
-  }, []);
+  }, [coinCount, joinGameMetaHash]);
 
   const handleHomeClick = async () => {
     useTeaserStore.getState().onHomeButtonClick();
