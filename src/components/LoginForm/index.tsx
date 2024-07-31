@@ -140,7 +140,9 @@ export default function LoginForm() {
   };
   return (
     <CardWrapper
-      backButtonLabel={"請使用和BlossomChain APP一致的帳號登錄"}
+      backButtonLabel={
+        "為了確保您能順利領取到平台提供的福利，我們建議您使用登錄Blossom Chain時的帳號登錄遊戲，保持帳號一致，謝謝！"
+      }
       showSocial
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">

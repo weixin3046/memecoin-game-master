@@ -89,7 +89,11 @@ export default function RusltPage({ params }: { params: { id: string } }) {
         <div className="absolute bottom-5 left-0 right-0 px-8">
           <Alert status={status}>
             <AlertIcon />
-            Transaction result query in progress
+            {status === "loading" &&
+              "正在進行PEG轉換成TPEG的流程，請您耐心等待..."}
+            {status === "success" &&
+              "您的PEG已成功轉換成TPEG，請返回主頁開始遊戲吧！"}
+            {status === "error" && "積分轉換失敗請重試！"}
             <div>{error}</div>
           </Alert>
         </div>
