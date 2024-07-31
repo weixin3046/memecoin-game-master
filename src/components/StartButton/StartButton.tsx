@@ -96,7 +96,7 @@ export const StartButton = () => {
   };
   // 开始游戏
   const onStartButtonClick = async () => {
-    if (provider === "credentials") {
+    if (provider && provider === "credentials") {
       playButtonSound();
       useTeaserStore.getState().onStartButtonClick();
       try {
@@ -107,7 +107,8 @@ export const StartButton = () => {
       try {
         updateToken("");
         const metaHash = await GetMetaHash();
-        getOAuthApprove(metaHash.metaHashB64, "join");
+        if (!provider) return console.log(provider, "provider 不存在");
+        getOAuthApprove(metaHash.metaHashB64, "join", provider);
       } catch (error) {}
     }
     return;

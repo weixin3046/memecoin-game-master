@@ -1,6 +1,7 @@
 import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
 import Header from "@/components/LoginForm/header";
 import Social from "@/components/LoginForm/social";
+import BackButton from "@/components/LoginForm/back-button";
 
 interface CardWrapperProps {
   children: React.ReactNode;
@@ -29,8 +30,11 @@ export default function CardWrapper({
         </CardFooter>
       )}
       <CardFooter>
-        <div className="text-center">{backButtonLabel}</div>
-        {/* <BackButton label={backButtonLabel} href={backButtonHref} /> */}
+        {backButtonHref ? (
+          <BackButton label={backButtonLabel} href={backButtonHref} />
+        ) : (
+          <div className="text-center">{backButtonLabel}</div>
+        )}
       </CardFooter>
     </Card>
   );

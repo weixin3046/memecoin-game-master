@@ -1,10 +1,11 @@
 import ErrorCard from "@/components/LoginForm/error-card";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const AuthErrorPage = () => {
   return (
-    <div>
+    <ChakraProvider>
       <ErrorCard />
-    </div>
+    </ChakraProvider>
   );
 };
 
