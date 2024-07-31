@@ -104,7 +104,7 @@ export default function SwapApprove() {
   }, [cross, crossJwt, provider]);
 
   const onSwap = () => {
-    if (approve === "Y") {
+    if (approve === "N") {
       onOpen();
     } else {
       handleSwap();
