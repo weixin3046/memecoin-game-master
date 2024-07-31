@@ -247,7 +247,7 @@ export default function SwapApprove() {
           <div className="flex">
             <div className="flex gap-2 items-center justify-start border rounded-full px-4">
               <NextImage src={"/logo.png"} alt="BNB" width={20} height={20} />
-              <span>BNB</span>
+              <span>REQ</span>
             </div>
           </div>
         </div>
@@ -257,9 +257,9 @@ export default function SwapApprove() {
             <div className="flex items-center justify-between border-b p-2">
               <div className="flex gap-1 items-center">
                 <NextImage src={"/logo.png"} alt="BNB" width={20} height={20} />
-                <div>TPEG</div>
+                <div>PEG</div>
               </div>
-              {/* <div>无限额度</div> */}
+              <div>无限额度</div>
             </div>
             <div className="pt-2 justify-between flex items-center">
               <div>矿工费</div>

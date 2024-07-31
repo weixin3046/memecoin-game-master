@@ -36,10 +36,15 @@ export default function Guide() {
         onClose={onClose}
         size={"sm"}
         isCentered
+        closeOnOverlayClick={false}
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            <AlertDialogHeader
+              fontSize="lg"
+              fontWeight="bold"
+              className="text-center"
+            >
               遊戲步骤{step}
             </AlertDialogHeader>
             {step === 2 && <AlertDialogCloseButton />}
