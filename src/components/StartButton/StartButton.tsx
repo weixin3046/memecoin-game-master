@@ -158,7 +158,7 @@ export const StartButton = () => {
           .join("&");
         let link = url + query;
         console.log(link);
-        // window.location.href = link;
+        window.location.href = link;
       } catch (error) {}
     }
     return;
