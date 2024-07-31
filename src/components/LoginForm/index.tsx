@@ -33,10 +33,13 @@ import TwFlag from "@/components/assets/flag/tw.svg";
 import { login } from "@/actions/login";
 import CardWrapper from "@/components/LoginForm/card-wrapper";
 import { useApproveState } from "@/stores/approveState";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginForm() {
   const setProvider = useApproveState((state) => state.setProvider);
-
+  const searchParams = useSearchParams();
+  const phoneNo = searchParams.get("phoneNo");
+  const areaCode = searchParams.get("areaCode");
   const {
     handleSubmit,
     register,
@@ -47,9 +50,9 @@ export default function LoginForm() {
     resolver: zodResolver(LoginSchema),
     mode: "all",
     defaultValues: {
-      phone: "",
+      phone: phoneNo ? phoneNo : "",
       verifcode: "",
-      areaCode: "+86",
+      areaCode: areaCode ? areaCode : "+86",
     },
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -156,7 +159,7 @@ export default function LoginForm() {
             <Input
               paddingLeft={"6.2rem"}
               id="phone"
-              isDisabled={isPending}
+              isDisabled={isPending || !!phoneNo}
               placeholder="請輸入"
               {...register("phone")}
             />
