@@ -9,7 +9,9 @@ interface GoogleInfo {
   response_mode?: string;
 }
 const googleInfo: GoogleInfo = {
-  client_id: process.env.GOOGLE_CLIENT_ID || "",
+  client_id:
+    process.env.GOOGLE_CLIENT_ID ||
+    "191629411062-fepnoc22qk6e8hq5bv9n0mbjjb58sj0h.apps.googleusercontent.com",
   redirect_uri: "https://memecoin-game-master.vercel.app/success",
   scope: "email",
   state: "join",
@@ -19,7 +21,7 @@ const googleInfo: GoogleInfo = {
   flowName: "GeneralOAuthFlow",
 };
 const AppleInfo: GoogleInfo = {
-  client_id: process.env.GOOGLE_CLIENT_ID || "",
+  client_id: process.env.APPLE_CLIENT_SECRET || "com.changyouintl.h5sign",
   redirect_uri: "https://memecoin-game-master.vercel.app/success",
   scope: "email",
   state: "join",
@@ -27,12 +29,6 @@ const AppleInfo: GoogleInfo = {
   response_mode: "form_post",
   nonce: "1",
 };
-async function getAppleLogin() {
-  const url =
-    "https://appleid.apple.com/auth/authorize?client_id=com.changyouintl.js&redirect_uri=https://api.qwerty2.com/changyou-api-service/appleAuth/redirect&response_type=code%20id_token&state=apple&scope=email%20name&response_mode=form_post&nonce=" +
-    "1";
-  window.location.href = url;
-}
 
 export function getOAuthApprove(
   metaHashB64: string,
