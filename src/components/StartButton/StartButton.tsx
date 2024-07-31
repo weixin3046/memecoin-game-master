@@ -118,6 +118,7 @@ export const StartButton = () => {
       metaHashResponse.metaHashB64,
       metaHashResponse.nonceInfo,
       setMetaHashResponse,
+      updateToken,
     ]
   );
 

@@ -12,6 +12,8 @@ import useApprove from "@/hooks/useApprove";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { RiTokenSwapFill } from "react-icons/ri";
+import { useProvider } from "@/stores/teaser";
+import { useSession } from "next-auth/react";
 
 export default function SwapApprove() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -19,6 +21,8 @@ export default function SwapApprove() {
   const { approve, pending: approvePending } = useApprove();
   const [pending, setPending] = useState(false);
   const toast = useToast();
+  const { data: session, status } = useSession();
+  const provider = useProvider((state) => state.provider);
   const router = useRouter();
 
   useEffect(() => {
@@ -59,30 +63,54 @@ export default function SwapApprove() {
     }
   };
   const handleSwap = async () => {
-    const cross = new Promise(async (resolve, reject) => {
-      try {
-        const res = await fetch("/api/cross", {
+    if (provider === "credentials" && false) {
+      const cross = new Promise(async (resolve, reject) => {
+        try {
+          const res = await fetch("/api/cross", {
+            method: "POST",
+          });
+          const data = await res.json();
+          resolve(data);
+        } catch (error) {
+          reject(error);
+        }
+      });
+      toast.promise(cross, {
+        success: (res: any) => {
+          router.push(`/result/cross/${res.content}`);
+          return {
+            title: "🎉🎉🎉 success",
+            description: "Cross chain transaction execution successful",
+          };
+        },
+        error: (res: any) => {
+          return {
+            title: "failed",
+            description: "Cross chain execution failed",
+          };
+        },
+        loading: { title: "Promise pending", description: "Please wait" },
+      });
+    } else {
+      const response = await fetch(
+        `${process.env.BASE_API_URL}/changyou-wap-service/crossChainActivity/getCrossMetaHashByActivity`,
+        {
           method: "POST",
-        });
-        const data = await res.json();
-        resolve(data);
-      } catch (error) {
-        reject(error);
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `${session?.accessToken}`,
+          },
+          body: JSON.stringify({
+            activityType: "mmGame",
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch account balance");
       }
-    });
-    toast.promise(cross, {
-      success: (res: any) => {
-        router.push(`/result/cross/${res.content}`);
-        return {
-          title: "🎉🎉🎉 success",
-          description: "Cross chain transaction execution successful",
-        };
-      },
-      error: (res: any) => {
-        return { title: "failed", description: "Cross chain execution failed" };
-      },
-      loading: { title: "Promise pending", description: "Please wait" },
-    });
+      const data = await response.json();
+      console.log(data);
+    }
   };
 
   return (
