@@ -2,8 +2,7 @@ import { useWindowStore } from "@/stores/window";
 import { Button8Bit2 } from "../Button8Bit2";
 import { useBalanceStore, useTeaserStore } from "@/stores/teaser";
 import ClickStartButtonSound from "@/components/assets/audios/click-start-button.mp3";
-import { FaApple, FaUser } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
+import { FaUser } from "react-icons/fa";
 import {
   AbsoluteCenter,
   Box,
@@ -19,13 +18,6 @@ import { useRouter } from "next/navigation";
 import PointButton from "./PointButton";
 import { MetaHashResponseProps, useApproveState } from "@/stores/approveState";
 import { getOAuthApprove } from "@/utils/getOAuthApprove";
-
-async function getAppleLogin() {
-  const url =
-    "https://appleid.apple.com/auth/authorize?client_id=com.changyouintl.js&redirect_uri=https://api.qwerty2.com/changyou-api-service/appleAuth/redirect&response_type=code%20id_token&state=apple&scope=email%20name&response_mode=form_post&nonce=" +
-    "1";
-  window.location.href = url;
-}
 
 export const StartButton = () => {
   const isMobile = useWindowStore((state) => state.isMobile);
@@ -56,12 +48,13 @@ export const StartButton = () => {
     const data = hashRes.content as MetaHashResponseProps;
 
     setJoinGameMetaHash(data);
+
     return data;
   }, [setJoinGameMetaHash]);
 
   const JoinGame = useCallback(
-    async (idToken?: string) => {
-      if (!joinGameMetaHash) return;
+    async (joinGameMetaHash: MetaHashResponseProps, idToken?: string) => {
+      // if (!joinGameMetaHash) return;
       await fetch("/api/joinGame", {
         method: "POST",
         body: JSON.stringify({
@@ -77,7 +70,7 @@ export const StartButton = () => {
       // setJoinGameMetaHash(null);
       updateToken(null); //加入游戏之后清除之前jwt
     },
-    [joinGameMetaHash, updateToken]
+    [updateToken]
   );
 
   // // 三方登录授权验证
@@ -86,9 +79,10 @@ export const StartButton = () => {
     if (token) {
       playButtonSound();
       useTeaserStore.getState().onStartButtonClick();
-      JoinGame(token);
+      if (!joinGameMetaHash) return console.log("没有joinGameMetaHash");
+      JoinGame(joinGameMetaHash, token);
     }
-  }, [JoinGame, token]);
+  }, [JoinGame, joinGameMetaHash, token]);
 
   const playButtonSound = () => {
     if (!useTeaserStore.getState().playingAudio) return;
@@ -102,8 +96,8 @@ export const StartButton = () => {
       playButtonSound();
       useTeaserStore.getState().onStartButtonClick();
       try {
-        await GetMetaHash();
-        await JoinGame();
+        const metaHash = await GetMetaHash();
+        await JoinGame(metaHash);
       } catch (error) {}
     } else {
       try {
