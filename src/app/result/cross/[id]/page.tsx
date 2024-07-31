@@ -1,12 +1,5 @@
 "use client";
-import {
-  Alert,
-  AlertIcon,
-  ChakraProvider,
-  Container,
-  Progress,
-  Spinner,
-} from "@chakra-ui/react";
+import { Alert, AlertIcon } from "@chakra-ui/react";
 import Link from "next/link";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";

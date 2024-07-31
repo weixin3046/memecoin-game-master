@@ -40,6 +40,7 @@ export default function LoginForm() {
   const searchParams = useSearchParams();
   const phoneNo = searchParams.get("phoneNo");
   const areaCode = searchParams.get("areaCode");
+  console.log(areaCode);
   const {
     handleSubmit,
     register,
@@ -52,7 +53,7 @@ export default function LoginForm() {
     defaultValues: {
       phone: phoneNo ? phoneNo : "",
       verifcode: "",
-      areaCode: areaCode ? areaCode : "+86",
+      areaCode: areaCode ? "+" + areaCode : "+86",
     },
   });
   const { isOpen, onOpen, onClose } = useDisclosure();

@@ -145,7 +145,6 @@ export default function SwapApprove() {
 
   const onExchange = async () => {
     setPending(true);
-
     try {
       if (provider && provider !== "credentials") {
         // 获取收取metahash
@@ -171,7 +170,7 @@ export default function SwapApprove() {
           getOAuthApprove(data.content.metaHashB64, "approve", provider); // 三方登录授权
         }
       } else {
-        await approvecross();
+        await approvecross(); //跨链授权状态
       }
     } catch (error) {
     } finally {
