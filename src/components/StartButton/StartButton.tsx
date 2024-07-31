@@ -74,10 +74,10 @@ export const StartButton = () => {
         }),
       });
 
-      setJoinGameMetaHash(null);
-      updateToken(null);
+      // setJoinGameMetaHash(null);
+      updateToken(null); //加入游戏之后清除之前jwt
     },
-    [joinGameMetaHash, setJoinGameMetaHash, updateToken]
+    [joinGameMetaHash, updateToken]
   );
 
   // // 三方登录授权验证

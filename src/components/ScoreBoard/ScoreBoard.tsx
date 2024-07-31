@@ -26,6 +26,9 @@ import { useApproveState } from "@/stores/approveState";
 export const ScoreBoard = ({ style, animation }: any) => {
   const coinCount = useTeaserStore((state) => state.coinCount);
   const joinGameMetaHash = useApproveState((state) => state.joinGameMetaHash);
+  const setJoinGameMetaHash = useApproveState(
+    (state) => state.setJoinGameMetaHash
+  );
   const vh = useWindowStore((state) => state.vh);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { refetch } = useToken();
@@ -55,8 +58,9 @@ export const ScoreBoard = ({ style, animation }: any) => {
           points: String(coinCount),
         }),
       });
+      setJoinGameMetaHash(null);
     })();
-  }, [coinCount, joinGameMetaHash]);
+  }, [coinCount, joinGameMetaHash, setJoinGameMetaHash]);
 
   const handleHomeClick = async () => {
     useTeaserStore.getState().onHomeButtonClick();
