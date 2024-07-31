@@ -23,6 +23,7 @@ export default function SwapApprove() {
   const [pending, setPending] = useState(false);
   const toast = useToast();
   const crossJwt = useApproveState((state) => state.crossJwt);
+  const setCrossMetaHash = useApproveState((state) => state.setCrossMetaHash);
   const setCrossJwt = useApproveState((state) => state.setCrossJwt);
   const crossMetaHash = useApproveState((state) => state.crossMetaHash);
   const setApproveMetaHash = useApproveState(
@@ -41,6 +42,8 @@ export default function SwapApprove() {
     (crossJwt?: string) => {
       const response = new Promise(async (resolve, reject) => {
         try {
+          console.log(crossMetaHash, "crossMetaHash===");
+          console.log(crossJwt, "crossJwt===");
           const res = await fetch("/api/cross", {
             method: "POST",
             body: JSON.stringify({
@@ -197,7 +200,7 @@ export default function SwapApprove() {
         throw new Error("Failed to fetch account balance");
       }
       const data = await response.json();
-      setApproveMetaHash(data.content);
+      setCrossMetaHash(data.content);
       if (provider) {
         getOAuthApprove(data.content.metaHashB64, "cross", provider); // 三方登录授权
       }

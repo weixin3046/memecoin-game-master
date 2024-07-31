@@ -1,4 +1,3 @@
-// callCrossActivity
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
