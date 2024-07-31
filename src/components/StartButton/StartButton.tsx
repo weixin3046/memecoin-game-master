@@ -20,27 +20,6 @@ import PointButton from "./PointButton";
 import { MetaHashResponseProps, useApproveState } from "@/stores/approveState";
 import { getOAuthApprove } from "@/utils/getOAuthApprove";
 
-const googleInfo = {
-  client_id:
-    "191629411062-fepnoc22qk6e8hq5bv9n0mbjjb58sj0h.apps.googleusercontent.com",
-  redirect_uri: "https://memecoin-game-master.vercel.app/success",
-  scope: "email",
-  state: "eyJvcGVyYXRlIjoibG9na",
-  response_type: "id_token",
-  // access_type: "offline",
-  nonce: "1",
-  flowName: "GeneralOAuthFlow",
-};
-
-async function getGoogleLogin() {
-  const url =
-    "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?";
-  const query = Object.keys(googleInfo)
-    .map((key) => `${key}=${(googleInfo as Record<string, string>)[key]}`)
-    .join("&");
-  const link = url + query;
-  window.location.href = link;
-}
 async function getAppleLogin() {
   const url =
     "https://appleid.apple.com/auth/authorize?client_id=com.changyouintl.js&redirect_uri=https://api.qwerty2.com/changyou-api-service/appleAuth/redirect&response_type=code%20id_token&state=apple&scope=email%20name&response_mode=form_post&nonce=" +
@@ -141,13 +120,7 @@ export const StartButton = () => {
   useEffect(() => {
     fetchTickerNum();
   }, []);
-  const googleLogin = async () => {
-    const data = await getGoogleLogin();
-  };
 
-  const appleLogin = async () => {
-    const data = await getAppleLogin();
-  };
   return (
     <>
       {Number(balance) < ticketNumber && <PointButton />}
@@ -180,12 +153,6 @@ export const StartButton = () => {
               或者
             </AbsoluteCenter>
           </Box>
-          <Button leftIcon={<Icon as={FcGoogle} />} onClick={googleLogin}>
-            通过 Google 继续
-          </Button>
-          <Button leftIcon={<Icon as={FaApple} />} onClick={appleLogin}>
-            通过 Apple 继续
-          </Button>
         </VStack>
       </CustomModal>
     </>
