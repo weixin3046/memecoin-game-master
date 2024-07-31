@@ -23,12 +23,13 @@ export default function SuccessPage() {
             break;
           case "join":
             setJoinJwt(token);
+            router.push("/");
             break;
           case "approve":
             setApproveJwt(token);
+            // router.push("/");
             break;
         }
-        router.push("/");
       }
       // setParams({ id_token: id })
     }

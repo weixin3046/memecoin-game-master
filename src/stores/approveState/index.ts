@@ -34,7 +34,7 @@ export const useApproveState = create(
       joinGameMetaHash: null,
       crossMetaHash: null,
       approveMetaHash: null,
-      provider: "google",
+      provider: null,
       joinJwt: null,
       approveJwt: null,
       crossJwt: null,

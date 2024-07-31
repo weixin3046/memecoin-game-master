@@ -35,46 +35,56 @@ export default function SwapApprove() {
   const provider = useApproveState((state) => state.provider);
   const router = useRouter();
 
-  const cross = async (crossJwt?: string) => {
-    const response = new Promise(async (resolve, reject) => {
-      try {
-        const res = await fetch("/api/cross", {
-          method: "POST",
-          body: JSON.stringify({
-            jwt: crossJwt,
-            metaHash: crossMetaHash?.metaHash,
-            metaHashB64: crossMetaHash?.metaHashB64,
-            feeInfo: crossMetaHash?.feelInfo,
-            nonceInfo: crossMetaHash?.nonceInfo,
-          }),
-        });
-        const data = await res.json();
-        if (data.code === "0") {
-          resolve(data);
-        } else {
-          reject("error");
+  const cross = useCallback(
+    (crossJwt?: string) => {
+      const response = new Promise(async (resolve, reject) => {
+        try {
+          const res = await fetch("/api/cross", {
+            method: "POST",
+            body: JSON.stringify({
+              jwt: crossJwt,
+              metaHash: crossMetaHash?.metaHash,
+              metaHashB64: crossMetaHash?.metaHashB64,
+              feeInfo: crossMetaHash?.feelInfo,
+              nonceInfo: crossMetaHash?.nonceInfo,
+            }),
+          });
+          const data = await res.json();
+          if (data.code === "0") {
+            resolve(data);
+          } else {
+            reject("error");
+          }
+        } catch (error) {
+          reject(error);
         }
-      } catch (error) {
-        reject(error);
-      }
-    });
-    toast.promise(response, {
-      success: (res: any) => {
-        router.push(`/result/cross/${res.content}`);
-        return {
-          title: "🎉🎉🎉 success",
-          description: "Cross chain transaction execution successful",
-        };
-      },
-      error: (res: any) => {
-        return {
-          title: "failed",
-          description: "Cross chain execution failed",
-        };
-      },
-      loading: { title: "Promise pending", description: "Please wait" },
-    });
-  };
+      });
+      toast.promise(response, {
+        success: (res: any) => {
+          router.push(`/result/cross/${res.content}`);
+          return {
+            title: "🎉🎉🎉 success",
+            description: "Cross chain transaction execution successful",
+          };
+        },
+        error: (res: any) => {
+          return {
+            title: "failed",
+            description: "Cross chain execution failed",
+          };
+        },
+        loading: { title: "Promise pending", description: "Please wait" },
+      });
+    },
+    [
+      crossMetaHash?.feelInfo,
+      crossMetaHash?.metaHash,
+      crossMetaHash?.metaHashB64,
+      crossMetaHash?.nonceInfo,
+      router,
+      toast,
+    ]
+  );
 
   useEffect(() => {
     (async () => {
@@ -90,10 +100,10 @@ export default function SwapApprove() {
     if ((provider === "google" || provider === "apple") && crossJwt) {
       cross(crossJwt);
     }
-  }, [crossJwt, provider]);
+  }, [cross, crossJwt, provider]);
 
   const onSwap = () => {
-    if (approve === "N") {
+    if (approve === "Y") {
       onOpen();
     } else {
       handleSwap();
@@ -122,12 +132,15 @@ export default function SwapApprove() {
     approveMetaHash?.nonceInfo,
     router,
   ]);
-
   useEffect(() => {
     if (approveJwt) {
-      approvecross();
+      onOpen();
+      setPending(true);
+      approvecross().then((res) => {
+        setPending(false);
+      });
     }
-  }, [approveJwt, approvecross]);
+  }, [approveJwt, approvecross, onOpen]);
 
   const onExchange = async () => {
     setPending(true);
@@ -152,7 +165,7 @@ export default function SwapApprove() {
           throw new Error("Failed to fetch account balance");
         }
         const data = await response.json();
-        if (data === "0") {
+        if (data.code === "0") {
           setApproveMetaHash(data.content);
           getOAuthApprove(data.content.metaHashB64, "approve", provider); // 三方登录授权
         }
