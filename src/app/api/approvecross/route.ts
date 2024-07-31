@@ -5,6 +5,7 @@ export async function POST(req: NextRequest) {
   try {
     const session = await auth();
     const token = session?.accessToken;
+    const body = await req.json();
     const response = await fetch(
       `${process.env.BASE_API_URL}/changyou-wap-service/crossChainActivity/approveEmpowerByActivity`,
       {
@@ -13,7 +14,7 @@ export async function POST(req: NextRequest) {
           "Content-type": "application/json",
           Authorization: `${token}`,
         },
-        body: JSON.stringify({ activityType: "mmGame" }),
+        body: JSON.stringify({ activityType: "mmGame", ...body }),
       }
     );
     if (!response.ok) {
