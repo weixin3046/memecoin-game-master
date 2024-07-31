@@ -243,7 +243,8 @@ export default function SwapApprove() {
         }
       >
         <div className="flex items-center justify-center flex-col gap-3">
-          <div>合约地址:0xaasdf...ss7f</div>
+          {/* 0xA34894EEec25f868DA87D33fc4FaA7D3528859Cc */}
+          <div>合约地址:0xA3489...59Cc</div>
           <div className="flex">
             <div className="flex gap-2 items-center justify-start border rounded-full px-4">
               <NextImage src={"/logo.png"} alt="BNB" width={20} height={20} />
