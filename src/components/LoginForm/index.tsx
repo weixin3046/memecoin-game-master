@@ -53,7 +53,7 @@ export default function LoginForm() {
     defaultValues: {
       phone: phoneNo ? phoneNo : "",
       verifcode: "",
-      areaCode: areaCode ? "+" + areaCode : "+86",
+      areaCode: areaCode ? `+${areaCode}` : "+86",
     },
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
