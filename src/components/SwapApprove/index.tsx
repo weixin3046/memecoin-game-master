@@ -51,7 +51,7 @@ export default function SwapApprove() {
               metaHash: crossMetaHash?.metaHash,
               metaHashB64: crossMetaHash?.metaHashB64,
               feeInfo: crossMetaHash?.feelInfo,
-              nonceInfo: crossMetaHash?.nonceInfo,
+              nonceInfoDto: crossMetaHash?.nonceInfo,
             }),
           });
           const data = await res.json();
