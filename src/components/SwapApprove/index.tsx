@@ -29,6 +29,7 @@ export default function SwapApprove() {
   );
 
   const approveJwt = useApproveState((state) => state.approveJwt);
+  const setApproveJwt = useApproveState((state) => state.setApproveJwt);
   const approveMetaHash = useApproveState((state) => state.approveMetaHash);
   // const setApproveMetaHash = useApproveState((state)=>state.setApproveMetaHash)
   const { data: session, status } = useSession();
@@ -123,6 +124,7 @@ export default function SwapApprove() {
     const data = await res.json();
     if (data.code === "0") {
       router.push(`/result/${data.content}`);
+      setApproveJwt(null);
     }
   }, [
     approveJwt,
@@ -131,6 +133,7 @@ export default function SwapApprove() {
     approveMetaHash?.metaHashB64,
     approveMetaHash?.nonceInfo,
     router,
+    setApproveJwt,
   ]);
   useEffect(() => {
     if (approveJwt) {
