@@ -262,14 +262,14 @@ export default function SwapApprove() {
               <div>无限额度</div>
             </div>
             <div className="pt-2 justify-between flex items-center">
-              <div>矿工费</div>
-              <div>{apprveFee}</div>
+              <div>永久有效</div>
+              {/* <div>{apprveFee}</div> */}
             </div>
           </div>
           {/* <div className="border p-4 rounded-xl ">
             <div className="flex items-center justify-between border-b p-2">
               <div>
-                <div>blc</div>
+                <div>钱包地址</div>
               </div>
               <div>无限额度</div>
             </div>
