@@ -32,7 +32,7 @@ export default function SuccessPage() {
       }
       // setParams({ id_token: id })
     }
-  }, [router, updateToken]);
+  }, [router, setApproveJwt, setCrossJwt, setJoinJwt]);
   if (!token) {
     return <div>Missing token!</div>;
   }

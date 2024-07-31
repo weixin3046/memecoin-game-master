@@ -84,6 +84,8 @@ export const StartButton = () => {
   useEffect(() => {
     console.log(token);
     if (token) {
+      playButtonSound();
+      useTeaserStore.getState().onStartButtonClick();
       JoinGame(token);
     }
   }, [JoinGame, token]);
