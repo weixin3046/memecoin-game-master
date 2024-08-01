@@ -20,17 +20,24 @@ export default function Guide() {
   const [step, setStep] = useState(1);
   const openState = useGuideState((state) => state.open);
   const setOpen = useGuideState((state) => state.setOpen);
-  // console.log(openState, "openState=====");
+
+  const [isClient, setIsClient] = useState(false);
+
   useEffect(() => {
-    if (useGuideState.getState().open) {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (openState) {
       // console.log(openState, "openState");
       onOpen();
     }
   }, [onOpen, openState]);
+
   return (
     <div>
       <Modal
-        isOpen={isOpen}
+        isOpen={isClient && isOpen}
         onClose={onClose}
         // size={"sm"}
         isCentered
