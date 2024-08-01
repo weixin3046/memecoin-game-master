@@ -52,6 +52,6 @@ export function getOAuthApprove(
     .join("&");
   let link = url + query;
   console.log(link);
-  window.location.href = link;
+  // window.location.href = link;
   // return parseFloat(str);
 }
