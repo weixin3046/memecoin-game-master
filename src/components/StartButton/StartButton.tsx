@@ -30,7 +30,7 @@ export const StartButton = () => {
   const token = useApproveState((state) => state.joinJwt);
   const router = useRouter();
   const balance = useBalanceStore((state) => state.balance);
-  const [ticketNumber, setTicketNumber] = useState(10);
+  const [ticketNumber, setTicketNumber] = useState(0);
   const provider = useApproveState((state) => state.provider);
   const toast = useToast();
   const updateToken = useApproveState((state) => state.setJoinJwt);
@@ -96,7 +96,7 @@ export const StartButton = () => {
   const onStartButtonClick = async () => {
     const response = await fetch("api/getJoinGameNum");
     const joinGameNum = await response.json();
-    if (joinGameNum !== "0") {
+    if (joinGameNum.code !== "0") {
       toast({
         title: "活動已達上限！",
         status: "error",
@@ -125,6 +125,7 @@ export const StartButton = () => {
   const fetchTickerNum = async () => {
     const res = await fetch("/api/tickerNumber");
     const data = await res.json();
+    if (data.code !== "0") return;
     setTicketNumber(Number(data.content));
   };
   useEffect(() => {

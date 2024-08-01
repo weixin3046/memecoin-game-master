@@ -8,7 +8,10 @@ import {
   ModalBody,
   Modal,
   Button,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
+import { PiSpinner } from "react-icons/pi";
 import React, { useEffect, useState } from "react";
 import { RiTokenSwapFill } from "react-icons/ri";
 import Image from "next/image";
@@ -85,7 +88,7 @@ export default function Guide() {
                       </div>
                     </div>
                     <div
-                      className="bg-gray-200 rounded-full absolute w-8 h-8 flex items-center justify-center right-3  top-1/2 -translate-y-1/2"
+                      className="bg-gray-200 rounded-full absolute w-8 h-8 flex items-center justify-center right-3 top-1/2 -translate-y-1/2"
                       onClick={() => {
                         setOpen();
                         setStep(2);
@@ -102,7 +105,20 @@ export default function Guide() {
                         點擊兌換後，需等待兌換結果兌換成功後點擊返回到遊戲頁面
                       </div>
                       <div className=" flex items-center justify-center gap-4 flex-col py-8">
-                        <Image
+                        <Alert status={"loading"} className="gap-2">
+                          {/* <AlertIcon /> */}
+                          <PiSpinner size={"24"} />
+                          <div className="text-sm">
+                            正在進行PEG轉換成TPEG的流程，請您耐心等待...
+                          </div>
+                        </Alert>
+                        <Alert status={"success"}>
+                          <AlertIcon />
+                          <div className="text-sm">
+                            您的PEG已成功轉換成TPEG，請返回主頁開始遊戲吧
+                          </div>
+                        </Alert>
+                        {/* <Image
                           src={"/setp2.png"}
                           width={630}
                           height={40}
@@ -113,7 +129,7 @@ export default function Guide() {
                           width={630}
                           height={40}
                           alt="setp"
-                        />
+                        /> */}
                       </div>
                     </div>
                     <div
