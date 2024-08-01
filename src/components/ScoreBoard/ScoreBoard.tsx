@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { useTeaserStore, useTransactionStore } from "@/stores/teaser";
+import { useTeaserStore } from "@/stores/teaser";
 import { useWindowStore } from "@/stores/window";
 
 import MotionBox from "@/components/MotionBox";

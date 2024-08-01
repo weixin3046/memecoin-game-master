@@ -1,6 +1,5 @@
 import {
   Box,
-  ChakraProvider,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -11,7 +10,7 @@ import {
 
 export default function Page() {
   return (
-    <ChakraProvider>
+    <div>
       {/* <Box>
         <FormControl>
           <FormLabel>Email address</FormLabel>
@@ -42,6 +41,6 @@ export default function Page() {
           <Input type="gray" />
         </FormControl>
       </Box>
-    </ChakraProvider>
+    </div>
   );
 }

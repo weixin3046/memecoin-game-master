@@ -1,14 +1,13 @@
 "use client";
 import {
-  AlertDialog,
+  ModalHeader,
   useDisclosure,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogBody,
-  AlertDialogFooter,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
+  Modal,
   Button,
-  AlertDialogCloseButton,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { RiTokenSwapFill } from "react-icons/ri";
@@ -17,7 +16,6 @@ import { useGuideState } from "@/stores/approveState";
 
 export default function Guide() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = React.useRef(null);
   const [step, setStep] = useState(1);
   const openState = useGuideState((state) => state.open);
   const setOpen = useGuideState((state) => state.setOpen);
@@ -30,25 +28,25 @@ export default function Guide() {
   }, [onOpen, openState]);
   return (
     <div>
-      <AlertDialog
+      <Modal
         isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
         onClose={onClose}
-        size={"sm"}
+        // size={"sm"}
         isCentered
+        colorScheme="blue"
         closeOnOverlayClick={false}
       >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader
+        <ModalOverlay>
+          <ModalContent>
+            <ModalHeader
               fontSize="lg"
               fontWeight="bold"
               className="text-center"
             >
               遊戲步骤{step}
-            </AlertDialogHeader>
-            {step === 2 && <AlertDialogCloseButton />}
-            <AlertDialogBody>
+            </ModalHeader>
+            {step === 2 && <ModalCloseButton />}
+            <ModalBody>
               <div className="text-center">
                 {step === 1
                   ? `開始遊戲前,請先將PEG兌換成TPEG可通過點擊Swap後面的圖標,一鍵兌換TPEG`
@@ -84,10 +82,10 @@ export default function Guide() {
                   </>
                 )}
               </div>
-            </AlertDialogBody>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+            </ModalBody>
+          </ModalContent>
+        </ModalOverlay>
+      </Modal>
     </div>
   );
 }
