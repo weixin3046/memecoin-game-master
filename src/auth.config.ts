@@ -4,21 +4,14 @@ import Google from "next-auth/providers/google";
 import Apple from "next-auth/providers/apple";
 
 export default {
-  cookies: {
-    callbackUrl: {
-      name: `__Secure-next-auth.callback-url`,
-      options: {
-        httpOnly: false,
-        sameSite: "none",
-        path: "/",
-        secure: true,
-      },
-    },
-  },
   providers: [
     Apple({
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
       clientId: process.env.APPLE_CLIENT_ID,
+      client: {
+        token_endpoint_auth_method: "client_secret_post",
+      },
+      profile: undefined,
       authorization: {
         params: {
           scope: "name email",
