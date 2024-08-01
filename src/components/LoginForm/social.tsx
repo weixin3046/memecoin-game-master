@@ -22,7 +22,7 @@ const Social = () => {
   };
 
   return (
-    <div className="flex items-center w-full gap-x-2">
+    <div className="flex items-center w-full justify-center flex-col gap-2">
       <Button
         size="lg"
         className="w-full gap-1"
@@ -30,16 +30,17 @@ const Social = () => {
         onClick={() => onClick("google")}
       >
         <FcGoogle className="h-5 w-5" />
-        通過google帳號登入
+        通過Google帳號登入
       </Button>
-      {/* <Button
+      <Button
         size="lg"
-        className="w-full"
+        className="w-full gap-1"
         variant="outline"
         onClick={() => onClick("apple")}
       >
         <FaApple className="h-5 w-5" />
-      </Button> */}
+        通過Apple帳號登入
+      </Button>
     </div>
   );
 };
