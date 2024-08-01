@@ -83,14 +83,7 @@ export default function SwapApprove() {
         loading: { title: "Promise pending", description: "Please wait" },
       });
     },
-    [
-      crossMetaHash?.feelInfo,
-      crossMetaHash?.metaHash,
-      crossMetaHash?.metaHashB64,
-      crossMetaHash?.nonceInfo,
-      router,
-      toast,
-    ]
+    [crossMetaHash, router, setCrossJwt, toast]
   );
 
   useEffect(() => {
