@@ -12,7 +12,7 @@ const googleInfo: GoogleInfo = {
   client_id:
     process.env.GOOGLE_CLIENT_ID ||
     "191629411062-fepnoc22qk6e8hq5bv9n0mbjjb58sj0h.apps.googleusercontent.com",
-  redirect_uri: "https://memecoin-game-master.vercel.app/success",
+  redirect_uri: `${process.env.AUTH_URL}/success`,
   scope: "email",
   state: "join",
   response_type: "id_token",
@@ -22,7 +22,7 @@ const googleInfo: GoogleInfo = {
 };
 const AppleInfo: GoogleInfo = {
   client_id: process.env.APPLE_CLIENT_SECRET || "com.changyouintl.h5sign",
-  redirect_uri: "https://memecoin-game-master.vercel.app/success",
+  redirect_uri: `${process.env.AUTH_URL}/success`,
   scope: "email",
   state: "join",
   response_type: "code id_token",
