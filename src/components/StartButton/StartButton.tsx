@@ -10,6 +10,7 @@ import {
   Divider,
   Icon,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
@@ -31,6 +32,7 @@ export const StartButton = () => {
   const balance = useBalanceStore((state) => state.balance);
   const [ticketNumber, setTicketNumber] = useState(10);
   const provider = useApproveState((state) => state.provider);
+  const toast = useToast();
   const updateToken = useApproveState((state) => state.setJoinJwt);
   const { state } = useTeaserStore((state) => ({
     state: state.state,
@@ -92,6 +94,17 @@ export const StartButton = () => {
   };
   // 开始游戏
   const onStartButtonClick = async () => {
+    const response = await fetch("api/getJoinGameNum");
+    const joinGameNum = await response.json();
+    if (joinGameNum !== "0") {
+      toast({
+        title: "Account created.",
+        status: "error",
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
     if (provider && provider === "credentials") {
       playButtonSound();
       useTeaserStore.getState().onStartButtonClick();
