@@ -105,9 +105,10 @@ export default function SwapApprove() {
 
   useEffect(() => {
     if ((provider === "google" || provider === "apple") && crossJwt) {
+      console.log("cross 执行了", provider, "provider===");
       cross(crossJwt);
     }
-  }, [cross, crossJwt, provider]);
+  }, [crossJwt, provider, cross]);
 
   const onSwap = () => {
     if (approve === "N") {
@@ -179,7 +180,7 @@ export default function SwapApprove() {
     }
   };
   const handleSwap = async () => {
-    // console.log(provider, token);
+    console.log(handleSwap, "handleSwap====");
     // 第三方登录
     if (provider && provider !== "credentials") {
       // 获取跨链meta
