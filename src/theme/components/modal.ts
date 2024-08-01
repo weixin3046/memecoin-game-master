@@ -11,7 +11,7 @@ const baseStyle = definePartsStyle((props) => {
   return {
     dialog: {
       borderRadius: "md",
-      mx: "8",
+      mx: "4",
     },
   };
 });

@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import { RiTokenSwapFill } from "react-icons/ri";
 import Image from "next/image";
 import { useGuideState } from "@/stores/approveState";
+import { ChevronRightIcon, ChevronLeftIcon } from "@chakra-ui/icons";
 
 export default function Guide() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,40 +47,69 @@ export default function Guide() {
               遊戲步骤{step}
             </ModalHeader>
             {step === 2 && <ModalCloseButton />}
-            <ModalBody>
+            <ModalBody className="!px-4">
               <div className="text-center">
-                {step === 1
-                  ? `開始遊戲前,請先將PEG兌換成TPEG可通過點擊Swap後面的圖標,一鍵兌換TPEG`
-                  : `點擊兌換後，需等待兌換結果兌換成功後點擊返回到遊戲頁面`}
-              </div>
-
-              <div className="flex items-center justify-center gap-4 flex-col py-8">
-                {step === 1 ? (
-                  <Button
-                    colorScheme="blue"
-                    onClick={() => {
-                      setStep(2);
-                      setOpen();
-                    }}
-                  >
-                    Swap: <RiTokenSwapFill className="text-white text-2xl" />
-                  </Button>
-                ) : (
-                  <>
-                    <Image
-                      src={"/setp2.png"}
-                      width={630}
-                      height={40}
-                      alt="setp"
-                    />
-                    <Image
-                      src={"/setp1.png"}
-                      width={630}
-                      height={40}
-                      alt="setp"
-                    />
-                    {/* <Image/> */}
-                  </>
+                {step === 1 && (
+                  <div className="relative px-8">
+                    <div>
+                      <div>
+                        開始遊戲前,請先將PEG兌換成TPEG可通過點擊Swap後面的圖標,一鍵兌換TPEG
+                      </div>
+                      <div className="relative flex items-center justify-center gap-4 flex-col py-8">
+                        <div className="relative">
+                          <Button
+                            colorScheme="blue"
+                            className="w-48"
+                            onClick={() => {
+                              setStep(2);
+                              setOpen();
+                            }}
+                          >
+                            Swap:
+                            <RiTokenSwapFill className="text-white text-2xl" />
+                          </Button>
+                          <div className="absolute top-[27px] right-8 w-12 h-12">
+                            <Image src={"hand.png"} alt="hand" fill />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="bg-gray-200 rounded-full absolute w-6 h-6 flex items-center justify-center right-0  top-1/2 -translate-y-1/2"
+                      onClick={() => setStep(2)}
+                    >
+                      <ChevronRightIcon color={"gray.500"} />
+                    </div>
+                  </div>
+                )}
+                {step === 2 && (
+                  <div className="relative px-8">
+                    <div>
+                      <div>
+                        點擊兌換後，需等待兌換結果兌換成功後點擊返回到遊戲頁面
+                      </div>
+                      <div className=" flex items-center justify-center gap-4 flex-col py-8">
+                        <Image
+                          src={"/setp2.png"}
+                          width={630}
+                          height={40}
+                          alt="setp"
+                        />
+                        <Image
+                          src={"/setp1.png"}
+                          width={630}
+                          height={40}
+                          alt="setp"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      className="bg-gray-200 rounded-full absolute w-6 h-6 flex items-center justify-center left-0  top-1/2 -translate-y-1/2"
+                      onClick={() => setStep(1)}
+                    >
+                      <ChevronLeftIcon color={"gray.500"} />
+                    </div>
+                  </div>
                 )}
               </div>
             </ModalBody>
