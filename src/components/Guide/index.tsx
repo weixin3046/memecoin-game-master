@@ -37,7 +37,7 @@ export default function Guide() {
   return (
     <div>
       <Modal
-        isOpen={isClient && isOpen}
+        isOpen={openState && isOpen}
         onClose={onClose}
         // size={"sm"}
         isCentered
@@ -68,8 +68,8 @@ export default function Guide() {
                             colorScheme="blue"
                             className="w-48"
                             onClick={() => {
-                              setStep(2);
                               setOpen();
+                              setStep(2);
                             }}
                           >
                             Swap:
@@ -83,7 +83,10 @@ export default function Guide() {
                     </div>
                     <div
                       className="bg-gray-200 rounded-full absolute w-6 h-6 flex items-center justify-center right-0  top-1/2 -translate-y-1/2"
-                      onClick={() => setStep(2)}
+                      onClick={() => {
+                        setOpen();
+                        setStep(2);
+                      }}
                     >
                       <ChevronRightIcon color={"gray.500"} />
                     </div>
