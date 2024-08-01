@@ -98,7 +98,7 @@ export const StartButton = () => {
     const joinGameNum = await response.json();
     if (joinGameNum !== "0") {
       toast({
-        title: "Account created.",
+        title: "活動已達上限！",
         status: "error",
         isClosable: true,
         position: "top",

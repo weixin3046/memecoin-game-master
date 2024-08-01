@@ -28,16 +28,19 @@ export default function Guide() {
   }, []);
 
   useEffect(() => {
-    if (openState) {
+    if (useGuideState.getState().open) {
       // console.log(openState, "openState");
       onOpen();
     }
   }, [onOpen, openState]);
+  if (!isClient) {
+    return <></>;
+  }
 
   return (
     <div>
       <Modal
-        isOpen={openState && isOpen}
+        isOpen={isOpen}
         onClose={onClose}
         // size={"sm"}
         isCentered
@@ -57,12 +60,12 @@ export default function Guide() {
             <ModalBody className="!px-4">
               <div className="text-center">
                 {step === 1 && (
-                  <div className="relative px-8">
+                  <div className=" px-8">
                     <div>
                       <div>
                         開始遊戲前,請先將PEG兌換成TPEG可通過點擊Swap後面的圖標,一鍵兌換TPEG
                       </div>
-                      <div className="relative flex items-center justify-center gap-4 flex-col py-8">
+                      <div className=" flex items-center justify-center gap-4 flex-col py-8">
                         <div className="relative">
                           <Button
                             colorScheme="blue"
@@ -82,18 +85,18 @@ export default function Guide() {
                       </div>
                     </div>
                     <div
-                      className="bg-gray-200 rounded-full absolute w-6 h-6 flex items-center justify-center right-0  top-1/2 -translate-y-1/2"
+                      className="bg-gray-200 rounded-full absolute w-8 h-8 flex items-center justify-center right-3  top-1/2 -translate-y-1/2"
                       onClick={() => {
                         setOpen();
                         setStep(2);
                       }}
                     >
-                      <ChevronRightIcon color={"gray.500"} />
+                      <ChevronRightIcon color={"gray.500"} boxSize={6} />
                     </div>
                   </div>
                 )}
                 {step === 2 && (
-                  <div className="relative px-8">
+                  <div className="px-8">
                     <div>
                       <div>
                         點擊兌換後，需等待兌換結果兌換成功後點擊返回到遊戲頁面
@@ -114,10 +117,10 @@ export default function Guide() {
                       </div>
                     </div>
                     <div
-                      className="bg-gray-200 rounded-full absolute w-6 h-6 flex items-center justify-center left-0  top-1/2 -translate-y-1/2"
+                      className="bg-gray-200 rounded-full absolute w-8 h-8 flex items-center justify-center left-3  top-1/2 -translate-y-1/2"
                       onClick={() => setStep(1)}
                     >
-                      <ChevronLeftIcon color={"gray.500"} />
+                      <ChevronLeftIcon color={"gray.500"} boxSize={6} />
                     </div>
                   </div>
                 )}

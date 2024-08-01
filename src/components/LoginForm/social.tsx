@@ -32,7 +32,7 @@ const Social = () => {
         <FcGoogle className="h-5 w-5" />
         通過Google帳號登入
       </Button>
-      <Button
+      {/* <Button
         size="lg"
         className="w-full gap-1"
         variant="outline"
@@ -40,7 +40,7 @@ const Social = () => {
       >
         <FaApple className="h-5 w-5" />
         通過Apple帳號登入
-      </Button>
+      </Button> */}
     </div>
   );
 };
