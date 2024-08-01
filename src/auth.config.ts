@@ -5,14 +5,13 @@ import Apple from "next-auth/providers/apple";
 
 export default {
   providers: [
-    Apple({
-      clientId: process.env.APPLE_CLIENT_ID,
-      clientSecret: process.env.APPLE_CLIENT_SECRET as string,
-      allowDangerousEmailAccountLinking: true,
-    }),
+    Apple,
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      client: {
+        token_endpoint_auth_method: "client_secret_post",
+      },
+      profile: undefined,
     }),
     Credentials({
       async authorize(credentials) {
