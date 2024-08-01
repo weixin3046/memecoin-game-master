@@ -181,7 +181,7 @@ export default function SwapApprove() {
   const handleSwap = async () => {
     // console.log(provider, token);
     // 第三方登录
-    if (provider !== "credentials") {
+    if (provider && provider !== "credentials") {
       // 获取跨链meta
       const response = await fetch(`/api/getCrossMetaHashByActivity`, {
         method: "POST",
@@ -195,9 +195,7 @@ export default function SwapApprove() {
       }
       const data = await response.json();
       setCrossMetaHash(data.content);
-      if (provider) {
-        getOAuthApprove(data.content.metaHashB64, "cross", provider); // 三方登录授权
-      }
+      getOAuthApprove(data.content.metaHashB64, "cross", provider); // 三方登录授权
     } else {
       cross();
     }

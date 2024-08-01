@@ -52,6 +52,7 @@ export function getOAuthApprove(
     .map((key) => `${key}=${links[key]}`)
     .join("&");
   let link = url + query;
+  console.log(link);
   window.location.href = link;
   // return parseFloat(str);
 }
