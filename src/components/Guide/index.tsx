@@ -66,7 +66,7 @@ export default function Guide() {
                   <div className=" px-8">
                     <div>
                       <div>
-                        開始遊戲前,請先將PEG兌換成TPEG可通過點擊Swap後面的圖標,一鍵兌換TPEG
+                        开始游戏前，请先将PEG兑换成TPEG可通過點擊Swap後面的圖標，一鍵兌換TPEG;（新用戶首次兌換時需先授權交易，授權成功後再次點擊兌換按鈕獲取TPEG）
                       </div>
                       <div className=" flex items-center justify-center gap-4 flex-col py-8">
                         <div className="relative">
