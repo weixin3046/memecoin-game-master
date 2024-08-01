@@ -7,6 +7,7 @@ export default {
   providers: [
     Apple({
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
+      clientId: process.env.APPLE_CLIENT_ID,
       client: {
         token_endpoint_auth_method: "client_secret_post",
       },
