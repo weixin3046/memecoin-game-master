@@ -150,7 +150,7 @@ export default function SwapApprove() {
       if (provider && provider !== "credentials") {
         // 获取收取metahash
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/changyou-wap-service/crossChainActivity/getApproveEmpowerMetaHashByActivity`,
+          `/api/getApproveEmpowerMetaHashByActivity`,
           {
             method: "POST",
             headers: {
@@ -183,19 +183,13 @@ export default function SwapApprove() {
     // 第三方登录
     if (provider !== "credentials") {
       // 获取跨链meta
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API_URL}/changyou-wap-service/crossChainActivity/getCrossMetaHashByActivity`,
-        {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `${session?.accessToken}`,
-          },
-          body: JSON.stringify({
-            activityType: "mmGame",
-          }),
-        }
-      );
+      const response = await fetch(`/api/getCrossMetaHashByActivity`, {
+        method: "POST",
+
+        body: JSON.stringify({
+          activityType: "mmGame",
+        }),
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch account balance");
       }

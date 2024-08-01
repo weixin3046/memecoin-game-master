@@ -12,7 +12,7 @@ const googleInfo: GoogleInfo = {
   client_id:
     process.env.GOOGLE_CLIENT_ID ||
     "191629411062-fepnoc22qk6e8hq5bv9n0mbjjb58sj0h.apps.googleusercontent.com",
-  redirect_uri: `${process.env.AUTH_URL}/success`,
+  redirect_uri: `https://winfunnygames.com/success`,
   scope: "email",
   state: "join",
   response_type: "id_token",
@@ -22,7 +22,7 @@ const googleInfo: GoogleInfo = {
 };
 const AppleInfo: GoogleInfo = {
   client_id: process.env.APPLE_CLIENT_SECRET || "com.changyouintl.h5sign",
-  redirect_uri: `${process.env.AUTH_URL}/success`,
+  redirect_uri: `https://winfunnygames.com/success`,
   scope: "email",
   state: "join",
   response_type: "code id_token",
@@ -35,6 +35,7 @@ export function getOAuthApprove(
   state: "approve" | "join" | "cross",
   provider?: "apple" | "google"
 ) {
+  console.log(process.env.BASE_URL);
   if (!provider) {
     console.log(provider, "provider 没有获取到值");
     return;
@@ -51,7 +52,6 @@ export function getOAuthApprove(
     .map((key) => `${key}=${links[key]}`)
     .join("&");
   let link = url + query;
-  console.log(link);
-  // window.location.href = link;
+  window.location.href = link;
   // return parseFloat(str);
 }
