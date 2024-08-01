@@ -11,13 +11,13 @@ import { useApproveState } from "@/stores/approveState";
 
 const Social = () => {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
+  // const callbackUrl = searchParams.get("callbackUrl");
   const setProvider = useApproveState((state) => state.setProvider);
   const onClick = (provider: "google" | "apple") => {
     console.log(provider);
     setProvider(provider);
     signIn(provider, {
-      callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+      callbackUrl: DEFAULT_LOGIN_REDIRECT,
     });
   };
 
