@@ -33,16 +33,6 @@ export default function SwapApprove() {
 
   return (
     <div>
-      {/* <button onClick={onSwap} disabled={approvePending}>
-        {approvePending ? (
-          <Spinner size="xs" className="ml-2" />
-        ) : (
-          <div className="flex gap-1 items-center">
-            <div>Swap：</div>
-            <RiTokenSwapFill className="text-white text-2xl" />
-          </div>
-        )}
-      </button> */}
       {approve === "N" && (
         <Button
           onClick={onApproveOpen}
@@ -55,17 +45,18 @@ export default function SwapApprove() {
           </div>
         </Button>
       )}
-      <Button
-        onClick={onCrossOpen}
-        isDisabled={approve === "N"}
-        isLoading={approvePending}
-        variant="unstyled"
-      >
-        <div className="flex gap-1 items-center">
-          <div>Swap：</div>
-          <RiTokenSwapFill className="text-white text-2xl" />
-        </div>
-      </Button>
+      {approve === "Y" && (
+        <Button
+          onClick={onCrossOpen}
+          isLoading={approvePending}
+          variant="unstyled"
+        >
+          <div className="flex gap-1 items-center">
+            <div>Swap：</div>
+            <RiTokenSwapFill className="text-white text-2xl" />
+          </div>
+        </Button>
+      )}
 
       {approve === "N" && (
         <ApproveModal

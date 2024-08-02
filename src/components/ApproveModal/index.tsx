@@ -70,9 +70,9 @@ export default function ApproveModal({
           activityType: "mmGame",
         }),
       });
-      const crossMetaHash = await response.json();
-      if (crossMetaHash !== "0") return console.log(crossMetaHash.msg);
-      getOAuthApprove(crossMetaHash.content.metaHashB64, "cross", provider);
+      const approveMetaHash = await response.json();
+      if (approveMetaHash !== "0") return console.log(approveMetaHash.msg);
+      getOAuthApprove(approveMetaHash.content.metaHashB64, "approve", provider);
     } else {
       await approve();
     }
