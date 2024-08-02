@@ -17,6 +17,7 @@ const useApprove = () => {
           setApprve(isApprove);
         }
       } catch (error) {
+        console.log(error);
       } finally {
         setPending(false);
       }

@@ -21,6 +21,7 @@ export async function POST() {
       throw new Error("Failed to fetch account balance");
     }
     const data = await response.json();
+    console.log(data, "approve data");
     if (data.code == "0") {
       return Response.json({ isApprove: data.content });
     }
