@@ -13,7 +13,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
-export default function ApproveModal({
+export default function CrossModal({
   isOpen,
   onClose,
   onOpen,
@@ -22,24 +22,25 @@ export default function ApproveModal({
   onClose: () => void;
   onOpen: () => void;
 }) {
-  const approveJwt = useApproveState((state) => state.approveJwt);
-  const setApproveJwt = useApproveState((state) => state.setApproveJwt);
+  const crossJwt = useApproveState((state) => state.crossJwt);
+  const setCrossJwt = useApproveState((state) => state.setCrossJwt);
   const provider = useApproveState((state) => state.provider);
-  const approveMetaHash = useApproveState((state) => state.approveMetaHash);
+  const crossMetaHash = useApproveState((state) => state.crossMetaHash);
   const [pending, setPending] = useState(false);
   const toast = useToast();
   const router = useRouter();
 
-  const approve = useCallback(
+  const cross = useCallback(
     async (crossJwt?: string) => {
-      const res = await fetch("/api/approvecross", {
+      const res = await fetch("/api/cross", {
         method: "POST",
         body: JSON.stringify({
-          jwt: approveJwt,
-          metaHash: approveMetaHash?.metaHash,
-          metaHashB64: approveMetaHash?.metaHashB64,
-          feeInfo: approveMetaHash?.feelInfo,
-          nonceInfo: approveMetaHash?.nonceInfoDto,
+          jwt: crossJwt,
+          metaHash: crossMetaHash?.metaHash,
+          metaHashB64: crossMetaHash?.metaHashB64,
+          feeInfo: crossMetaHash?.feelInfo,
+          nonceInfoDto: crossMetaHash?.nonceInfo,
+          transactionId: crossMetaHash?.transactionId,
         }),
       });
       const data = await res.json();
@@ -48,15 +49,15 @@ export default function ApproveModal({
           title: data.msg,
           status: "error",
         });
-      router.push(`/result/${data.content}`);
+      router.push(`/result/cross/${data.content}`);
       setPending(false);
     },
     [
-      approveJwt,
-      approveMetaHash?.feelInfo,
-      approveMetaHash?.metaHash,
-      approveMetaHash?.metaHashB64,
-      approveMetaHash?.nonceInfoDto,
+      crossMetaHash?.feelInfo,
+      crossMetaHash?.metaHash,
+      crossMetaHash?.metaHashB64,
+      crossMetaHash?.nonceInfo,
+      crossMetaHash?.transactionId,
       router,
       toast,
     ]
@@ -64,7 +65,7 @@ export default function ApproveModal({
   const onCross = async () => {
     setPending(true);
     if (provider && provider !== "credentials") {
-      const response = await fetch(`/api/getApproveEmpowerMetaHashByActivity`, {
+      const response = await fetch(`/api/getCrossMetaHashByActivity`, {
         method: "POST",
         body: JSON.stringify({
           activityType: "mmGame",
@@ -74,32 +75,32 @@ export default function ApproveModal({
       if (crossMetaHash !== "0") return console.log(crossMetaHash.msg);
       getOAuthApprove(crossMetaHash.content.metaHashB64, "cross", provider);
     } else {
-      await approve();
+      await cross();
     }
   };
 
   useEffect(() => {
-    if (approveJwt) {
+    if (crossJwt) {
       onOpen();
-      if (approveMetaHash?.metaHash) {
+      if (crossMetaHash?.metaHash) {
         setPending(true);
-        approve();
+        cross();
       }
     }
-  }, [onOpen, approveJwt, approveMetaHash?.metaHash, approve]);
+  }, [crossJwt, onOpen, crossMetaHash?.metaHash, cross]);
   return (
     <div>
       <CustomModal
         isOpen={isOpen}
         onClose={onClose}
-        header={<div className="text-center">授权代币交易权限给智能合约</div>}
+        header={"跨链"}
         footer={
           <ButtonGroup spacing="6" className="w-full">
             <Button
               size={"md"}
               onClick={() => {
                 onClose();
-                setApproveJwt(null);
+                setCrossJwt(null);
               }}
               className="flex-1"
             >
@@ -117,15 +118,6 @@ export default function ApproveModal({
           </ButtonGroup>
         }
       >
-        <div className="flex items-center justify-center flex-col gap-3 pb-3">
-          <div>合约地址:0xaasdf...ss7f </div>
-          <div className="flex">
-            <div className="flex gap-2 items-center justify-start border rounded-full px-4">
-              <Image src="/logo.png" alt="" width={20} height={20} />
-              <span>raq</span>
-            </div>
-          </div>
-        </div>
         <div className="space-y-2">
           <Card>
             <CardBody>
@@ -133,16 +125,20 @@ export default function ApproveModal({
                 <div className="flex items-center justify-between  px-1">
                   <div className="flex gap-2 items-center justify-start">
                     <Image src={"/logo.png"} alt="BNB" width={20} height={20} />
-                    <span>PEG</span>
+                    <span>raq</span>
                   </div>
-
+                  <div>
+                    <span>To</span>
+                  </div>
                   <div className="flex gap-2 items-center justify-start">
-                    无限额度
+                    <Image src={"/logo.png"} alt="BNB" width={20} height={20} />
+                    <span>raq</span>
                   </div>
                 </div>
                 <Divider />
                 <div className="flex items-center justify-between px-1">
-                  <div>永久有效</div>
+                  <div>数量</div>
+                  <div>28 PEG</div>
                 </div>
               </div>
             </CardBody>
@@ -152,16 +148,16 @@ export default function ApproveModal({
               <div className="space-y-2">
                 <div className="flex items-center justify-between  px-1">
                   <div className="flex gap-2 items-center justify-start">
-                    钱包地址
+                    手续费
                   </div>
                   <div className="flex gap-2 items-center justify-start">
-                    0xaasdf...ss7f
+                    0.0840 PEG
                   </div>
                 </div>
                 <Divider />
                 <div className="flex items-center justify-between px-1">
                   <div>Gas Fee</div>
-                  <div>0 PEG</div>
+                  <div>6 PEG</div>
                 </div>
               </div>
             </CardBody>

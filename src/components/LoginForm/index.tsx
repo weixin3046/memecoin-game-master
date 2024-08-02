@@ -13,6 +13,8 @@ import {
   useDisclosure,
   List,
   ListItem,
+  NumberInputField,
+  NumberInput,
 } from "@chakra-ui/react";
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -176,6 +178,8 @@ export default function LoginForm() {
                 isDisabled={isPending}
                 id="verifcode"
                 placeholder="請輸入"
+                minLength={6}
+                maxLength={6}
                 {...register("verifcode")}
               />
               <InputRightElement width={"auto"}>
