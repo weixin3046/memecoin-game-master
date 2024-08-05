@@ -13,7 +13,9 @@ export function SignIn({
         await signIn(provider);
       }}
     >
-      <Button {...props}>Sign In</Button>
+      <Button {...props} type="submit">
+        Sign In
+      </Button>
     </form>
   );
 }
