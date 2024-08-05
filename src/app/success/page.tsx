@@ -34,7 +34,7 @@ export default function SuccessPage() {
     }
   }, [router, setApproveJwt, setCrossJwt, setJoinJwt]);
   if (!token) {
-    return <div>Missing token!</div>;
+    return null;
   }
   return <div>{token}</div>;
 }
