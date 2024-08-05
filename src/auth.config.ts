@@ -8,23 +8,6 @@ export default {
     Apple({
       clientSecret: process.env.APPLE_CLIENT_SECRET!,
       clientId: process.env.APPLE_CLIENT_ID,
-      wellKnown: "https://appleid.apple.com/.well-known/openid-configuration",
-      checks: ["pkce"],
-      token: {
-        url: `https://appleid.apple.com/auth/token`,
-      },
-      authorization: {
-        url: "https://appleid.apple.com/auth/authorize",
-        params: {
-          scope: "",
-          response_type: "code",
-          response_mode: "query",
-          state: crypto.randomUUID(),
-        },
-      },
-      client: {
-        token_endpoint_auth_method: "client_secret_post",
-      },
     }),
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
