@@ -79,6 +79,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## 目录结构
 
+```
 memecoin-game/
 ├── public/ # 公共资源目录
 ├── src/ # 源代码
@@ -102,6 +103,8 @@ memecoin-game/
 ├── .gitignore # Git 忽略文件列表
 ├── package.json # 项目配置和依赖项
 └── README.md # 项目总览
+
+```
 
 ## 概述
 
