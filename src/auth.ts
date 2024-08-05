@@ -16,6 +16,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return true;
     },
     async session({ session, token }) {
+      if (token?.idToken) {
+        session.idToken = token.idToken;
+
+        // 解析 ID Token 以获取用户信息
+        const decoded = jwt.decode(token.idToken);
+        session.user = {
+          ...session.user,
+          ...decoded,
+        };
+      }
       session.accessToken = token.accessToken;
       session.provider = token.provider;
       return session;
@@ -28,6 +38,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
       }
       if (account?.id_token) {
+        console.log(
+          account?.id_token,
+          account?.provider,
+          "auth.ts 文件中的第41行"
+        );
         const url =
           account?.provider === "google"
             ? "/changyou-wap-service/google/verify/v2"
