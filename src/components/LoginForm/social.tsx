@@ -8,11 +8,13 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@chakra-ui/react";
 import { useApproveState } from "@/stores/approveState";
+import { SignIn } from "./auth-components";
 
 const Social = () => {
   const searchParams = useSearchParams();
   // const callbackUrl = searchParams.get("callbackUrl");
   const setProvider = useApproveState((state) => state.setProvider);
+  return <SignIn />;
   const onClick = (provider: "google" | "apple") => {
     console.log(provider);
     setProvider(provider);

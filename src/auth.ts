@@ -16,16 +16,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return true;
     },
     async session({ session, token }) {
-      if (token?.idToken) {
-        session.idToken = token.idToken;
-
-        // 解析 ID Token 以获取用户信息
-        const decoded = jwt.decode(token.idToken);
-        session.user = {
-          ...session.user,
-          ...decoded,
-        };
-      }
       session.accessToken = token.accessToken;
       session.provider = token.provider;
       return session;
